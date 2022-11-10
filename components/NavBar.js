@@ -3,13 +3,12 @@ import ConnectButton from "./ConnectButton";
 export default function NavBar() {
   return (
     <div
-      className="w-full container mx-auto p-2 "
+      className="w-screen px-4 py-2"
       style={{
-        backgroundColor: "black",
         backgroundImage: "linear-gradient(to right, #a5a6a2 , #2b181c,#1f2b2b)",
       }}
     >
-      <div className="w-full flex items-center justify-between">
+      <div className="w-full flex items-center justify-around">
         <a
           className="flex items-center text-black-400 no-underline hover:no-underline font-bold text-2xl lg:text-4xl"
           href="#"

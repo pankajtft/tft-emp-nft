@@ -1,12 +1,12 @@
 import Head from "../components/Head";
 import NavBar from "../components/NavBar";
-import Form from "../components/Form";
+import BuyForm from "../components/BuyForm";
 
 export default function Home() {
   return (
-    <div>
+    <div className="w-screen">
       <NavBar />
-      <Form />
+      <BuyForm />
     </div>
   );
 }
