@@ -2,14 +2,20 @@ import ConnectButton from "./ConnectButton";
 
 export default function NavBar() {
   return (
-    <div className="w-full container mx-auto p-6">
+    <div
+      className="w-full container mx-auto p-2 "
+      style={{
+        backgroundColor: "black",
+        backgroundImage: "linear-gradient(to right, #a5a6a2 , #2b181c,#1f2b2b)",
+      }}
+    >
       <div className="w-full flex items-center justify-between">
         <a
-          className="flex items-center text-indigo-400 no-underline hover:no-underline font-bold text-2xl lg:text-4xl"
+          className="flex items-center text-black-400 no-underline hover:no-underline font-bold text-2xl lg:text-4xl"
           href="#"
         >
           <svg
-            className="h-8 fill-current text-indigo-600 pr-2"
+            className="h-8 fill-current text-white-600 pr-2"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
           >
@@ -18,7 +24,7 @@ export default function NavBar() {
           NFT MARKET
         </a>
         <div className="flex w-1/2 justify-end content-center">
-          <a className="inline-block text-blue-700 no-underline hover:text-blue-400 hover:text-underline text-center h-10 p-2 md:h-auto md:p-4">
+          <a className="inline-block text-white-700 no-underline hover:text-blue-400 hover:text-underline text-center h-10 p-2 md:h-auto md:p-4">
             <ConnectButton />
           </a>
         </div>
