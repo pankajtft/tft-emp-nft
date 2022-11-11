@@ -1,4 +1,5 @@
 import ConnectButton from "./ConnectButton";
+import Link from "next/link";
 
 export default function NavBar() {
   return (
@@ -22,6 +23,16 @@ export default function NavBar() {
           </svg>{" "}
           NFT MARKET
         </a>
+        <Link href="/MarketPlace">
+          <span className="inline-block text-white-700 no-underline hover:text-blue-400 hover:text-underline text-center h-10 p-2 md:h-auto md:p-4">
+            MarketPlace
+          </span>
+        </Link>
+        <Link href="/Create">
+          <button className="inline-block text-white-700 no-underline hover:text-blue-400 hover:text-underline text-center h-10 p-2 md:h-auto md:p-4">
+            Create
+          </button>
+        </Link>
         <div className="flex w-1/2 justify-end content-center">
           <a className="inline-block text-white-700 no-underline hover:text-blue-400 hover:text-underline text-center h-10 p-2 md:h-auto md:p-4">
             <ConnectButton />
