@@ -96,31 +96,74 @@ describe('Box', function () {
 
         it("should have two NFTs created", async () => {
             const totalSupply = await _contract.totalSupply();
-            expect(totalSupply.toNumber()).to.be.equal(2,"Total supply of token is not correct");
+            expect(totalSupply.toNumber()).to.be.equal(2, "Total supply of token is not correct");
         })
 
         it("should be able to retreive nft by index", async () => {
             const nftId1 = await _contract.tokenByIndex(0);
             const nftId2 = await _contract.tokenByIndex(1);
 
-            expect(nftId1.toNumber()).to.be.equal(1,"Nft id is wrong");
-            expect(nftId2.toNumber()).to.be.equal(2,"Nft id is wrong");
+            expect(nftId1.toNumber()).to.be.equal(1, "Nft id is wrong");
+            expect(nftId2.toNumber()).to.be.equal(2, "Nft id is wrong");
         })
 
         it("should have one listed NFT", async () => {
             const allNfts = await _contract.getAllNftsOnSale();
-            expect(allNfts[0].tokenId.toNumber()).to.be.equal(2,"Nft has a wrong id");
+            expect(allNfts[0].tokenId.toNumber()).to.be.equal(2, "Nft has a wrong id");
         })
 
         it("account[1] should have one owned NFT", async () => {
             const secondAddressSigner = await ethers.getSigner(address1)
             const ownedNfts = await _contract.connect(secondAddressSigner).getOwnedNfts({ from: address1 });
-            expect(ownedNfts[0].tokenId.toNumber()).to.be.equal(1,"Nft id is wrong");
+            expect(ownedNfts[0].tokenId.toNumber()).to.be.equal(1, "Nft id is wrong");
         })
 
         it("account[0] should have one owned NFT", async () => {
             const ownedNfts = await _contract.getOwnedNfts({ from: ownerAddress });
-            expect(ownedNfts[0].tokenId.toNumber()).to.be.equal(2,"Nft id is wrong");
+            expect(ownedNfts[0].tokenId.toNumber()).to.be.equal(2, "Nft id is wrong");
         })
+    })
+
+    describe("Token transfer to new owner", () => {
+        before(async () => {
+            await _contract.transferFrom(
+                ownerAddress,
+                address1,
+                2
+            )
+        })
+
+        it("ownerAddress should own 0 tokens", async () => {
+            const ownedNfts = await _contract.getOwnedNfts({ from: ownerAddress });
+            expect(ownedNfts.length).to.be.equal(0, "Invalid length of tokens");
+        })
+
+        it("address1 should own 2 tokens", async () => {
+            const secondAddressSigner = await ethers.getSigner(address1)
+            const ownedNfts = await _contract.connect(secondAddressSigner).getOwnedNfts({ from: address1 });
+            expect(ownedNfts.length).to.be.equal(2, "Invalid length of tokens");
+        })
+    })
+
+    describe("List an Nft", () => {
+        before(async () => {
+            const secondAddressSigner = await ethers.getSigner(address1)
+            await _contract.connect(secondAddressSigner).placeNftOnSale(
+                1,
+                _nftPrice, { from: address1, value: _listingPrice }
+            )
+        })
+
+        it("should have two listed items", async () => {
+            const listedNfts = await _contract.getAllNftsOnSale();
+            expect(listedNfts.length).to.be.equal(2, "Invalid length of Nfts");
+        })
+
+        it("should set new listing price", async () => {
+            await _contract.setListingPrice(_listingPrice, { from: ownerAddress });
+            const listingPrice = await _contract.listingPrice();
+            expect(listingPrice.toString()).to.be.equal(_listingPrice, "Invalid length of Nfts");
+        })
+
     })
 })
