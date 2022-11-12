@@ -11,8 +11,8 @@ export default function NavBar() {
     >
       <div className="w-full flex items-center justify-around">
         <a
-          className="flex items-center text-black-400 no-underline hover:no-underline font-bold text-2xl lg:text-4xl"
-          href="#"
+          className="flex items-center text-black-400 no-underline hover:no-underline font-bold text-2xl lg:text-4xl cursor-pointer"
+          // href=
         >
           <svg
             className="h-8 fill-current text-white-600 pr-2"
@@ -23,7 +23,7 @@ export default function NavBar() {
           </svg>{" "}
           NFT MARKET
         </a>
-        <Link href="/MarketPlace">
+        <Link href="/">
           <span className="inline-block text-white-700 no-underline hover:text-blue-400 hover:text-underline text-center h-10 p-2 md:h-auto md:p-4">
             MarketPlace
           </span>

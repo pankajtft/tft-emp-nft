@@ -10,12 +10,13 @@ const Create = () => {
   const onFinish = (values) => {
     console.log("Success:", values);
   };
+
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
+
   return (
     <>
-      <NavBar />
       <div style={{ margin: "4rem" }}>
         <h1>Do you have meta data already?</h1>
         <Switch defaultChecked />

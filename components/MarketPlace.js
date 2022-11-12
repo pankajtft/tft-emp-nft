@@ -1,7 +1,7 @@
 import { Col, Row } from "antd";
 import { useState, useEffect } from "react";
-import Card from "../components/Card";
-import NavBar from "../components/NavBar";
+import Card from "./Card";
+import NavBar from "./NavBar";
 
 const MarketPlace = () => {
   const [NFTs, setNFTS] = useState([1, 2, 3, 4, 5, 6, 7, 8]);
@@ -12,7 +12,6 @@ const MarketPlace = () => {
 
   return (
     <>
-      <NavBar />
       <div
         style={{
           margin: "1rem",
