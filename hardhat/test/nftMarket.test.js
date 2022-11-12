@@ -28,8 +28,35 @@ describe('Box', function () {
 
         it("owner of the first token should be address[0]", async () => {
             const owner_ = await _contract.ownerOf(1);
-            // console.log(owner_)
             expect(owner_).to.be.equal(ownerAddress);
+        })
+
+        it("first token should point to the correct tokenURI", async () => {
+            const actualTokenURI = await _contract.tokenURI(1);
+            expect(actualTokenURI).to.be.equal(tokenURI);
+        })
+
+        it("should not be possible to create a NFT with used tokenURI", async () => {
+            try {
+                const obj = await _contract.mintToken(tokenURI, _nftPrice, {
+                    from: ownerAddress
+                })
+            } catch (error) {
+                expect(error).not.to.be.empty;
+            }
+        })
+
+        it("should have one listed item", async () => {
+            const listedItemCount = await _contract.listedItemsCount();
+            expect(listedItemCount.toNumber()).to.be.equal(1);
+        })
+
+        it("should have create NFT item", async () => {
+            const nftItem = await _contract.getNftItem(1);
+            expect(nftItem.tokenId.toNumber()).to.be.equal(1, "Token id is not 1");
+            expect(nftItem.price.toString()).to.be.equal(_nftPrice, "Nft price is not correct");
+            expect(nftItem.creator).to.be.equal(ownerAddress, "Creator is not account[0]");
+            expect(nftItem.isListed).to.be.true;
         })
     })
 })
