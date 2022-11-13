@@ -1,7 +1,6 @@
 import { Col, Row } from "antd";
 import { useState, useEffect } from "react";
 import Card from "./Card";
-import NavBar from "./NavBar";
 
 const MarketPlace = () => {
   const [NFTs, setNFTS] = useState([1, 2, 3, 4, 5, 6, 7, 8]);
@@ -29,7 +28,7 @@ const MarketPlace = () => {
           }}
         >
           {NFTs.length > 0 ? (
-            NFTs.map((nft) => <Card nft={nft} />)
+            NFTs.map((i, nft) => <Card key={i} nft={nft} />)
           ) : (
             <> No NFTS On Sale... Try Later! </>
           )}

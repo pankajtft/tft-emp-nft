@@ -1,12 +1,10 @@
 import { Form, Input, Upload, Switch } from "antd";
 import { InboxOutlined } from "@ant-design/icons";
 import "antd/dist/antd.css";
-import React from "react";
-import NavBar from "../components/NavBar";
-
-const { TextArea } = Input;
 
 const Create = () => {
+  const { TextArea } = Input;
+
   const onFinish = (values) => {
     console.log("Success:", values);
   };

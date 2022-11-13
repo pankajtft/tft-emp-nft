@@ -6,13 +6,13 @@ const ConnectButton = () => {
 
   return (
     <button
-      className="border-2 border-blue-800 bg-blue-200 rounded-lg p-2 font-black"
+      className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
       onClick={connect}
     >
       {hasMetamask
         ? isConnected
-          ? "Connected! "
-          : "Connect"
+          ? "Connected"
+          : "Connect Wallet"
         : "Please install metamask"}
     </button>
   );
