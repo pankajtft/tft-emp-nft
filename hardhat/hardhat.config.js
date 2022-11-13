@@ -12,6 +12,14 @@ const PRIVATE_KEY = process.env.ACCOUNT;
 const etherscanAPIKey = process.env.ETHERSCAN_TOKEN;
 const coinMarketCapKey = process.env.COINMARKETCAP_API_KEY;
 
+task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
+  const accounts = await hre.ethers.getSigners();
+
+  for (const account of accounts) {
+    console.log(account.address);
+  }
+});
+
 module.exports = {
   solidity: "0.8.9",
   namedAccounts: {
