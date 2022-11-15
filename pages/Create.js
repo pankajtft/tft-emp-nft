@@ -1,12 +1,15 @@
 import { Form, Input, Upload, Switch } from "antd";
 import { InboxOutlined } from "@ant-design/icons";
 import "antd/dist/antd.css";
+import { storeImage } from "../utils/upload";
 
 const Create = () => {
   const { TextArea } = Input;
 
   const onFinish = (values) => {
     console.log("Success:", values);
+    console.log(document.querySelector("input[type=file]"));
+    storeImage();
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -70,7 +73,9 @@ const Create = () => {
           />
         </Form.Item>
 
-        <Form.Item label="Upload">
+        <input type="file" />
+
+        {/* <Form.Item label="Upload">
           <Form.Item name="dragger" valuePropName="fileList" noStyle>
             <Upload.Dragger name="files" action="/upload.do">
               <p className="ant-upload-drag-icon">
@@ -81,7 +86,7 @@ const Create = () => {
               </p>
             </Upload.Dragger>
           </Form.Item>
-        </Form.Item>
+        </Form.Item> */}
 
         <Form.Item
           label="Attack"
