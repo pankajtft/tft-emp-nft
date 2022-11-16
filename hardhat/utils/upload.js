@@ -28,10 +28,11 @@ async function storeImage(imagesFilePath) {
 
   let res = await axios(config);
 
+  await storeJson(res.data.IpfsHash);
+
   return res.data.IpfsHash;
 }
-
-async function storeJson(imageHash, formData) {
+async function storeJson(imageHash) {
   var tokenUriMetadata = JSON.stringify({
     pinataOptions: {
       cidVersion: 1,
@@ -43,7 +44,6 @@ async function storeJson(imageHash, formData) {
       name: "IpfsNFT",
       keyvalues: {
         image: `ipfs://${imageHash}`,
-        ...formData,
       },
     },
   });
