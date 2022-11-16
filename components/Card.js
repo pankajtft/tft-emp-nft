@@ -36,7 +36,7 @@ const NFTCard = () => {
       />
       <div className="additional">
         <p className="price">
-          <span className={styles.price}>20ETH</span>
+          <span className={styles.price}>20 ETH</span>
         </p>
         <p>
           <span className={styles.quantity}>John Doe</span>

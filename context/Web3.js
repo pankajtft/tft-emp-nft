@@ -8,12 +8,21 @@ const Web3Context = React.createContext(defaultValue);
 
 const { Provider, Consumer } = Web3Context;
 
+const chainIdToNetwork = {
+  1: "Mainnet",
+  5: "Goerli",
+  31337: "Hardhat",
+};
+
 const Web3Provider = ({ children }) => {
   const [isConnected, setIsConnected] = useState(false);
   const [hasMetamask, setHasMetamask] = useState(false);
   const [signer, setSigner] = useState(undefined);
   const [chainId, setChainID] = useState(undefined);
   const [contract, setContract] = useState(undefined);
+  const [address, setAddress] = useState(undefined);
+  const [network, setNetwork] = useState(undefined);
+  const [provider, setProvider] = useState(undefined);
 
   useEffect(() => {
     if (typeof window.ethereum !== "undefined") {
@@ -24,16 +33,28 @@ const Web3Provider = ({ children }) => {
     }
   });
 
+  useEffect(() => {
+    setNetwork(chainIdToNetwork[chainId]);
+  }, [chainId]);
+
+  async function setValues() {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    setProvider(provider);
+    setSigner(provider.getSigner());
+    setChainID(window.ethereum.networkVersion);
+    setAddress(await signer.getAddress());
+    setNetwork(chainIdToNetwork[chainId]);
+    setIsConnected(true);
+    localStorage.setItem("isWalletConnected", true);
+    // const contract = new ethers.Contract(contractAddress, abi, signer);
+    // setContract(contract);
+  }
+
   async function connect() {
     if (typeof window.ethereum !== "undefined") {
       try {
         await ethereum.request({ method: "eth_requestAccounts" });
-        setIsConnected(true);
-        const provider = new ethers.providers.Web3Provider(window.ethereum);
-        setSigner(provider.getSigner());
-        setChainID(window.ethereum.networkVersion);
-        // const contract = new ethers.Contract(contractAddress, abi, signer);
-        // setContract(contract);
+        await setValues();
       } catch (e) {
         console.log(e);
       }
@@ -51,6 +72,9 @@ const Web3Provider = ({ children }) => {
         chainId,
         connect,
         contract,
+        address,
+        network,
+        provider,
       }}
     >
       {children}

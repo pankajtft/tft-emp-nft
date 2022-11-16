@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useRouter } from "next/router";
 import ConnectButton from "./ConnectButton";
+import { Web3Context } from "../context/Web3";
 
 const PrettyNavBar = () => {
+  const { network, isConnected } = useContext(Web3Context);
+
   const { pathname } = useRouter();
 
   const selectedItemClass =
@@ -57,6 +60,15 @@ const PrettyNavBar = () => {
             </div>
           </div>
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+            {isConnected ? (
+              <span className="bg-white border-2 rounded-lg shadow-lg px-2 text-md font-semibold">
+                {" "}
+                {network}{" "}
+              </span>
+            ) : (
+              <></>
+            )}
+
             <ConnectButton />
 
             <div className="relative ml-3">

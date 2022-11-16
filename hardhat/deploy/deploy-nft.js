@@ -1,7 +1,7 @@
 const { network } = require("hardhat");
 const { storeImage } = require("../utils/upload");
 
-const imageLoc = "/home/shivam/Pictures/hacking.png";
+const imageLoc = "/Users/ShivamArora/Desktop/r.png";
 
 module.exports = async ({ getNamedAccounts, deployments }) => {
   const { deploy } = deployments;
