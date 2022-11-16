@@ -30,6 +30,9 @@ const Web3Provider = ({ children }) => {
       window.ethereum.on("chainChanged", (e) => {
         setChainID(parseInt(e));
       });
+      window.ethereum.on("accountsChanged", function (accounts) {
+        setAddress(accounts[0]);
+      });
     }
   });
 
