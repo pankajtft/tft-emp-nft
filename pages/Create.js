@@ -1,5 +1,4 @@
 import { Form, Input, Upload, Switch } from "antd";
-import { InboxOutlined } from "@ant-design/icons";
 import "antd/dist/antd.css";
 import { storeImage } from "../utils/upload";
 
@@ -73,7 +72,9 @@ const Create = () => {
           />
         </Form.Item>
 
+        <Form.Item label="Upload">
         <input type="file" />
+          </Form.Item>
 
         {/* <Form.Item label="Upload">
           <Form.Item name="dragger" valuePropName="fileList" noStyle>
