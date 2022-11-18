@@ -1,9 +1,17 @@
 import { Avatar, Card } from "antd";
 const { Meta } = Card;
 import styles from "../styles/Card.module.css";
+import { useRouter } from "next/router";
 
 const NFTCard = () => {
+  const { pathname } = useRouter();
   return (
+    <>
+    <a
+      href="detailsPage"
+      className={pathname}
+      aria-current="page"
+    >
     <Card
       className={styles.cardBody}
       hoverable
@@ -29,11 +37,6 @@ const NFTCard = () => {
         />
       }
     >
-      <Meta
-      // avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-      // title="10 ETH"
-      // description="This is the description"
-      />
       <div className="additional">
         <p className="price">
           <span className={styles.price}>20 ETH</span>
@@ -42,10 +45,13 @@ const NFTCard = () => {
           <span className={styles.quantity}>John Doe</span>
         </p>
       </div>
-      <button className="buyNow bg-gray-800 hover:bg-gray-400 text-white font-bold my-1 py-.5 px-0 rounded-2xl w-6/12 ">
+      {/* <button
+      className="buyNow bg-gray-800 hover:bg-gray-400 text-white font-bold my-1 py-.5 px-0 rounded-2xl w-6/12 "
+      >
         Buy Now
-      </button>
+      </button> */}
     </Card>
+    </a></>
   );
 };
 

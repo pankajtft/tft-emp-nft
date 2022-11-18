@@ -16,15 +16,14 @@ const Create = () => {
   };
 
   return (
-    <>
-      <div style={{ margin: "4rem" }}>
+    <div style={{display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center' ,margin:'4rem'}}>
+      {/* <div style={{ margin: "4rem" }}>
         <h1>Do you have meta data already?</h1>
         <Switch defaultChecked />
-      </div>
-
+      </div> */}   
       <Form
         style={{
-          width: "90%",
+          width: "50%",
           justifyContent: "center",
           alignItems: "center",
         }}
@@ -42,6 +41,9 @@ const Create = () => {
         onFinishFailed={onFinishFailed}
         autoComplete="off"
       >
+        <Form.Item label="Do you have a Meta Data already" valuePropName="checked">
+          <Switch defaultChecked/>
+        </Form.Item>
         <Form.Item
           label="Name"
           name="Name"
@@ -151,10 +153,9 @@ const Create = () => {
             <Input placeholder="Enter Value" />
           </Form.Item>
         </Form.Item>
-
         <Form.Item>
           <button
-            className="border-2 border-blue-800 bg-blue-200 rounded-lg p-2 font-black absolute bottom-0 right-20 h-16 w-1/5"
+            className="border-2 bg-gray-800 text-white rounded-lg p-2 font-black absolute bottom-0 right-20 h-12 w-2/5"
             onClick={onFinish}
           >
             {" "}
@@ -162,7 +163,7 @@ const Create = () => {
           </button>
         </Form.Item>
       </Form>
-    </>
+    </div>
   );
 };
 export default Create;

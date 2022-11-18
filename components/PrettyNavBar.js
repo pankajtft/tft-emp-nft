@@ -71,7 +71,8 @@ const PrettyNavBar = () => {
 
             <ConnectButton />
 
-            <div className="relative ml-3">
+           {isConnected && 
+           <div className="relative ml-3">
               <div>
                 <button
                   type="button"
@@ -129,6 +130,7 @@ const PrettyNavBar = () => {
                 </a>
               </div>
             </div>
+            }
           </div>
         </div>
       </div>
