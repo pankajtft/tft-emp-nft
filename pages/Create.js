@@ -1,6 +1,7 @@
 import { Form, Input, Upload, Switch } from "antd";
 import "antd/dist/antd.css";
 import { storeImage } from "../utils/upload";
+import axios from "axios";
 
 const Create = () => {
   const { TextArea } = Input;
@@ -13,6 +14,21 @@ const Create = () => {
 
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
+  };
+
+  const uploadHandler = async (e) => {
+    const data = new FormData();
+    data.append("file", e.target.files[0]);
+
+    const response = await fetch("/api/image-upload", {
+      method: "POST",
+      body: data,
+      Headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    const res = await response.json();
+    console.log(res);
   };
 
   return (
@@ -73,8 +89,8 @@ const Create = () => {
         </Form.Item>
 
         <Form.Item label="Upload">
-        <input type="file" />
-          </Form.Item>
+          <input type="file" name="file" onChange={uploadHandler} />
+        </Form.Item>
 
         {/* <Form.Item label="Upload">
           <Form.Item name="dragger" valuePropName="fileList" noStyle>
