@@ -2,7 +2,12 @@ import Link from "next/link";
 
 const PrettyCard = ({ nft }) => (
   <>
-    <div className="max-w-sm rounded overflow-hidden shadow-2xl m-4">
+    <div
+      className="rounded overflow-hidden shadow-2xl m-4"
+      style={{
+        width: "400px",
+      }}
+    >
       <img
         className="w-full"
         style={{
@@ -21,7 +26,7 @@ const PrettyCard = ({ nft }) => (
         <div className="flex justify-between mt-4 space-x-3 md:mt-6">
           <Link
             href={`/nft/${nft.title}`}
-            className="inline-flex w-26 items-center px-4 py-2 text-sm font-medium text-center text-white bg-gray-800 rounded-lg"
+            className="inline-flex w-18 items-center px-4 py-2 text-sm font-medium text-center text-white bg-gray-800 rounded-lg"
           >
             Preview{" "}
             <svg

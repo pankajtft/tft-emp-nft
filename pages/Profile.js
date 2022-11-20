@@ -1,6 +1,6 @@
-import NotSoPrettyProfile from "../components/NotSoPrettyProfile";
+import PrettyProfile from "../components/PrettyProfile";
 const Profile = () => {
-  return <NotSoPrettyProfile />;
+  return <PrettyProfile />;
 };
 
 export default Profile;

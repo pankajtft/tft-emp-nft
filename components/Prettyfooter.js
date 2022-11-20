@@ -1,7 +1,7 @@
-const Footer = () => {
+const PrettyFooter = () => {
   return (
-    <div className="flex flex-col m-12">
-      <footer className="p-4 bg-white rounded-lg shadow md:px-6 md:py-8 dark:bg-gray-900">
+    <div className="flex flex-col mt-20">
+      <footer className="p-4 bg-white rounded-lg shadow md:px-6 md:py-4 dark:bg-gray-900 max-h-28">
         <div className="sm:flex sm:items-center sm:justify-between">
           <a
             href="https://www.tftus.com/"
@@ -34,7 +34,7 @@ const Footer = () => {
             </li>
           </ul>
         </div>
-        <hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
+        <hr className="my-2 border-gray-200 sm:mx-auto dark:border-gray-700" />
         <span className="block text-sm text-gray-500 sm:text-center dark:text-gray-400">
           © 2022{" "}
           <a href="https://www.tftus.com" className="hover:underline">
@@ -47,4 +47,4 @@ const Footer = () => {
   );
 };
 
-export default Footer;
+export default PrettyFooter;
