@@ -50,7 +50,7 @@ const PrettyNavBar = () => {
                 </Link>
 
                 <Link
-                  href="create"
+                  href="Create"
                   className={
                     pathname === "/create" ? selectedItemClass : otherItemClass
                   }
@@ -102,15 +102,16 @@ const PrettyNavBar = () => {
                   aria-labelledby="user-menu-button"
                   tabIndex={-1}
                 >
-                  <a
-                    href="#"
+                  <Link
+                    href="Profile"
                     className="block px-4 py-2 text-sm text-gray-700"
                     role="menuitem"
                     tabIndex={-1}
                     id="user-menu-item-0"
+                    onClick={() => setIsShow((prev) => !prev)}
                   >
                     Your Profile
-                  </a>
+                  </Link>
                   <a
                     href="#"
                     className="block px-4 py-2 text-sm text-gray-700"

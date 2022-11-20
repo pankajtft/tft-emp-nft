@@ -13,6 +13,16 @@ const NFTProvider = ({ children }) => {
       price: "20",
     },
     {
+      title: "Mitic Bureies",
+      desc: "Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
+      price: "20",
+    },
+    {
+      title: "Cluster Crank",
+      desc: "Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
+      price: "20",
+    },
+    {
       title: "GK Ape",
       desc: "Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
       price: "1",
