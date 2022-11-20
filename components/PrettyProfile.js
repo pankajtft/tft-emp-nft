@@ -209,10 +209,8 @@ const NotSoPrettyProfile = () => {
           </h1>
         </div>
         <div className="flex justify-around ml-8 gap-x-4">
-          <div className="flex w-full">
-            <ProfileOptions />
-            <ProfileCards />
-          </div>
+          <ProfileOptions />
+          <ProfileCards />
         </div>
       </div>
     </>

@@ -1,7 +1,8 @@
+const axios = require("axios");
+import { contractAddresses, abi } from "../contract-constants";
+import Web3 from "web3";
 import React, { useState, useEffect } from "react";
-
 import { ethers } from "ethers";
-import { contractAddress, abi } from "../contract-constants";
 
 const defaultValue = {};
 const Web3Context = React.createContext(defaultValue);
@@ -23,6 +24,8 @@ const Web3Provider = ({ children }) => {
   const [address, setAddress] = useState(undefined);
   const [network, setNetwork] = useState(undefined);
   const [provider, setProvider] = useState(undefined);
+  const [nonce, setNonce] = useState(undefined);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
     if (typeof window.ethereum !== "undefined") {
@@ -49,8 +52,15 @@ const Web3Provider = ({ children }) => {
     setNetwork(chainIdToNetwork[chainId]);
     setIsConnected(true);
     localStorage.setItem("isWalletConnected", true);
-    // const contract = new ethers.Contract(contractAddress, abi, signer);
-    // setContract(contract);
+
+    const nftMarketContractAddress = contractAddresses[chainId][0];
+
+    const NFTMarketContract = new ethers.Contract(
+      nftMarketContractAddress,
+      abi,
+      signer
+    );
+    setContract(NFTMarketContract);
   }
 
   async function connect() {
@@ -66,6 +76,45 @@ const Web3Provider = ({ children }) => {
     }
   }
 
+  async function handleSignIn() {
+    if (address) {
+      axios
+        .post("/api/authenticate", {
+          address: address,
+        })
+        .then(async (res) => {
+          await handleAuthenticate(await handleSignMessage(res.data));
+        })
+        .then(handleAuthenticate)
+        .catch((err) => console.log(err));
+    }
+  }
+
+  function handleSignMessage({ publicAddress, nonce }) {
+    return new Promise((resolve, reject) => {
+      let web3 = new Web3(window.ethereum);
+      setNonce(nonce);
+      web3.eth.personal.sign(
+        `I am signing my one-time nonce: ${nonce}`,
+        publicAddress,
+        (err, signature) => {
+          if (err) return reject(err);
+          return resolve({ publicAddress, signature });
+        }
+      );
+    });
+  }
+
+  function handleAuthenticate({ publicAddress, signature }) {
+    axios
+      .post("/api/authenticate/verify", {
+        publicAddress,
+        signature,
+      })
+      .then(() => setIsAuthenticated(true))
+      .catch(() => setIsAuthenticated(false));
+  }
+
   return (
     <Provider
       value={{
@@ -78,6 +127,9 @@ const Web3Provider = ({ children }) => {
         address,
         network,
         provider,
+        nonce,
+        handleSignIn,
+        isAuthenticated,
       }}
     >
       {children}

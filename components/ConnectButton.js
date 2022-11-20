@@ -2,7 +2,7 @@ import { useContext, useEffect } from "react";
 import { Web3Context } from "../context/Web3";
 
 const ConnectButton = () => {
-  const { connect, hasMetamask, isConnected, address } =
+  const { connect, hasMetamask, isConnected, address, handleSignIn } =
     useContext(Web3Context);
 
   useEffect(() => {
@@ -17,6 +17,12 @@ const ConnectButton = () => {
     };
     connectWalletOnPageLoad();
   }, []);
+
+  useEffect(() => {
+    if (address) {
+      handleSignIn();
+    }
+  }, [address]);
 
   return (
     <button
