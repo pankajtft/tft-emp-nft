@@ -15,6 +15,7 @@ contract NftMarket is ERC721URIStorage, ERC721Enumerable, Ownable {
         uint256 price;
         address creator;
         bool isListed;
+        string _tokenURI;
     }
 
     uint256 public listingPrice = 0.025 ether;
@@ -81,7 +82,11 @@ contract NftMarket is ERC721URIStorage, ERC721Enumerable, Ownable {
         return _listedItems.current();
     }
 
-    function tokenURIExists(string memory _tokenURI) public view returns (bool) {
+    function tokenURIExists(string memory _tokenURI)
+        public
+        view
+        returns (bool)
+    {
         return _usedTokenURIs[_tokenURI] == true;
     }
 
@@ -140,7 +145,7 @@ contract NftMarket is ERC721URIStorage, ERC721Enumerable, Ownable {
 
         _safeMint(msg.sender, newTokenId);
         _setTokenURI(newTokenId, _tokenURI);
-        _createNftItem(newTokenId, price);
+        _createNftItem(newTokenId, price, _tokenURI);
         _usedTokenURIs[_tokenURI] = true;
 
         return newTokenId;
@@ -179,10 +184,20 @@ contract NftMarket is ERC721URIStorage, ERC721Enumerable, Ownable {
         _listedItems.increment();
     }
 
-    function _createNftItem(uint256 tokenId, uint256 price) private {
+    function _createNftItem(
+        uint256 tokenId,
+        uint256 price,
+        string memory _tokenURI
+    ) private {
         require(price > 0, "Price must be at least 1 wei");
 
-        _idToNftItem[tokenId] = NftItem(tokenId, price, msg.sender, true);
+        _idToNftItem[tokenId] = NftItem(
+            tokenId,
+            price,
+            msg.sender,
+            true,
+            _tokenURI
+        );
 
         emit NftItemCreated(tokenId, price, msg.sender, true);
     }

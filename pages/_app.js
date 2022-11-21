@@ -1,12 +1,17 @@
-import NavBar from "../components/NavBar";
+import PrettyNavBar from "../components/PrettyNavBar";
+import PrettyFooter from "../components/PrettyFooter";
 import "../styles/globals.css";
 import { Web3Provider } from "../context/Web3";
+import { NFTProvider } from "../context/NFTs";
 
 function MyApp({ Component, pageProps }) {
   return (
     <Web3Provider>
-      <NavBar />
-      <Component {...pageProps} />
+      <NFTProvider>
+        <PrettyNavBar />
+        <Component {...pageProps} />
+        <PrettyFooter />
+      </NFTProvider>
     </Web3Provider>
   );
 }

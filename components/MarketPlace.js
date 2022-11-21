@@ -1,10 +1,10 @@
 import { Col, Row } from "antd";
-import { useState, useEffect } from "react";
-import Card from "./Card";
-import NavBar from "./NavBar";
+import { useState, useEffect, useContext } from "react";
+import { NFTContext } from "../context/NFTs";
+import Card from "./PrettyCard";
 
 const MarketPlace = () => {
-  const [NFTs, setNFTS] = useState([1, 2, 3, 4, 5, 6, 7, 8]);
+  const { NFTs } = useContext(NFTContext);
 
   useEffect(() => {
     //make API call to backend and set NFTS
@@ -28,8 +28,8 @@ const MarketPlace = () => {
             alignItems: "center",
           }}
         >
-          {NFTs.length > 0 ? (
-            NFTs.map((nft) => <Card nft={nft} />)
+          {NFTs?.length > 0 ? (
+            NFTs.map((nft, index) => <Card key={index} nft={nft} />)
           ) : (
             <> No NFTS On Sale... Try Later! </>
           )}
