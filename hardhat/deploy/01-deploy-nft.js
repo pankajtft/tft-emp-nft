@@ -9,7 +9,7 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
   const { deploy, log } = deployments;
   const { deployer } = await getNamedAccounts();
 
-  const raffle = await deploy("NftMarket", {
+  const raffle = await deploy("EMS", {
     from: deployer,
     args: [],
     log: true,
@@ -17,4 +17,4 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
   });
 };
 
-module.exports.tags = ["all", "raffle"];
+module.exports.tags = ["all", "ems"];

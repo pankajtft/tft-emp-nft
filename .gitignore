@@ -60,4 +60,7 @@ hardhat/next-env.d.ts
 hardhat/hardhat/node_modules/
 hardhat/cache
 hardhat/artifacts/
+hardhat/yarn.lock
+hardhat/package-lock.json
+
 package-lock.json

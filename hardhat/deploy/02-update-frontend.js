@@ -15,7 +15,7 @@ module.exports = async () => {
 };
 
 async function updateAbi() {
-  const raffle = await ethers.getContract("NftMarket");
+  const raffle = await ethers.getContract("EMS");
   console.log(frontEndAbiFile);
   fs.writeFileSync(
     frontEndAbiFile,
@@ -24,7 +24,7 @@ async function updateAbi() {
 }
 
 async function updateContractAddresses() {
-  const raffle = await ethers.getContract("NftMarket");
+  const raffle = await ethers.getContract("EMS");
   console.log(frontEndContractsFile);
   const contractAddresses = JSON.parse(
     fs.readFileSync(frontEndContractsFile, "utf8")
