@@ -1,16 +1,19 @@
-import Head from 'next/head'
-import Image from 'next/image'
+
 import { Inter } from '@next/font/google'
 import styles from '../styles/Home.module.css'
-import MainListing from './Components/MainListing'
+import AddEmployee from './AddEmployee'
+import HomePage from './Components/Home'
+import Listing from './Listing'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
   return (
     <>
-      <main className="">
-        <MainListing/>
+      <main className="bg-my_bg_image">
+        <HomePage/>
+        {/* <AddEmployee/> */}
+        {/* <Listing/> */}
       </main>
     </>
   )

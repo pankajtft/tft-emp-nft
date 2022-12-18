@@ -45,16 +45,24 @@ const TopNavBar = () => {
                   }
                   aria-current="page"
                 >
-                  Employee NFT's
+                  Home
                 </Link>
 
                 <Link
-                  href="/create"
+                  href="/AddEmployee"
                   className={
                     pathname === "/create" ? selectedItemClass : otherItemClass
                   }
                 >
                   Add Employee
+                </Link>
+                <Link
+                  href="/Listing"
+                  className={
+                    pathname === "/create" ? selectedItemClass : otherItemClass
+                  }
+                >
+                  Listing
                 </Link>
               </div>
             </div>
