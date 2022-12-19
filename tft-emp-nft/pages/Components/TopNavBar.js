@@ -51,7 +51,7 @@ const TopNavBar = () => {
                 <Link
                   href="/AddEmployee"
                   className={
-                    pathname === "/create" ? selectedItemClass : otherItemClass
+                    pathname === "/Create" ? selectedItemClass : otherItemClass
                   }
                 >
                   Add Employee
