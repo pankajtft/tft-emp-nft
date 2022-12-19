@@ -12,22 +12,29 @@
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@mui/icons-material": "^5.11.0",
+    "@mui/lab": "^5.0.0-alpha.112",
     "@mui/material": "^5.11.0",
+    "@mui/x-date-pickers": "^5.0.11",
     "@next/font": "13.0.7",
     "eslint": "8.29.0",
     "eslint-config-next": "13.0.7",
+    "moment": "^2.29.4",
     "next": "13.0.7",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.41.0",
-    "yup": "^0.32.11",
     "react-select": "^5.7.0",
-    "@mui/lab": "^5.0.0-alpha.112",
-    "@mui/x-date-pickers": "^5.0.11",
-    "moment": "^2.29.4"
+    "yup": "^0.32.11",
+    "web3": "^1.8.1",
+    "ethereumjs-util": "^7.1.5",
+    "ethers": "^5.7.2",
+    "eth-sig-util": "^3.0.1"
+
   },
   "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^2.0.0",
     "autoprefixer": "^10.4.13",
+    "hardhat": "^2.12.4",
     "postcss": "^8.4.20",
     "tailwindcss": "^3.2.4"
   }
