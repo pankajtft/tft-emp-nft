@@ -1,8 +1,14 @@
 import { ShoppingCartOutlined, DollarOutlined } from "@ant-design/icons";
 import CountDown from "../components/CountDown";
 import styles from "../styles/Details.module.css";
+import axios from "axios";
 
 export default function DetailsPage() {
+
+  useEffect(() => {
+    axios.get("/api/employee/index").then((res) => console.log(res));
+  }, []);
+
   return (
     <div style={{ display: "flex", flexDirection: "row", width: "100%" }}>
       <div
