@@ -1,11 +1,6 @@
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+import { initializeApp , getApps} from "firebase/app";
+import { getAuth } from "firebase/auth";
 const firebaseConfig = {
   apiKey: "AIzaSyD1EROsC3EeaGOwmBenrVe8_glT16_AJGM",
   authDomain: "nfttft-36fe0.firebaseapp.com",
@@ -15,7 +10,17 @@ const firebaseConfig = {
   appId: "1:299404230297:web:82754ed24d702f970b0208",
   measurementId: "G-FFRX01VRDD"
 };
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+//Sara firebase Account Key
+  // const firebaseConfig = { 
+  //         apiKey: "AIzaSyClJVQhX79QEx-q-jmlpQ41nkIutYKMZ_M", 
+  //         authDomain: "tft-emp-nft.firebaseapp.com", 
+  //         projectId: "tft-emp-nft", 
+  //         storageBucket: "tft-emp-nft.appspot.com", 
+  //         messagingSenderId: "17028995638", 
+  //         appId: "1:17028995638:web:91cade3eafe1b805969697", 
+  //         measurementId: "G-118W3MEDVZ" };
+if (!getApps().length) {
+  initializeApp(firebaseConfig);
+}
+export const auth = getAuth();
+export default firebaseConfig;

@@ -10,6 +10,7 @@ module.exports = {
     extend: {
       backgroundImage: {
         'my_bg_image' : "url('../pages/assets/images/darkBlack.jpeg')",
+        'login_form' : "url('../pages/assets/images/web3.jpeg')"
       },
       keyframes: {
         wiggle: {
