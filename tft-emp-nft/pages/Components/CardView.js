@@ -19,13 +19,13 @@ const CardView = () =>{
 
 
 <div class="relative group w-96 h-96 overflow-hidden bg-black m-auto mt-12">
-  <img class="object-cover w-full h-full transform duration-700 backdrop-opacity-100" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ861kKtQQNaB-ldRWBs6MQqTVkShMh9tEJOn_BQKmrmSFHu76MI-TOTA-lGnloYzZgKvk&usqp=CAU" />
-  <div class="absolute w-full h-full shadow-2xl opacity-20 transform duration-500 inset-y-full group-hover:-inset-y-0"></div>
+  <img class="object-cover w-full h-full transform duration-700 backdrop-opacity-100 group-hover:opacity-40" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ861kKtQQNaB-ldRWBs6MQqTVkShMh9tEJOn_BQKmrmSFHu76MI-TOTA-lGnloYzZgKvk&usqp=CAU" />
+  <div class="absolute w-full h-full shadow-2xl opacity-10 transform duration-500 inset-y-full group-hover:-inset-y-0"></div>
   <div class="absolute bg-gradient-to-t from-black w-full h-full transform duration-500 inset-y-3/4 group-hover:-inset-y-0 justify-evenly">
     <div class="absolute w-full flex place-content-center">
       <p class="capitalize font-serif font-bold text-3xl text-center shadow-2xl text-white mt-10">TFT Employee Name</p>
     </div>
-    <div class="w-full flex flex-col place-content-center mt-20">
+    <div class="w-full flex flex-col place-content-center mt-20 ">
       <p class="font-sans text-left w-4/5 text-white mt-5 mx-4">Experience: <span class="font-sans text-left w-4/5 text-white mt-5 mx-4">6+years</span></p>
       <p class="font-sans text-left w-4/5 text-white mt-5 mx-4">Email: <span class="font-sans text-right w-4/5 text-white mt-5 mx-4">demoMail@tftus.com</span></p>
       <p class="font-sans text-left w-4/5 text-white mt-5 mx-4">Employee Code: <span class="font-sans text-left w-4/5 text-white mt-5 mx-4">123456</span></p>

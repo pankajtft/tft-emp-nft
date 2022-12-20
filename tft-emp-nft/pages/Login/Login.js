@@ -1,8 +1,11 @@
 import React from "react";
 import GoogleIcon from '@mui/icons-material/Google';
-import { loginWithGoogle } from "../Context/AuthContext";
+import { AuthContext } from "../Context/auth-context";
+import { useRouter } from "next/router";
 const Login = () => {
-
+  const router = useRouter();
+  const authContext = React.useContext(AuthContext);
+  const {loginWithGoogle, } = authContext
   function handleGoogleSignIn(){
     loginWithGoogle()
   }
