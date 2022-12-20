@@ -1,4 +1,4 @@
-import CardView from "./Components/CardView"
+import CardView from "../Components/CardView"
 
 const Listing = () =>{
     return(

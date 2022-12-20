@@ -2,7 +2,7 @@ import "../styles/globals.css";
 import React, { useEffect } from "react";
 import MainFooter from "./Components/Mainfooter";
 import TopNavBar from "./Components/TopNavBar";
-import {Login} from "./Login";
+import Login from "./Login";
 import { AuthProvider } from "./Context/auth-context"
 
 export default function App({ Component, pageProps }) {
