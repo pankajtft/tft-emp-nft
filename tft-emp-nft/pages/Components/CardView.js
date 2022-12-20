@@ -1,3 +1,7 @@
+import EmployeeDetails from "./Hook-form/detailPageEmp"
+
+const empDetails = EmployeeDetails();
+
 const CardView = () =>{
     return(
 //         <div class="max-w-xs bg-white bg-opacity-0 border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700 mx-4 my-4 ">
@@ -30,8 +34,7 @@ const CardView = () =>{
       <p class="font-sans text-left w-4/5 text-white mt-5 mx-4">Email: <span class="font-sans text-right w-4/5 text-white mt-5 mx-4">demoMail@tftus.com</span></p>
       <p class="font-sans text-left w-4/5 text-white mt-5 mx-4">Employee Code: <span class="font-sans text-left w-4/5 text-white mt-5 mx-4">123456</span></p>
     </div>
-    
-    <button class="absolute left-1/4 bottom-4 bg-white text-black hover:bg-purple-500 font-bold rounded-lg h-10 w-48">See More</button>
+    <button onClick={empDetails} class="absolute left-1/4 bottom-4 bg-white text-black hover:bg-purple-500 font-bold rounded-lg h-10 w-48">See More</button>
   </div>
 </div>
     )
