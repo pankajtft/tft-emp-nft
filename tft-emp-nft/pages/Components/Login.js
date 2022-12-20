@@ -18,9 +18,6 @@ const Login = () => {
                   <div class="lg:w-6/12 px-4 md:px-0">
                     <div class="md:p-12 md:mx-6">
                       <div class="text-center">
-                        {/* <h4 class=" text-xs font-semibold mt-1 mb-12 pb-1">
-                        We are Tft'ians
-                      </h4> */}
                         <img
                           class="mx-auto w-20"
                           src="https://www.tftus.com/wp-content/uploads/2021/01/logo-1.png"
@@ -79,7 +76,7 @@ const Login = () => {
                       <h1 className="flex justify-center mb-2 text-gray-500">---------OR---------</h1>
                         <div>
                         <button class="flex items-center justify-center w-full px-4 py-2 text-sm text-gray-700 border border-gray-300 rounded-lg hover:border-gray-500 focus:border-gray-500 mx-2"
-                        onClick={handleGoogleSignIn}>
+                        onClick={()=>handleGoogleSignIn()}>
                           <GoogleIcon className=" text-red-700 mr-2"/> 
                                     Login With Google
                                 </button>

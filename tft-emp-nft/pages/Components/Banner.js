@@ -1,5 +1,6 @@
 import BannerImg from "../assets/images/ethereum-1.png"
 import Image from "next/image";
+import Link from "next/link";
 const Banner = () => {
   const isMinted= true
   return (
@@ -18,12 +19,18 @@ const Banner = () => {
             from-white via-slate-300 to-white text-2xl
             animate-text">
                 Here we are happy to let you know that the portal is build using Web3 and blockchain Technology
-                which allows you to see your Nft in the form of card with all relavant work history and other .
+                which allows you to see your Nft in the form of card with all relavant work history and information .
                 lets get started
             </p>
-            <button class=" bg-transparent hover:bg-indigo-500 text-purple-700 font-semibold hover:text-white py-4 px-16 border border-purple-500 hover:border-transparent rounded">
+            <Link
+              href={{
+                pathname: '/Listing',
+              }}
+              className="bg-transparent hover:bg-indigo-500 text-purple-700 font-semibold hover:text-white py-4 px-16 border border-purple-500 hover:border-transparent rounded"
+              // className="inline-flex w-18 items-center px-4 py-2 text-sm font-medium text-center text-white bg-gray-800 rounded-lg"
+            >
             My Listing
-            </button>
+            </Link>
             </div>
           </>
         <>
@@ -32,7 +39,7 @@ const Banner = () => {
          bg-gradient-to-r 
          from-[#332575]  via-[#928DAB] to-[#332575]
          animate-text 
-         rounded-full"/>
+         rounded-full w-auto"/>
          </div>
          {/* bg-gradient-to-r from-[#332575] via-[#928DAB] to-[#332575] */}
         </>

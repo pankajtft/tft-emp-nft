@@ -2,19 +2,27 @@ import "../styles/globals.css";
 import MainFooter from "./Components/Mainfooter";
 import TopNavBar from "./Components/TopNavBar";
 import Login from "./Components/Login";
+import { useCallback, useEffect, useState } from "react";
 
 export default function App({ Component, pageProps }) {
-  function isTokenAvailable() {
+  
+  const [isToken , setToken] = useState(false)
+
+  const isTokenAvailable = useCallback(()=>{
     if (typeof window !== "undefined") {
       // Perform localStorage action
-      let data = JSON.parse(localStorage.getItem("LoginData"));
+      let data = JSON.parse(window.localStorage.getItem("LoginData"));
       console.log(data?.user?.photoURL);
-      if (!!!data?.token) return true;
-      else return false;
+      if (!!!data?.token){
+        setToken(data?.token)
+      };
     }
-  }
-  return isTokenAvailable() ? (
+  },[isToken]) 
+    
+  return !isToken ? (
+    <>
     <Login />
+    </>
   ) : (
     <>
       <TopNavBar />
