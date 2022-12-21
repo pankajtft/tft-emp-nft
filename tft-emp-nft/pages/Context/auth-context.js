@@ -1,7 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import { useRouter } from "next/router";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "../utils/firebase-config";
+import { getEmployeeData } from "../utils/apis";
 
 const defaultValue= {
     token:null,
@@ -13,7 +14,7 @@ const { Provider } = AuthContext;
 const AuthProvider = ({ children }) => {
   const [authState, setAuthState] = React.useState({ token:""});
   const [isUserAuthenticated, setUserAuthenticated] = React.useState(false)
-
+  const [employeeData , setEmployeeData] = React.useState(true)
   const router = useRouter()
   const loginWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
@@ -75,6 +76,13 @@ const AuthProvider = ({ children }) => {
       const token = localStorage.getItem("Token")
       setUserAuthInfo(token)
   }
+  const getData = useCallback(async(employeeData) => {
+   const data =await getEmployeeData();
+   if(data){
+     setEmployeeData(data)
+   }
+   else return null
+  }, []);
   return (
     <AuthContext.Provider
       value={{
@@ -82,7 +90,9 @@ const AuthProvider = ({ children }) => {
         setAuthState: (userAuthInfo) => setUserAuthInfo(userAuthInfo),
         isUserAuthenticated,
         loginWithGoogle,
-        logout
+        logout,
+        getData,
+        employeeData
       }}
     >
       {children}

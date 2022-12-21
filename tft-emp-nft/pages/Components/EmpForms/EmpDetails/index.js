@@ -46,30 +46,19 @@ const EmpDetails = ({ handleSubmitForm, initialData }) => {
               pb: 1,
             }}
           />
-          <RHFTextField
-            required
-            id="experience"
-            name="empDetail.experience"
-            label="Experience"
-            fullWidth
-            variant="outlined"
-            sx={{
-              pb: 1,
-            }}
-          />
           <RHMultiCheckDropdown
             name="empDetail.skills"
             label="Skills"
             options={
-            [{title:"React"},
-            {title:"Vue"},
-            {title:"React Native"},
-            {title:"Mongo"},
-            {title:"Node"},
-            {title:"Blockchain"},
-            {title:"Solidity"},
-            {title:"JavaScript"},
-            {title:"AWS"}]
+            ["React",
+            "Vue",
+            "React Native",
+            "Mongo",
+            "Node",
+            "Blockchain",
+            "Solidity",
+            "JavaScript",
+            "AWS"]
             } 
             id="skills"
           />

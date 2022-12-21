@@ -1,6 +1,13 @@
+import { useCallback, useEffect } from "react";
 import CardView from "../Components/CardView";
-
+import { useContext } from "react";
+import { AuthContext } from "../Context/auth-context";
 const Listing = () => {
+  const {getData, employeeData} = useContext(AuthContext)
+
+  useEffect(()=>{
+    getData()
+  },[])
   const dummyData = [
     {
       name: "Atul",
@@ -51,6 +58,7 @@ const Listing = () => {
       teamSize: "2",
     },
   ];
+  console.log(employeeData, "eployeeData")
   return (
     <div className="px-28 py-8 flex flex-row flex-wrap justify-center bg-my_bg_image">
       {dummyData.map((elm, index) => {
