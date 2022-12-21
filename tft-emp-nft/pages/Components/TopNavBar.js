@@ -2,18 +2,20 @@ import React, { useContext, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import ConnectButton from "./ConnectButton";
-
+import { AuthContext } from "../Context/auth-context";
+// import {Web3Context} from "../Context/web3Context"
 const TopNavBar = () => {
 
   const { pathname } = useRouter();
-
+  // const { network, isConnected, disconnect } = useContext(Web3Context);
+  const {logout} = useContext(AuthContext)
   const selectedItemClass =
     "bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium";
   const otherItemClass =
     "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium";
 
   const [isShow, setIsShow] = useState(false);
-  const isConnected = true
+  const isConnected= true
   return (
     <nav className="bg-gradient-to-r from-[#332575] to-[#928DAB] sticky top-0 z-50">
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -51,7 +53,7 @@ const TopNavBar = () => {
                 <Link
                   href="/AddEmployee"
                   className={
-                    pathname === "/Create" ? selectedItemClass : otherItemClass
+                    pathname === "/AddEmployee" ? selectedItemClass : otherItemClass
                   }
                 >
                   Add Employee
@@ -134,7 +136,7 @@ const TopNavBar = () => {
                     role="menuitem"
                     tabIndex={-1}
                     id="user-menu-item-2"
-                    onClick={console.log("disconnect")}
+                    onClick={()=>logout()}
                   >
                     Sign out
                   </button>

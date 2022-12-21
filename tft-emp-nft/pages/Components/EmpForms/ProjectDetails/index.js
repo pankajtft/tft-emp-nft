@@ -42,6 +42,7 @@ const ProjectDetails = ({ handleSubmitForm, initialData }) => {
             variant="outlined-basic"
             sx={{
               pb: 1,
+              mr:2
             }}
             className='mr-2 pr-4'
           />
