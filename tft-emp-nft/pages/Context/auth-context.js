@@ -14,26 +14,35 @@ const AuthProvider = ({ children }) => {
   const [authState, setAuthState] = React.useState({ token:""});
   const [isUserAuthenticated, setUserAuthenticated] = React.useState(false)
 
+  const router = useRouter()
   const loginWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
     provider.addScope("https://www.googleapis.com/auth/contacts.readonly");
     await signInWithPopup(auth, provider)
       .then((result) => {
         // This gives you a Google Access Token. You can use it to access the Google API.
+        const user = result.user;
+        const domain = user?.email.split("@"); 
+        if(domain?.[1] !== "tftus.com"){
+          alert("You are not authorised to login")
+        }
+        else {
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const token = credential?.accessToken;
-        // The signed-in user info.
-        const user = result.user;
         console.log({ credential, token, user });
-        // localStorage.setItem(
-        //   "LoginData",
-        //   JSON.stringify({ credential, token, user })
-        // );
-       
         return token
+        }
+       
       }).then((data)=>{
-        localStorage.setItem("Token", data);
-        setUserAuthInfo()
+        if(data){
+          localStorage.setItem("Token", data);
+          setUserAuthInfo()
+          router.reload(window.location.pathname)
+        }
+        else {
+          alert("Domain Specified is not valid")
+        }
+        
       })
       .catch((error) => {
         // Handle Errors here.
@@ -51,6 +60,7 @@ const AuthProvider = ({ children }) => {
     await auth.signOut();
     localStorage.removeItem("Token");
     console.log("Token revoked .Logout successfull");
+    router.reload(window.location.pathname)
   };
 
   const setUserAuthInfo = ( data ) => {
