@@ -15,6 +15,7 @@ const AuthProvider = ({ children }) => {
   const [authState, setAuthState] = React.useState({ token:""});
   const [isUserAuthenticated, setUserAuthenticated] = React.useState(false)
   const [employeeData , setEmployeeData] = React.useState(true)
+  const [isUserAdmin, setUserAdmin]= React.useState(false)
   const router = useRouter()
   const loginWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
@@ -38,6 +39,7 @@ const AuthProvider = ({ children }) => {
         if(data){
           localStorage.setItem("Token", data);
           setUserAuthInfo()
+          setUserAdmin(false)
           router.reload(window.location.pathname)
         }
         else {
@@ -92,7 +94,8 @@ const AuthProvider = ({ children }) => {
         loginWithGoogle,
         logout,
         getData,
-        employeeData
+        employeeData,
+        isUserAdmin
       }}
     >
       {children}

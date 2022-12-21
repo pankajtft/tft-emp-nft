@@ -3,19 +3,18 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import ConnectButton from "./ConnectButton";
 import { AuthContext } from "../Context/auth-context";
-// import {Web3Context} from "../Context/web3Context"
+import { Web3Context } from "../Context/web3Context";
 const TopNavBar = () => {
 
   const { pathname } = useRouter();
-  // const { network, isConnected, disconnect } = useContext(Web3Context);
-  const {logout} = useContext(AuthContext)
+  const { network, isConnected, disconnect,hasMetaMask } = useContext(Web3Context);
+  const {logout, isUserAdmin} = useContext(AuthContext)
   const selectedItemClass =
     "bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium";
   const otherItemClass =
     "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium";
 
   const [isShow, setIsShow] = useState(false);
-  const isConnected= true
   return (
     <nav className="bg-gradient-to-r from-[#332575] to-[#928DAB] sticky top-0 z-50">
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -50,18 +49,18 @@ const TopNavBar = () => {
                   Home
                 </Link>
 
-                <Link
+                {isUserAdmin && <Link
                   href="/AddEmployee"
                   className={
                     pathname === "/AddEmployee" ? selectedItemClass : otherItemClass
                   }
                 >
                   Add Employee
-                </Link>
+                </Link>}
                 <Link
                   href="/Listing"
                   className={
-                    pathname === "/create" ? selectedItemClass : otherItemClass
+                    pathname === "/Listing" ? selectedItemClass : otherItemClass
                   }
                 >
                   Listing
@@ -70,18 +69,15 @@ const TopNavBar = () => {
             </div>
           </div>
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-            {isConnected ? (
+             {isUserAdmin && isConnected ? (
               <span className="bg-white border-2 rounded-lg shadow-lg px-2 text-md font-semibold">
-                {" "}
-                {"network"}{" "}
+                {network}
               </span>
             ) : (
               <></>
             )}
+            {isUserAdmin && <ConnectButton />}
 
-            <ConnectButton />
-
-            {isConnected ? (
               <div className="relative ml-3">
                 <div>
                   <button
@@ -134,7 +130,6 @@ const TopNavBar = () => {
                     href="#"
                     className="block px-4 py-2 text-sm text-gray-700"
                     role="menuitem"
-                    tabIndex={-1}
                     id="user-menu-item-2"
                     onClick={()=>logout()}
                   >
@@ -142,9 +137,6 @@ const TopNavBar = () => {
                   </button>
                 </div>
               </div>
-            ) : (
-              <></>
-            )}
           </div>
         </div>
       </div>
