@@ -1,6 +1,13 @@
 const Employee = require("../../models/employee");
 
-const addNewProject = async (tokenId, _projectName, startTime, endTime) => {
+const addNewProject = async (
+  tokenId,
+  skills,
+  team_size,
+  _projectName,
+  startTime,
+  endTime
+) => {
   // const employeeProject = await Employee.find({
   //   projects: { $elemMatch: { project_name: _projectName } },
   // });
@@ -14,10 +21,12 @@ const addNewProject = async (tokenId, _projectName, startTime, endTime) => {
     // {
     //   $push:
     {
+      skills: skills.split(","),
       projects: {
         project_name: _projectName,
         project_start_date: startTime,
         project_end_date: endTime,
+        team_size: team_size,
       },
     }
   );

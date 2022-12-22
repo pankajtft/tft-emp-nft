@@ -47,10 +47,23 @@ initMongo();
 
 FactoryContractEthers.on(
   "NFTMinted",
-  (_empId, _employeeName, _projectName, startTime, endTime, tokenId) => {
+  (
+    _empId,
+    _employeeName,
+    email,
+    skills,
+    team_size,
+    _projectName,
+    startTime,
+    endTime,
+    tokenId
+  ) => {
     createEmployee(
       Number(_empId._hex),
       _employeeName,
+      email,
+      skills,
+      Number(team_size._hex),
       _projectName,
       new Date(Number(startTime._hex)),
       new Date(Number(endTime._hex)),
@@ -61,9 +74,11 @@ FactoryContractEthers.on(
 
 FactoryContractEthers.on(
   "NFTChanged",
-  (tokenId, _projectName, startTime, endTime) => {
+  (tokenId, skills, team_size, _projectName, startTime, endTime) => {
     addNewProject(
       Number(tokenId._hex),
+      skills,
+      Number(team_size._hex),
       _projectName,
       new Date(Number(startTime._hex)),
       new Date(Number(endTime._hex))

@@ -58,13 +58,7 @@ contract EMS is IERC721Receiver, ReentrancyGuard {
     ) public nonReentrant returns (uint256) {
         bytes32 empHash = keccak256(abi.encode(_employeeName, _empId, email));
         bytes32 projectHash = keccak256(
-            abi.encode(
-                _projectName,
-                startTime,
-                endTime,
-                _skills,
-                team_size
-            )
+            abi.encode(_projectName, startTime, endTime, _skills, team_size)
         );
         bytes32 uriHash = keccak256(abi.encode(empHash, projectHash));
         string memory uri = string(abi.encodePacked(uriHash));
@@ -96,13 +90,7 @@ contract EMS is IERC721Receiver, ReentrancyGuard {
         uint256 endTime //UnixTime
     ) public {
         bytes32 projectHash = keccak256(
-            abi.encode(
-                _projectName,
-                startTime,
-                endTime,
-                skills,
-                team_size
-            )
+            abi.encode(_projectName, startTime, endTime, skills, team_size)
         );
         employees[tokenId].projDetails = projectHash;
         bytes32 uriHash = keccak256(

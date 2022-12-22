@@ -8,11 +8,14 @@ const employeeSchema = new mongoose.Schema({
   _employeeName: {
     type: String,
   },
-  tokenId: {
-    type: Number,
-  },
   email: {
     type: String,
+  },
+  skills: {
+    type: Array,
+  },
+  tokenId: {
+    type: Number,
   },
   experience: {
     type: Number,
@@ -42,5 +45,3 @@ const employeeSchema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model("Employee", employeeSchema);
-
-
