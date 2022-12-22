@@ -1,71 +1,54 @@
-import { useCallback, useEffect } from "react";
-import CardView from "../Components/CardView";
-import { useContext } from "react";
-import { AuthContext } from "../Context/auth-context";
-const Listing = () => {
-  const {getData, employeeData} = useContext(AuthContext)
 
-  useEffect(()=>{
-    getData()
-  },[])
-  const dummyData = [
-    {
-      name: "Atul",
-      experience: 1,
-      email: "asd@asd.com",
-      employeeCode: 1231231,
-      projName: "A",
-      designation: "Front",
-      skills: ["A", "B", "C", "D"],
-      startDate: "1/1/2022",
-      endDate: "2/12/2022",
-      teamSize: "2",
-    },
-    {
-      name: "Atul",
-      experience: 1,
-      email: "asd@asd.com",
-      employeeCode: 1231231,
-      projName: "A",
-      designation: "Front",
-      skills: ["A", "B", "C", "D"],
-      startDate: "1/1/2022",
-      endDate: "2/12/2022",
-      teamSize: "2",
-    },
-    {
-      name: "Atul",
-      experience: 1,
-      email: "asd@asd.com",
-      employeeCode: 1231231,
-      projName: "A",
-      designation: "Front",
-      skills: ["A", "B", "C", "D"],
-      startDate: "1/1/2022",
-      endDate: "2/12/2022",
-      teamSize: "2",
-    },
-    {
-      name: "Atul",
-      experience: 1,
-      email: "asd@asd.com",
-      employeeCode: 1231231,
-      projName: "A",
-      designation: "Front",
-      skills: ["A", "B", "C", "D"],
-      startDate: "1/1/2022",
-      endDate: "2/12/2022",
-      teamSize: "2",
-    },
-  ];
-  console.log(employeeData, "eployeeData")
-  return (
-    <div className="px-28 py-8 flex flex-row flex-wrap justify-center bg-my_bg_image">
-      {dummyData.map((elm, index) => {
-        return <CardView data={elm} key={index}/>;
-      })}
-    </div>
-  );
-};
+import SearchBar from '../Components/SearchBar';
+import { TableHeader } from '../Components/Table/TableHeader';
+import { TableRow } from '../Components/Table/TableRow';
+const Listing = () =>{
+    const val=[{
+        name: "Demo Name",
+        email: "Demo@gmail.com",
+        empCode: "121212",
+        projectName: "EMS",
+        projectStartDate: "1/2/2022",
+        projectEndDate: "1/12/2022",
+        teamSize: "5",
+        designation: "Frontend",
+        skills:["React", "Vue", "JavaScript", "Blockchain"]
+    }];
+    function setLength(){
+        let data= val;
+        while (data?.length < 5) {
+            data.push({
+                name: "",
+                email: "",
+                empCode: "",
+                projectName: "",
+                projectStartDate: "",
+                projectEndDate: "",
+                teamSize: "",
+                designation: "",
+                skills:[]
+                })
+          }
+        return data
 
-export default Listing;
+    }
+    return(
+       <div className='bg-my_bg_image py-6'> 
+       {/* <h1 className='flex flex-col text-white w-auto border-r rounded-b justify-center items-center justify-center '>NFT Listing</h1> */}
+       <div class="flex flex-col w-auto border-r rounded-b justify-center items-center justify-center ">
+           <div className='w-1/2 justify-self-center m-8 shadow-inner'>
+           <SearchBar/>
+           </div>
+<div className='w-auto border-2 mx-20 border-double'>
+    <table className='border-collapse'>
+<TableHeader/>
+{setLength().map((item)=>{
+    return <TableRow data={item}/>
+})}
+</table>
+</div>
+</div>
+</div>
+    )
+}
+export default Listing
