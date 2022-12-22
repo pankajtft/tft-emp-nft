@@ -4,19 +4,19 @@ import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "../utils/firebase-config";
 import { getEmployeeData } from "../utils/apis";
 
-const defaultValue= {
-    token:null,
-    isUserAuthenticated:false
-}
+const defaultValue = {
+  token: null,
+  isUserAuthenticated: false,
+};
 const AuthContext = React.createContext(defaultValue);
 const { Provider } = AuthContext;
 
 const AuthProvider = ({ children }) => {
-  const [authState, setAuthState] = React.useState({ token:""});
-  const [isUserAuthenticated, setUserAuthenticated] = React.useState(false)
-  const [employeeData , setEmployeeData] = React.useState(true)
-  const [isUserAdmin, setUserAdmin]= React.useState(false)
-  const router = useRouter()
+  const [authState, setAuthState] = React.useState({ token: "" });
+  const [isUserAuthenticated, setUserAuthenticated] = React.useState(false);
+  const [employeeData, setEmployeeData] = React.useState(true);
+  const [isUserAdmin, setUserAdmin] = React.useState(true);
+  const router = useRouter();
   const loginWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
     provider.addScope("https://www.googleapis.com/auth/contacts.readonly");
@@ -24,28 +24,25 @@ const AuthProvider = ({ children }) => {
       .then((result) => {
         // This gives you a Google Access Token. You can use it to access the Google API.
         const user = result.user;
-        const domain = user?.email.split("@"); 
-        if(domain?.[1] !== "tftus.com"){
-          alert("You are not authorised to login")
+        const domain = user?.email.split("@");
+        if (domain?.[1] !== "tftus.com") {
+          alert("You are not authorised to login");
+        } else {
+          const credential = GoogleAuthProvider.credentialFromResult(result);
+          const token = credential?.accessToken;
+          console.log({ credential, token, user });
+          return token;
         }
-        else {
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential?.accessToken;
-        console.log({ credential, token, user });
-        return token
-        }
-       
-      }).then((data)=>{
-        if(data){
+      })
+      .then((data) => {
+        if (data) {
           localStorage.setItem("Token", data);
-          setUserAuthInfo()
-          setUserAdmin(false)
-          router.reload(window.location.pathname)
+          setUserAuthInfo();
+          setUserAdmin(false);
+          router.reload(window.location.pathname);
+        } else {
+          alert("Domain Specified is not valid");
         }
-        else {
-          alert("Domain Specified is not valid")
-        }
-        
       })
       .catch((error) => {
         // Handle Errors here.
@@ -63,28 +60,31 @@ const AuthProvider = ({ children }) => {
     await auth.signOut();
     localStorage.removeItem("Token");
     console.log("Token revoked .Logout successfull");
-    router.reload(window.location.pathname)
+    router.reload(window.location.pathname);
   };
 
-  const setUserAuthInfo = ( data ) => {
+  const setUserAuthInfo = (data) => {
     const token = localStorage.getItem("Token");
     setAuthState({
-      token
+      token,
     });
-    setUserAuthenticated(true)
+    setUserAuthenticated(true);
   };
-  const setUser =() =>{
+  const setUser = () => {
+    const token = localStorage.getItem("Token");
+    setUserAuthInfo(token);
+  };
+  const getData = useCallback(async () => {
+    const data = await getEmployeeData();
+    if (data) {
+      setEmployeeData(data);
+    } else return null;
+  }, [employeeData]);
 
-      const token = localStorage.getItem("Token")
-      setUserAuthInfo(token)
-  }
-  const getData = useCallback(async(employeeData) => {
-   const data =await getEmployeeData();
-   if(data){
-     setEmployeeData(data)
-   }
-   else return null
+  useEffect(() => {
+    getData();
   }, []);
+
   return (
     <AuthContext.Provider
       value={{
@@ -95,7 +95,7 @@ const AuthProvider = ({ children }) => {
         logout,
         getData,
         employeeData,
-        isUserAdmin
+        isUserAdmin,
       }}
     >
       {children}

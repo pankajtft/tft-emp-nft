@@ -6,18 +6,14 @@ const cors = require("cors");
 const app = express();
 
 const { ethers } = require("ethers");
-const data = require("../hardhat/deployments/localhost/EMS.json");
+const address = require("../contract-constants/addresses.json").EMS[31337];
+const abi = require("../contract-constants/abi.json_EMS.json");
 const { createEmployee, addNewProject } = require("./controllers/employee");
 
 const url = "http://127.0.0.1:8545/";
-const factoryContractAddress = data.address;
 
 const provider = new ethers.providers.JsonRpcProvider(url);
-const FactoryContractEthers = new ethers.Contract(
-  factoryContractAddress,
-  data.abi,
-  provider
-);
+const FactoryContractEthers = new ethers.Contract(address, abi, provider);
 
 app.use(
   bodyParser.json({
