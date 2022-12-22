@@ -15,9 +15,6 @@ export const TableHeader = ()=>{
                     Project Name
                 </th>
                 <th scope="col" class="py-3 px-6">
-                    Designation
-                </th>
-                <th scope="col" class="py-3 px-6">
                     Project Start Date
                 </th>
                 <th scope="col" class="py-3 px-6">

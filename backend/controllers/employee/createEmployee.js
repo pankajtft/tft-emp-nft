@@ -11,7 +11,7 @@ const createEmployee = async (
   endTime,
   tokenId
 ) => {
-  const employee = await Employee.findOne({ employee_code: _empId });
+  const employee = await Employee.findOne({ _empId: _empId });
   console.log(employee);
   if (employee) {
     console.log("This Employee is already exists");

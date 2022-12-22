@@ -15,7 +15,7 @@ const AuthProvider = ({ children }) => {
   const [authState, setAuthState] = React.useState({ token: "" });
   const [isUserAuthenticated, setUserAuthenticated] = React.useState(false);
   const [employeeData, setEmployeeData] = React.useState(true);
-  const [isUserAdmin, setUserAdmin] = React.useState(true);
+  const [isUserAdmin, setUserAdmin] = React.useState(false);
   const router = useRouter();
   const loginWithGoogle = async () => {
     const provider = new GoogleAuthProvider();

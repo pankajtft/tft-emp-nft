@@ -37,7 +37,6 @@ export const TableRow = ({ data }) => {
         <td class="py-4 px-6 text-center">
           {data?.projects?.[0]?.project_name}
         </td>
-        <td class="py-4 px-6 text-center">{data?.designation}</td>
         <td class="py-4 px-6 text-center">
           {data?.projects &&
             moment(data?.projects?.[0]?.project_start_date).format(
@@ -49,7 +48,7 @@ export const TableRow = ({ data }) => {
           {data?.projects &&
             moment(data?.projects?.[0]?.project_end_date).format("DD/MM/YYYY")}
         </td>
-        <td class="py-4 px-6 text-center">{data?.teamSize}</td>
+        <td class="py-4 px-6 text-center">{data?.projects?.[0]?.team_size}</td>
         <td class="py-4 px-6 text-center">
           {data?.skills?.map((item) => {
             return <p className="text-left item-center">{item}</p>;

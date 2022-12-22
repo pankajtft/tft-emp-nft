@@ -30,6 +30,8 @@ const addNewProject = async (
       },
     }
   );
+
+  console.log(employee);
   //   );
   //   console.log(employee);
   // }

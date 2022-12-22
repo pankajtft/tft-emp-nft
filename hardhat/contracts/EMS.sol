@@ -26,7 +26,7 @@ contract EMS is IERC721Receiver, ReentrancyGuard {
         string employeeName,
         string email,
         string skills,
-        uint8 team_size,
+        uint256 team_size,
         string _projectName,
         uint256 startTime,
         uint256 endTime,
@@ -36,7 +36,7 @@ contract EMS is IERC721Receiver, ReentrancyGuard {
     event NFTChanged(
         uint256 tokenId,
         string skills,
-        uint8 team_size,
+        uint256 team_size,
         string _projectName,
         uint256 startTime,
         uint256 endTime
@@ -51,7 +51,7 @@ contract EMS is IERC721Receiver, ReentrancyGuard {
         uint256 _empId,
         string memory email,
         string memory _skills,
-        uint8 team_size,
+        uint256 team_size,
         string memory _projectName,
         uint256 startTime, //UnixTime
         uint256 endTime //UnixTime
@@ -84,7 +84,7 @@ contract EMS is IERC721Receiver, ReentrancyGuard {
     function updateEmployeeNFT(
         uint256 tokenId,
         string memory skills,
-        uint8 team_size,
+        uint256 team_size,
         string memory _projectName,
         uint256 startTime, //UnixTime
         uint256 endTime //UnixTime
