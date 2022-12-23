@@ -22,7 +22,7 @@ const RHDatepicker = ({ name, label, ...others }) => {
            onChange={field.onChange}
            renderInput={(params) => (
              <TextField
-               error={error}
+              //  error={error}
                helperText={error?.message}
                {...params}
              />

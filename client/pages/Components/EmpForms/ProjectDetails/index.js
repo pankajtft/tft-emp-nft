@@ -22,9 +22,9 @@ const ProjectDetails = ({ handleSubmitForm, initialData }) => {
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
           <RHFTextField
-            required
+            // required
             id="projectName"
-            name="empDetail.projectName"
+            name="projDetails.projectName"
             label="Project Name"
             fullWidth
             variant="outlined"
@@ -36,10 +36,10 @@ const ProjectDetails = ({ handleSubmitForm, initialData }) => {
           <RHDatepicker
             required
             id="projectStartDate"
-            name="empDetail.projectStartDate"
+            name="projDetails.projectStartDate"
             label="Project Start Date"
             fullWidth
-            variant="outlined-basic"
+            variant="outlined"
             sx={{
               pb: 1,
               mr:2
@@ -49,7 +49,7 @@ const ProjectDetails = ({ handleSubmitForm, initialData }) => {
           <RHDatepicker
             required
             id="projectEndDate"
-            name="empDetail.projectEndDate"
+            name="projDetails.projectEndDate"
             label="Project End Date"
             fullWidth
             variant="outlined"
@@ -59,9 +59,9 @@ const ProjectDetails = ({ handleSubmitForm, initialData }) => {
           />
           </div>
           <RHFTextField
-            required
+            // required
             id="designation"
-            name="empDetail.designation"
+            name="projDetails.designation"
             label="Designation"
             fullWidth
             variant="outlined"
@@ -70,10 +70,10 @@ const ProjectDetails = ({ handleSubmitForm, initialData }) => {
             }}
           />
          <RHSelect
-          required
+          // required
           fullWidth
           id="teamSize"
-          name="empDetail.teamSize"
+          name="projDetails.teamSize"
           label="Team size"
           variant="outlined"
           sx={{

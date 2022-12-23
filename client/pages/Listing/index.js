@@ -5,13 +5,6 @@ import { TableRow } from "../Components/Table/TableRow";
 import { AuthContext } from "../Context/auth-context";
 const Listing = () => {
   const { employeeData } = useContext(AuthContext);
-  console.log(employeeData);
-  //   useEffect(() => {
-  //     (async () => {
-  //       const emp_data = await getData();
-  //       console.log(emp_data);
-  //     })();
-  //   }, []);
 
   const val = [
     {

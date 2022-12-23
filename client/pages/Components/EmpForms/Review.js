@@ -1,72 +1,71 @@
 import EmpDetails from "./constants";
+import { useForm } from "react-hook-form";
+import { DEFAULT_DATA_VALUE } from "./constants";
+import React from "react";
 const Review = ({data}) =>{
-    console.log(data, "DADADAQDAD")
-    const {empDetail} = data
-    // const {
-    //     name,
-    //     email,
-    //     experience,
-    //     empCode,
-    //     projectName,
-    //     projectStartDate,
-    //     projectEndDate,
-    //     teamSize,
-    //     designation,
-    // } = empDetail
-    let value=true
+
+
+    const {empDetail} = data;
+    const {email, empCode, name , skills} =empDetail;
+    const skillArr=[]
+    const skillsIs=()=>{
+        skills.map((item, index)=>{return skillArr.push(` ${item?.title}`)})
+        return skillArr
+    }
     const finalData =[
         {
             label:"Name",
-            value:"name"
+            value:name,
         },
         {
             label:"Email",
-            value:"email"
+            value:email
         },
         {
             label:"Employee Code",
-            value:"empCode"
+            value:empCode
+        },
+        {
+            label:"Skills",
+            value:skillsIs()
         },
         {
             label:"Project Name",
-            value:"projectName"
-        },
-        {
-            label:"Experience",
-            value:"experience"
+            value:""
         },
         {
             label:"Designation",
-            value:"designation"
+            value:""
         },
         {
             label:"Team Size",
-            value:"teamSize"
+            value:""
         },
         {
             label:"Project Start Date",
-            value:"projectStartDate"
+            value:""
         },
         {
             label:"Project End Date",
-            value:"projectEndDate"
+            value:""
         },
     ]
+    console.log(skillArr)
     return(
         <>
-       {value ? 
+       {!data ? 
        <>
-       <div className="flex flex-col w-auto h-1/2 shadow-xl rounded-r-sm font-mono bg-gradient-to-r from-[#332575] to-[#928DAB">
+       <div className="flex flex-col w-auto h-1/2 shadow-xl rounded-r-sm font-mono">
            <p className="h-1/2 px-20 py-32"> All the details have been fetched and saved . To add new NFT please fill details again.</p>
        </div>
        </>  :
-        <div className="flex flex-col w-auto shadow-xl rounded-r-sm font-mono bg-gradient-to-r from-[#332575] to-[#928DAB">
+        <div className="flex flex-col w-auto shadow-xl rounded-r-sm font-mono">
                 {finalData.map((item , index)=>{
                     return(
                         <div key={index}className="flex flex-row m-2 text-sm text-black justify-around ">            
-                        <p className="w-10 text-white ">{index+1}</p>
-                        <p className="w-40 text-white ">{item?.label}</p>
-                        <p className="w-10 text-white ">:</p>
+                        <p className="w-10 text-black ">{index+1}</p>
+                        <p className="w-40 text-black ">{item?.label}</p>
+                        <p className="w-10 text-black ">:</p>
                         <p className="w-1/2 ml-1 text-black capitalize">{item?.value}</p>
                         </div>
                     )

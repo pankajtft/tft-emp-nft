@@ -14,12 +14,14 @@ import { useForm } from "react-hook-form";
 import { FormProvider } from "../Hook-form";
 import Review from "./Review";
 import { useRouter } from 'next/navigation';
+import DialogBox from "../ConfirmModal";
 const Newform = () => {
-  const steps = ['Employee Details', 'Project details', 
-    // 'Review'
+  const steps = ['Employee Details', 'Project Details',
+    'Review'
 ];
   const [activeStep, setActiveStep] = React.useState(0);
   const [formdata, setFormData] = React.useState({})
+  const [show, setShow] = React.useState(false)
   const router = useRouter();
   // const currentValidationSchema = validationSchema[activeStep];
   const methods = useForm({
@@ -29,19 +31,33 @@ const Newform = () => {
     mode:"onChange"
   });
 
-  const { handleSubmit, trigger } = methods;
-
+  const { handleSubmit, trigger ,watch } = methods;
+  watch((data) => setFormData(data))
   const handleNext = async () => {
     const isStepValid = await trigger();
     if (isStepValid) {
-      setActiveStep(activeStep + 1);
+      handleDialogOption();
+      // setActiveStep(activeStep + 1);
     }
   };
-
+  const onSelection = (val) =>{
+    console.log(val)
+    if(val){
+      setActiveStep(activeStep + 1);
+      setShow(false)
+    }
+    else{
+      console.log(formdata, "form Data on no select")
+      setActiveStep(activeStep + 2);
+      setShow(false)
+    }
+  }
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
-
+  const handleDialogOption = ()=>{
+    setShow(true)
+  }
   const onSubmit = async (data) => {
     console.log(data, "data");
     setFormData(data)
@@ -52,14 +68,20 @@ const Newform = () => {
         return <EmpDetails />;
       case 1:
         return <ProjectDetails />;
-      // case 2:
-      //   return <Review data={formdata} />;
+      case 2:
+        return <Review data={formdata}/>;
       default:
         throw new Error('Unknown step');
     }
   }
   return (
+    <>
+    {show && <DialogBox 
+      isOpen={show} 
+      handleClose={()=>setShow(false)}
+      onButtonPress={(val)=>onSelection(val)}/> }
     <div className=" p-6">
+      
       <Container component="main" maxWidth="md" sx={{ mb: 1}}>
         <Paper
           variant="outlined"
@@ -131,6 +153,7 @@ const Newform = () => {
         </Paper>
       </Container>
     </div>
+    </>
   );
 };
 

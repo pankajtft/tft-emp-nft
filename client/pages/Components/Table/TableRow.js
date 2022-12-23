@@ -7,17 +7,24 @@ export const TableRow = ({ data }) => {
     styleForMinted();
   }, [Minted?.isMinted]);
   function styleForMinted() {
-    if (Minted[0]?.isMinted) {
+    if (!Minted[0]?.isMinted) {
       return (
-        <p className="text-xs text-green-700 font-extrabold uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <p className="text-xs text-green-700 font-extrabold uppercase">
           Minted
         </p>
       );
     } else {
       return (
-        <p className="text-xs text-red-700 font-extrabold uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <>
+        {/* <p className="text-xs text-red-700 font-extrabold uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           Not Minted
-        </p>
+        </p> */}
+        <button
+        className="uppercase text-xs bg-green-700 hover:bg-white text-white font-semibold hover:text-green-700 px-6 mx-4 border border-green-700 hover:border-green-700 rounded"
+      >
+        Mint NFT
+      </button>
+      </>
       );
     }
   }
@@ -31,32 +38,32 @@ export const TableRow = ({ data }) => {
           lalit
           {data?._employeeName}
         </td> */}
-        <td class="py-4 px-6 text-center">{data?._employeeName}</td>
-        <td class="py-4 px-6 text-center">{data?._empId}</td>
-        <td class="py-4 px-6 text-center">{data?.email}</td>
-        <td class="py-4 px-6 text-center">
+        <td class="py-4 px-6 text-center capitalize text-sm">{data?._employeeName}</td>
+        <td class="py-4 px-6 text-center capitalize text-sm">{data?._empId}</td>
+        <td class="py-4 px-6 text-center text-sm">{data?.email}</td>
+        <td class="py-4 px-6 text-center text-sm">
+          {data?.skills?.map((item) => {
+            return <p className="text-left item-center text-sm capitalize">{item}</p>;
+          })}
+        </td>
+        <td class="py-4 px-6 text-center text-sm">
           {data?.projects?.[0]?.project_name}
         </td>
-        <td class="py-4 px-6 text-center">
+        <td class="py-4 px-6 text-center text-sm">
           {data?.projects &&
             moment(data?.projects?.[0]?.project_start_date).format(
               "DD/MM/YYYY"
             )}
         </td>
-        <td class="py-4 px-6 text-center">
+        <td class="py-4 px-6 text-center text-sm">
           {" "}
           {data?.projects &&
             moment(data?.projects?.[0]?.project_end_date).format("DD/MM/YYYY")}
         </td>
-        <td class="py-4 px-6 text-center">{data?.projects?.[0]?.team_size}</td>
-        <td class="py-4 px-6 text-center">
-          {data?.skills?.map((item) => {
-            return <p className="text-left item-center">{item}</p>;
-          })}
-        </td>
-        <td class="py-4 px-6 text-center">{styleForMinted()}</td>
+        <td class="py-4 px-6 text-center text-sm">{data?.projects?.[0]?.team_size}</td>
+        <td class="py-2 px-6 text-center text-sm">{data?.projects && styleForMinted()}</td>
         <td class="py-4 px-6 w-10 ">
-          {<ButtonGroupIcon isEdit={true} isDelete={true} />}
+          {<ButtonGroupIcon isEdit={true} isDelete={true} disabled={!!!data?.projects}/>}   
         </td>
       </tr>
     </>

@@ -12,6 +12,9 @@ export const TableHeader = ()=>{
                     Email
                 </th>
                 <th scope="col" class="py-3 px-6">
+                   Skills
+                </th>
+                <th scope="col" class="py-3 px-6">
                     Project Name
                 </th>
                 <th scope="col" class="py-3 px-6">
@@ -22,9 +25,6 @@ export const TableHeader = ()=>{
                 </th>
                 <th scope="col" class="py-3 px-6 ">
                     Team Size
-                </th>
-                <th scope="col" class="py-3 px-6">
-                   Skills
                 </th>
                 <th scope="col" class="py-3 px-6 ">
                     Status
