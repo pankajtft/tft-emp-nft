@@ -1,15 +1,19 @@
 const mongoose = require("mongoose");
 
 const employeeSchema = new mongoose.Schema({
-  _empId: {
-    type: String,
-    required: true,
-  },
-  _employeeName: {
-    type: String,
-  },
-  email: {
-    type: String,
+  empDetail: {
+    empCode: {
+      type: Number,
+      required: true,
+    },
+    email: {
+      type: String,
+      required: true,
+    },
+    name: {
+      type: String,
+      required: true,
+    },
   },
   skills: {
     type: Array,
@@ -17,27 +21,21 @@ const employeeSchema = new mongoose.Schema({
   tokenId: {
     type: Number,
   },
-  experience: {
-    type: Number,
-  },
-  project_hash: {
-    type: String,
-  },
   projects: [
     {
-      project_name: {
+      projectName: {
         type: String,
       },
-      project_start_date: {
+      projectStartDate: {
         type: Date,
       },
-      project_end_date: {
+      projectEndDate: {
         type: Date,
       },
-      team_size: {
+      teamSize: {
         type: Number,
       },
-      role: {
+      designation: {
         type: String,
       },
     },

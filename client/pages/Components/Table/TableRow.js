@@ -11,11 +11,11 @@ export const TableRow = ({ data }) => {
     styleForMinted();
   }, [Minted?.isMinted]);
 
-  const mintNFTonETH = () => {
+  const mintNFTonETH = async () => {
     const tx = await contract
       .mintEmployeeNFT
       //params
-      ()
+      ();
     tx = tx.wait(1);
     console.log(tx);
   };

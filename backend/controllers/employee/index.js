@@ -1,9 +1,9 @@
 const { createEmployee } = require("./createEmployee");
-const { addNewProject } = require("./addNewProject");
+const { updateEmployee } = require("./updateEmployee");
 const { getAllEmployees } = require("./getAllEmployees");
 
 module.exports = {
   createEmployee,
-  addNewProject,
+  updateEmployee,
   getAllEmployees,
 };
