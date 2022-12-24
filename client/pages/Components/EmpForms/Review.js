@@ -1,12 +1,14 @@
 import EmpDetails from "./constants";
 import { useForm } from "react-hook-form";
 import { DEFAULT_DATA_VALUE } from "./constants";
+import moment from "moment";
 import React from "react";
 const Review = ({data}) =>{
 
 
-    const {empDetail} = data;
+    const {empDetail, projDetails} = data;
     const {email, empCode, name , skills} =empDetail;
+    const{ designation, projectEndDate,projectName, teamSize, projectStartDate}= projDetails
     const skillArr=[]
     const skillsIs=()=>{
         skills.map((item, index)=>{return skillArr.push(` ${item?.title}`)})
@@ -31,26 +33,26 @@ const Review = ({data}) =>{
         },
         {
             label:"Project Name",
-            value:""
+            value:projectName
         },
         {
             label:"Designation",
-            value:""
+            value:designation 
         },
         {
             label:"Team Size",
-            value:""
+            value:teamSize 
         },
         {
             label:"Project Start Date",
-            value:""
+            value:moment(projectStartDate).format("DD/MM/YYYY")
         },
         {
             label:"Project End Date",
-            value:""
+            value:moment(projectEndDate).format("DD/MM/YYYY") 
         },
     ]
-    console.log(skillArr)
+    console.log(data)
     return(
         <>
        {!data ? 
