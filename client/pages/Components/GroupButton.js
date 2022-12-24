@@ -33,7 +33,7 @@ const ButtonGroupWithLabel = ({isEdit, isView , isDelete}) =>{
     )
 }
 
-const ButtonGroupIcon = ({isEdit, isView , isDelete ,disabled}) =>{
+const ButtonGroupIcon = ({isEdit, isView , isDelete ,disabled, onEditPress, onDeletePress}) =>{
     const disableView="text-gray-500 text-sm bg-white border-y border-slate-200 font-medium px-4 py-2 inline-flex space-x-1 items-center";    
     const disableEdit="text-gray-500 text-sm bg-white border border-slate-200 rounded-l-lg font-medium px-4 py-2 inline-flex space-x-1 items-center";
     const disableDelete="text-gray-500 text-sm bg-white border border-slate-200 rounded-r-lg font-medium px-4 py-2 inline-flex space-x-1 items-center";
@@ -42,7 +42,7 @@ const ButtonGroupIcon = ({isEdit, isView , isDelete ,disabled}) =>{
         <div class="inline-flex items-center rounded-md shadow-sm">
             {!!isEdit && <button class={!!disabled ? disableEdit: "text-green-500 hover:text-white text-sm bg-white hover:bg-purple-500 border border-slate-200 rounded-l-lg font-medium px-4 py-2 inline-flex space-x-1 items-center"}
             disabled={!!disabled}
-            data-bs-toggle="tooltip" data-bs-placement="right" title="Tooltip on right"
+            onClick={onEditPress}
             >
                 <span><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
@@ -60,6 +60,7 @@ const ButtonGroupIcon = ({isEdit, isView , isDelete ,disabled}) =>{
             </button>}
             {!!isDelete && <button class={!!disabled ? disableDelete:"text-red-500 hover:text-white text-sm bg-white hover:bg-purple-500 border border-slate-200 rounded-r-lg font-medium px-4 py-2 inline-flex space-x-1 items-center"}
             disabled={!!disabled}
+            onClick={onDeletePress}
             >
                 <span>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">

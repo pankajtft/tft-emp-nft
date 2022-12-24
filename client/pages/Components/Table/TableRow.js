@@ -3,7 +3,7 @@ import React, { useContext, useEffect } from "react";
 import moment from "moment";
 import { Web3Context } from "../../Context/web3Context";
 export const TableRow = ({ data }) => {
-  const { contract } = useContext(Web3Context);
+  const {mintEmployeeNFT , updateEmployeeNFT, burnNft} = useContext(Web3Context);
 
   const Minted = [{ isMinted: false }];
 
@@ -21,7 +21,7 @@ export const TableRow = ({ data }) => {
   };
 
   function styleForMinted() {
-    if (!Minted[0]?.isMinted) {
+    if (Minted[0]?.isMinted) {
       return (
         <p className="text-xs text-green-700 font-extrabold uppercase">
           Minted
@@ -30,10 +30,8 @@ export const TableRow = ({ data }) => {
     } else {
       return (
         <>
-          {/* <p className="text-xs text-red-700 font-extrabold uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-          Not Minted
-        </p> */}
-          <button className="uppercase text-xs bg-green-700 hover:bg-white text-white font-semibold hover:text-green-700 px-6 mx-4 border border-green-700 hover:border-green-700 rounded">
+          <button className="uppercase text-xs bg-green-700 hover:bg-white text-white font-semibold hover:text-green-700 px-6 mx-4 border border-green-700 hover:border-green-700 rounded"
+          onClick={()=>mintEmployeeNFT(addEmployee)}>
             Mint NFT
           </button>
         </>
@@ -43,13 +41,6 @@ export const TableRow = ({ data }) => {
   return (
     <>
       <tr class="bg-white item-center border-black border-separate border border-slate-300">
-        {/* <td
-          scope="row"
-          class="py-1 px-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-        >
-          lalit
-          {data?._employeeName}
-        </td> */}
         <td class="py-4 px-6 text-center capitalize text-sm">
           {data?._employeeName}
         </td>
@@ -88,6 +79,8 @@ export const TableRow = ({ data }) => {
               isEdit={true}
               isDelete={true}
               disabled={!!!data?.projects}
+              onEditPress={()=>updateEmployeeNFT(updateData)}
+              onDeletePress={()=>burnNft()}
             />
           }
         </td>
