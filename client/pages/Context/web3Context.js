@@ -46,7 +46,6 @@ const Web3Provider = ({ children }) => {
     setNetwork(chainIdToNetwork[chainId]);
     setIsConnected(true);
     localStorage.setItem("isWalletConnected", true);
-
     const address = contractAddresses["EMS"][chainId][0];
 
     const NFTMarketContract = new ethers.Contract(address, abi, signer);
@@ -79,16 +78,39 @@ const Web3Provider = ({ children }) => {
       console.log(e);
     }
   }
-  const addEmployee = () => {
-    console.log("addEmployee");
+  const mintEmployeeNFT = async(d) => {
+    try{
+      console.log(d)
+     let res = await new contract.mintEmployeeNFT(d?.name,d?.code,d?.email,d?.skill,d?.size, d?.pName,d?.sTime,d?.eTime)
+     console.log(res, "Employee Added") 
+    }
+    catch(e){
+      console.log(e, "error mintEmployeeNFT")
+    }
   };
-  const editEmployeeDetails = () => {
-    console.log("Edit Employee");
+  const updateEmployeeNFT = async(data) => {
+    try{
+      let res = await new contract.updateEmployeeNFT(
+        data?.tokenId,
+        data?.skills,
+        data?.size,
+        data?.projectName,
+        data?.sTime,
+        data?.eTime)
+        console.log(res, "Employee data updated")
+    }
+    catch(e){
+      console.log(e, "Error from updateEmployeeNFT")
+    }
   };
-  const burnNft = () => {
-    console.log("burning NFT");
+  const burnNft = async() => {
+    try{
+      let res= await new contract._burn(0)
+    }catch(e){
+      console.log(e, "error _burn")
+    }
   };
-  console.log(isConnected, "has");
+  console.log(abi, "has");
   return (
     <Provider
       value={{
@@ -104,6 +126,9 @@ const Web3Provider = ({ children }) => {
         hasMetamask,
         nonce,
         isAuthenticated,
+        mintEmployeeNFT,
+        updateEmployeeNFT,
+        burnNft
       }}
     >
       {children}

@@ -1,7 +1,7 @@
 const developmentChains = ["hardhat", "localhost"];
 const VERIFICATION_BLOCK_CONFIRMATIONS = 6;
-const frontEndContractsFile = "../contract-constants/addresses.json";
-const frontEndAbiFile = "../contract-constants/abi.json";
+const frontEndContractsFile = "../client/pages/contract-constants/addresses.json";
+const frontEndAbiFile = "../client/pages/contract-constants/abi.json";
 
 module.exports = {
   developmentChains,

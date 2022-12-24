@@ -6,8 +6,8 @@ const cors = require("cors");
 const app = express();
 
 const { ethers } = require("ethers");
-const address = require("../contract-constants/addresses.json").EMS[31337];
-const abi = require("../contract-constants/abi.json_EMS.json");
+const address = require("../client/pages/contract-constants/addresses.json").EMS[31337];
+const abi = require("../client/pages/contract-constants/abi.json_EMS.json");
 const { createEmployee, addNewProject } = require("./controllers/employee");
 
 const url = "http://127.0.0.1:8545/";
