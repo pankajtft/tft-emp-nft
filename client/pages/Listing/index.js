@@ -5,7 +5,7 @@ import { TableRow } from "../Components/Table/TableRow";
 import { AuthContext } from "../Context/auth-context";
 const Listing = () => {
   const { employeeData } = useContext(AuthContext);
-  const [searchData, setSearchData]= useState("")
+  const [searchData, setSearchData] = useState("");
   const val = [
     {
       name: "Demo Name",
@@ -36,7 +36,7 @@ const Listing = () => {
     }
     return data;
   }
-  function handleSearch(){
+  function handleSearch() {
     // employeeData?.filter((item)=> {
     //   return(
     //   if(searchData === ""){
@@ -44,17 +44,19 @@ const Listing = () => {
     //   }
     //    if(item?._employeeName.includes(searchData)) return item
     //   else if(item?._empId.includes(searchData)) return true
-      
+
     // )
-    console.log(data)
+    console.log(data);
   }
   return (
     <div className="bg-my_bg_image py-6">
       {/* <h1 className='flex flex-col text-white w-auto border-r rounded-b justify-center items-center justify-center '>NFT Listing</h1> */}
       <div class="flex flex-col w-auto border-r rounded-b justify-center items-center justify-center ">
         <div className="w-1/2 justify-self-center m-8 shadow-inner">
-          <SearchBar onPress={()=>handleSearch()}
-          onSearch={(e)=>setSearchData(e.target.value)} />
+          <SearchBar
+            onPress={() => handleSearch()}
+            onSearch={(e) => setSearchData(e.target.value)}
+          />
         </div>
         <div className="w-auto border-2 mx-20 border-double">
           <table className="border-collapse">

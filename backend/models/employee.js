@@ -14,14 +14,14 @@ const employeeSchema = new mongoose.Schema({
       type: String,
       required: true,
     },
-  },
-  skills: {
-    type: Array,
+    skills: {
+      type: Array,
+    },
   },
   tokenId: {
     type: Number,
   },
-  projects: [
+  projDetails: [
     {
       projectName: {
         type: String,

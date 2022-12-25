@@ -12,7 +12,7 @@ export const TableRow = ({ data }) => {
   }, [Minted?.isMinted]);
 
   const mintNFTonETH = async () => {
-    const tx = await contract
+    let tx = await contract
       .mintEmployeeNFT
       //params
       ();
