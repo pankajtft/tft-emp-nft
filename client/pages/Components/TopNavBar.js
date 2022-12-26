@@ -31,9 +31,9 @@ const TopNavBar = () => {
           </div>
           <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
             <div className="flex flex-shrink-0 items-center">
-              <a href="https://www.tftus.com/" class="flex items-center">
-                <img src="https://www.tftus.com/wp-content/uploads/2021/01/logo-1.png" class="mr-3 h-8" alt="Think Future Technology Logo" />
-                <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white text-cyan-50">EMS</span>
+              <a href="https://www.tftus.com/" className="flex items-center">
+                <img src="https://www.tftus.com/wp-content/uploads/2021/01/logo-1.png" className="mr-3 h-8" alt="Think Future Technology Logo" />
+                <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white text-cyan-50">EMS</span>
             </a>
             </div>
             <div className="hidden sm:ml-6 sm:block">
@@ -92,7 +92,7 @@ const TopNavBar = () => {
                     <img
                       className="h-8 w-8 rounded-full"
                       src="https://lumiere-a.akamaihd.net/v1/images/h_blackpanther_mobile_19754_57fe2288.jpeg?region=0,0,640,480"
-                      alt=""
+                      alt="Profile"
                     />
                   </button>
                 </div>

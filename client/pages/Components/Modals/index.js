@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, {useContext} from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -13,21 +13,23 @@ import {
   RHSelect,
 } from "../Hook-form";
 import Box from "@mui/material/Box";
+import { Web3Context } from "../../Context/web3Context";
+import { AuthContext } from "../../Context/auth-context";
 
 export default function FormModal({ isShow, handleClose, data }) {
+  const {updateEmployeeNFT} = useContext(Web3Context)
   const methods = useForm({
     shouldUnregister: false,
-    defaultValues: DEFAULT_DATA_VALUE?.projDetails,
+    defaultValues: data,
     mode: "onChange",
   });
 
   const { handleSubmit, trigger, watch } = methods;
   watch((data) => setFormData(data));
   const [formdata, setFormData] = React.useState({});
-
-  const onSubmit = (data) => {
-    console.log(data);
-    handleClose()
+  const onSubmit = async(projectData) => {
+    console.log(projectData);
+    await updateEmployeeNFT(updated).then(()=>handleClose())
   };
   return (
     <div className="flex flex-col w-full">

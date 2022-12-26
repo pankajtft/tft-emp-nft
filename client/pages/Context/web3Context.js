@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { contractAddresses, abi } from "../contract-constants";
 import Web3 from "web3";
 import { ethers } from "ethers";
-import {updateEmployeeData} from "../utils/apis"
+import {updateEmployeeData, postEmployeeData, deleteData} from "../utils/apis"
 const defaultValue = {};
 const Web3Context = React.createContext(defaultValue);
 const { Provider, Consumer } = Web3Context;
@@ -81,7 +81,7 @@ const Web3Provider = ({ children }) => {
   const mintEmployeeNFT = async(d) => {
     try{
       console.log(d, "FromDa")
-     let res = await new contract.mintEmployeeNFT(
+     let res = await contract.mintEmployeeNFT(
        d?.empDetail?.name,
        d?.empDetail?.empCode,
        d?.empDetail?.email,
@@ -90,7 +90,13 @@ const Web3Provider = ({ children }) => {
        d?.projDetails?.[0].projectName,
        100000,
        200000);
-      //  res = res.wait(1);
+      res =await res.wait(1)
+      if(res){
+        let id = await contract.returnToken();
+        console.log(id, "token")
+        const finalData = {...d, tokenId: id}
+        await updateEmployeeData(finalData);
+      }
      console.log(res, "Employee Added") 
 
     }
@@ -100,9 +106,10 @@ const Web3Provider = ({ children }) => {
   };
   const updateEmployeeNFT = async(d) => {
     try{
+      console.log(d, "D");
       let res = await new contract.updateEmployeeNFT(
-        1,
-        d?.empDetail?.skills?.[0].title,
+        d?.tokenId,
+        "New Skills",
         d?.projDetails?.[0].teamSize, 
         d?.projDetails?.[0].projectName,
         100000,
@@ -116,15 +123,17 @@ const Web3Provider = ({ children }) => {
       console.log(e, "Error from updateEmployeeNFT")
     }
   };
-  const burnNft = async() => {
+  const burnNft = async(data) => {
     try{
-      let res= await new contract.burn(0)
-      console.log(res)
+      let res= await contract.burn(data?.tokenId)
+      res =await res.wait(1);
+      if(res){
+        await deleteData(id)
+      }
     }catch(e){
       console.log(e, "error _burn")
     }
   };
-  console.log(abi, "has");
   return (
     <Provider
       value={{

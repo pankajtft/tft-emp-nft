@@ -39,7 +39,9 @@ const Banner = () => {
          bg-gradient-to-r 
          from-[#332575]  via-[#928DAB] to-[#332575]
          animate-text 
-         rounded-full w-auto"/>
+         rounded-full w-auto"
+         alt="Banner"
+         priority/>
          </div>
          {/* bg-gradient-to-r from-[#332575] via-[#928DAB] to-[#332575] */}
         </>

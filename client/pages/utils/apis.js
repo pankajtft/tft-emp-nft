@@ -45,3 +45,16 @@ export const updateEmployeeData = async (FormData) => {
     console.log(e, "Error fetching Employee Details");
   }
 };
+export const deleteData = async (FormData) => {
+  console.log(FormData);
+  try {
+    const res = await axios.delete(`${Path}employee/${FormData?._id}`);
+    if (!res.ok) {
+      throw new Error("Failed to fetch data");
+    }
+    let data = res;
+    return data;
+  } catch (e) {
+    console.log(e, "Error fetching Employee Details");
+  }
+};
