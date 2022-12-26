@@ -4,6 +4,7 @@ pragma solidity ^0.8.9;
 import "./NFT.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 import "hardhat/console.sol";
 
 /**
@@ -11,7 +12,7 @@ import "hardhat/console.sol";
  * @author Shivam Arora
  * @dev Employee Management Contract allows users to create employeesNFTs and manage them
  */
-contract EMS is IERC721Receiver, ReentrancyGuard {
+ contract EMS is IERC721Receiver, ReentrancyGuard, Ownable {
     EmployeeNFT internal NFT;
 
     struct Employee {
@@ -117,6 +118,11 @@ contract EMS is IERC721Receiver, ReentrancyGuard {
         bytes calldata
     ) external pure returns (bytes4) {
         return IERC721Receiver.onERC721Received.selector;
+    }
+
+    //burn
+    function burn(uint256 tokenId) public virtual onlyOwner {
+        NFT.burn(tokenId);
     }
 
     //Pure/View Functions
