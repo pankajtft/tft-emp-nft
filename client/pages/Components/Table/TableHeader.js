@@ -12,6 +12,9 @@ export const TableHeader = ()=>{
                     Email
                 </th>
                 <th scope="col" class="py-3 px-6">
+                    Designation
+                </th>
+                <th scope="col" class="py-3 px-6">
                    Skills
                 </th>
                 <th scope="col" class="py-3 px-6">

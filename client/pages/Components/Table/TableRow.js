@@ -42,43 +42,44 @@ export const TableRow = ({ data }) => {
     <>
       <tr class="bg-white item-center border-black border-separate border border-slate-300">
         <td class="py-4 px-6 text-center capitalize text-sm">
-          {data?._employeeName}
+          {data?.empDetail?.name}
         </td>
-        <td class="py-4 px-6 text-center capitalize text-sm">{data?._empId}</td>
-        <td class="py-4 px-6 text-center text-sm">{data?.email}</td>
+        <td class="py-4 px-6 text-center capitalize text-sm">{data?.empDetail?.empCode}</td>
+        <td class="py-4 px-6 text-center text-sm">{data?.empDetail?.email}</td>
+        <td class="py-4 px-6 text-center text-sm">{data?.projDetails?.[0]?.designation}</td>
         <td class="py-4 px-6 text-center text-sm">
-          {data?.skills?.map((item) => {
+          {!!data && data?.empDetail?.skills.map((item) => {
             return (
-              <p className="text-left item-center text-sm capitalize">{item}</p>
+              <p className="text-left item-center text-sm capitalize">{item?.title}</p>
             );
           })}
         </td>
         <td class="py-4 px-6 text-center text-sm">
-          {data?.projects?.[0]?.project_name}
+          {data?.projDetails?.[0]?.projectName}
         </td>
         <td class="py-4 px-6 text-center text-sm">
-          {data?.projects &&
-            moment(data?.projects?.[0]?.project_start_date).format(
+          {data?.projDetails &&
+            moment(data?.projDetails?.[0]?.projectStartDate).format(
               "DD/MM/YYYY"
             )}
         </td>
         <td class="py-4 px-6 text-center text-sm">
           {" "}
-          {data?.projects &&
-            moment(data?.projects?.[0]?.project_end_date).format("DD/MM/YYYY")}
+          {data?.projDetails &&
+            moment(data?.projDetails?.[0]?.projectEndDate).format("DD/MM/YYYY")}
         </td>
         <td class="py-4 px-6 text-center text-sm">
-          {data?.projects?.[0]?.team_size}
+          {data?.projDetails?.[0]?.teamSize}
         </td>
         <td class="py-2 px-6 text-center text-sm">
-          {data?.projects && styleForMinted()}
+          {!!data?.projDetails?.[0] && styleForMinted()}
         </td>
         <td class="py-4 px-6 w-10 ">
           {
             <ButtonGroupIcon
               isEdit={true}
               isDelete={true}
-              disabled={!!!data?.projects}
+              disabled={!!!data?.projDetails?.[0]}
               onEditPress={()=>updateEmployeeNFT(updateData)}
               onDeletePress={()=>burnNft()}
             />
