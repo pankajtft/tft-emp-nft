@@ -21,6 +21,7 @@ const Newform = () => {
   const [activeStep, setActiveStep] = React.useState(0);
   const [formdata, setFormData] = React.useState({});
   const [show, setShow] = React.useState(false);
+  const [skip,setSkip] = React.useState(false)
   const router = useRouter();
   // const currentValidationSchema = validationSchema[activeStep];
   const methods = useForm({
@@ -48,13 +49,19 @@ const Newform = () => {
       console.log(formdata, "form Data on no select");
       setActiveStep(activeStep + 2);
       setShow(false);
+      setSkip(true)
     }
   };
   const handleBack = () => {
     setActiveStep(activeStep - 1);
+    if(skip){
+      setActiveStep(0); 
+      setSkip(false)
+    }
   };
   const handleDialogOption = () => {
-    setShow(true);
+    if(activeStep !== 1)setShow(true);
+    else setActiveStep(activeStep+1)
   };
   const onSubmit = async (data) => {
     setFormData(data);
