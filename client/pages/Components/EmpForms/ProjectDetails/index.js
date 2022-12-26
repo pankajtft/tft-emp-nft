@@ -34,7 +34,7 @@ const ProjectDetails = ({ handleSubmitForm, initialData }) => {
           />
           <div className="flex flex-row my-2 mr-2 justify-around">
           <RHDatepicker
-            required
+            // required
             id="projectStartDate"
             name="projDetails.projectStartDate"
             label="Project Start Date"
@@ -47,7 +47,7 @@ const ProjectDetails = ({ handleSubmitForm, initialData }) => {
             className='mr-2 pr-4'
           />
           <RHDatepicker
-            required
+            // required
             id="projectEndDate"
             name="projDetails.projectEndDate"
             label="Project End Date"

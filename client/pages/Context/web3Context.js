@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { contractAddresses, abi } from "../contract-constants";
 import Web3 from "web3";
 import { ethers } from "ethers";
-
+import {updateEmployeeData} from "../utils/apis"
 const defaultValue = {};
 const Web3Context = React.createContext(defaultValue);
 const { Provider, Consumer } = Web3Context;
@@ -80,24 +80,37 @@ const Web3Provider = ({ children }) => {
   }
   const mintEmployeeNFT = async(d) => {
     try{
-      console.log(d)
-     let res = await new contract.mintEmployeeNFT(d?.name,d?.code,d?.email,d?.skill,d?.size, d?.pName,d?.sTime,d?.eTime)
+      console.log(d, "FromDa")
+     let res = await new contract.mintEmployeeNFT(
+       d?.empDetail?.name,
+       d?.empDetail?.empCode,
+       d?.empDetail?.email,
+       d?.empDetail?.skills?.[0].title,
+       d?.projDetails?.[0].teamSize, 
+       d?.projDetails?.[0].projectName,
+       100000,
+       200000);
+       res = res.wait(1);
      console.log(res, "Employee Added") 
+
     }
     catch(e){
       console.log(e, "error mintEmployeeNFT")
     }
   };
-  const updateEmployeeNFT = async(data) => {
+  const updateEmployeeNFT = async(d) => {
     try{
       let res = await new contract.updateEmployeeNFT(
-        data?.tokenId,
-        data?.skills,
-        data?.size,
-        data?.projectName,
-        data?.sTime,
-        data?.eTime)
+        1,
+        d?.empDetail?.skills?.[0].title,
+        d?.projDetails?.[0].teamSize, 
+        d?.projDetails?.[0].projectName,
+        100000,
+        200000)
         console.log(res, "Employee data updated")
+        if(res){
+          await updateEmployeeData(d)
+        }
     }
     catch(e){
       console.log(e, "Error from updateEmployeeNFT")

@@ -11,14 +11,6 @@ export const TableRow = ({ data }) => {
     styleForMinted();
   }, [Minted?.isMinted]);
 
-  const mintNFTonETH = async () => {
-    let tx = await contract
-      .mintEmployeeNFT
-      //params
-      ();
-    tx = tx.wait(1);
-    console.log(tx);
-  };
 
   function styleForMinted() {
     if (Minted[0]?.isMinted) {
@@ -31,7 +23,7 @@ export const TableRow = ({ data }) => {
       return (
         <>
           <button className="uppercase text-xs bg-green-700 hover:bg-white text-white font-semibold hover:text-green-700 px-6 mx-4 border border-green-700 hover:border-green-700 rounded"
-          onClick={()=>mintEmployeeNFT(addEmployee)}>
+          onClick={()=>mintEmployeeNFT(data)}>
             Mint NFT
           </button>
         </>
@@ -58,14 +50,14 @@ export const TableRow = ({ data }) => {
           {data?.projDetails?.[0]?.projectName}
         </td>
         <td class="py-4 px-6 text-center text-sm">
-          {data?.projDetails &&
+          {!!data?.projDetails?.[0]?.projectStartDate &&
             moment(data?.projDetails?.[0]?.projectStartDate).format(
               "DD/MM/YYYY"
             )}
         </td>
         <td class="py-4 px-6 text-center text-sm">
           {" "}
-          {data?.projDetails &&
+          {!!data?.projDetails?.[0]?.projectEndDate &&
             moment(data?.projDetails?.[0]?.projectEndDate).format("DD/MM/YYYY")}
         </td>
         <td class="py-4 px-6 text-center text-sm">
@@ -80,7 +72,7 @@ export const TableRow = ({ data }) => {
               isEdit={true}
               isDelete={true}
               disabled={!!!data?.projDetails?.[0]}
-              onEditPress={()=>updateEmployeeNFT(updateData)}
+              onEditPress={()=>updateEmployeeNFT(data)}
               onDeletePress={()=>burnNft()}
             />
           }

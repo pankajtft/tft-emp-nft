@@ -1,8 +1,7 @@
 import axios from "axios";
-
+import { Path } from "./apiPaths";
 export const getEmployeeData = async () => {
   try {
-    const Path = "http://localhost:4080/";
     const res = await fetch(`${Path}employee`);
     if (!res.ok) {
       throw new Error("Failed to fetch data");
@@ -15,10 +14,27 @@ export const getEmployeeData = async () => {
 };
 
 export const postEmployeeData = async (FormData) => {
+  let data={};
+  if(!!FormData?.projDetails?.[0]?.projectName) data= FormData
+  else data.empDetail= FormData?.empDetail  
+  try {
+    if(data){
+   const res = await axios.post(`${Path}employee`,data);
+    if (!res.ok) {
+      throw new Error("Failed to fetch data");
+    }
+    let response = res;
+    return response;
+  }
+  } catch (e) {
+    console.log(e, "Error fetching Employee Details");
+  }
+};
+
+export const updateEmployeeData = async (FormData) => {
   console.log(FormData);
   try {
-    const Path = "http://localhost:4080/";
-    const res = await axios.post(`${Path}employee`, FormData);
+    const res = await axios.patch(`${Path}employee/${FormData?._id}`, FormData);
     if (!res.ok) {
       throw new Error("Failed to fetch data");
     }

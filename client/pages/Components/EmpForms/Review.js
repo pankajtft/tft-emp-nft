@@ -45,11 +45,11 @@ const Review = ({data}) =>{
         },
         {
             label:"Project Start Date",
-            value:moment(projectStartDate).format("DD/MM/YYYY")
+            value:!!projectStartDate&& moment(projectStartDate).format("DD/MM/YYYY")
         },
         {
             label:"Project End Date",
-            value:moment(projectEndDate).format("DD/MM/YYYY") 
+            value:!!projectEndDate && moment(projectEndDate).format("DD/MM/YYYY") 
         },
     ]
     console.log(data)

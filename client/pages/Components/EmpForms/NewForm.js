@@ -57,9 +57,9 @@ const Newform = () => {
     setShow(true);
   };
   const onSubmit = async (data) => {
+    setFormData(data);
     await postEmployeeData(data);
     console.log(data, "data");
-    setFormData(data);
   };
   function getStepContent(step) {
     switch (step) {
