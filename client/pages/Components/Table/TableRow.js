@@ -2,11 +2,12 @@ import { ButtonGroupIcon } from "../GroupButton";
 import React, { useContext, useEffect } from "react";
 import moment from "moment";
 import { Web3Context } from "../../Context/web3Context";
+import FormModal from "../Modals";
 export const TableRow = ({ data }) => {
   const {mintEmployeeNFT , updateEmployeeNFT, burnNft} = useContext(Web3Context);
 
   const Minted = [{ isMinted: false }];
-
+  const [editModal, setEditModal]= React.useState(false)
   useEffect(() => {
     styleForMinted();
   }, [Minted?.isMinted]);
@@ -32,6 +33,10 @@ export const TableRow = ({ data }) => {
   }
   return (
     <>
+    <FormModal
+    isShow={editModal}
+    handleClose={()=>setEditModal(false)}
+    data={data}/>
       <tr class="bg-white item-center border-black border-separate border border-slate-300">
         <td class="py-4 px-6 text-center capitalize text-sm">
           {data?.empDetail?.name}
@@ -72,7 +77,8 @@ export const TableRow = ({ data }) => {
               isEdit={true}
               isDelete={true}
               disabled={!!!data?.projDetails?.[0]}
-              onEditPress={()=>updateEmployeeNFT(data)}
+              onEditPress={()=>setEditModal(true)
+              }
               onDeletePress={()=>burnNft()}
             />
           }

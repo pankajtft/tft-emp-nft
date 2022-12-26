@@ -90,7 +90,7 @@ const Web3Provider = ({ children }) => {
        d?.projDetails?.[0].projectName,
        100000,
        200000);
-       res = res.wait(1);
+      //  res = res.wait(1);
      console.log(res, "Employee Added") 
 
     }
@@ -118,7 +118,8 @@ const Web3Provider = ({ children }) => {
   };
   const burnNft = async() => {
     try{
-      let res= await new contract._burn(0)
+      let res= await new contract.burn(0)
+      console.log(res)
     }catch(e){
       console.log(e, "error _burn")
     }

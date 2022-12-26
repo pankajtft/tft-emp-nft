@@ -31,8 +31,6 @@ export default function RHMultiCheckDropdown({
       name={name}
       rules={{ required: true }}
       render={({field: { onChange },fieldState: { error } }) => (
-        <>
-          <div >
             <Autocomplete
             multiple              
             id={id}
@@ -72,8 +70,6 @@ export default function RHMultiCheckDropdown({
                 </>
               )}
             />
-          </div>
-        </>
       )}
     />
   );

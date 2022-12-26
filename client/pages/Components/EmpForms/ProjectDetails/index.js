@@ -19,8 +19,8 @@ const ProjectDetails = ({ handleSubmitForm, initialData }) => {
       <Typography variant="h6" gutterBottom>
         Project Details
       </Typography>
-      <Grid container spacing={3}>
-        <Grid item xs={12} sm={6}>
+      {/* <Grid container spacing={3}> */}
+        {/* <Grid item xs={12} sm={6}> */}
           <RHFTextField
             // required
             id="projectName"
@@ -32,7 +32,7 @@ const ProjectDetails = ({ handleSubmitForm, initialData }) => {
               pb: 0 ,
             }}
           />
-          <div className="flex flex-row my-2 mr-2 justify-around">
+          <div className="flex flex-row my-2 mr-2 justify-between">
           <RHDatepicker
             // required
             id="projectStartDate"
@@ -42,7 +42,7 @@ const ProjectDetails = ({ handleSubmitForm, initialData }) => {
             variant="outlined"
             sx={{
               pb: 1,
-              mr:2
+              mr:2,
             }}
             className='mr-2 pr-4'
           />
@@ -97,8 +97,8 @@ const ProjectDetails = ({ handleSubmitForm, initialData }) => {
           }
           />
 
-        </Grid>
-      </Grid>
+        {/* </Grid> */}
+      {/* </Grid> */}
     </>
   );
 };

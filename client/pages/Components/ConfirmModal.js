@@ -18,8 +18,12 @@ export default function DialogBox({handleClose,isOpen, onButtonPress}) {
           {"Do you want to add Project Details?"}
         </DialogTitle>
         <DialogActions>
-          <Button onClick={()=>onButtonPress(false)}>No</Button>
-          <Button onClick={()=>onButtonPress(true)} autoFocus>
+          <Button onClick={()=>onButtonPress(false)}
+          className=" bg-transparent hover:bg-purple-700 text-purple-700 font-semibold hover:text-white py-2 px-8 border border-purple-500 hover:border-transparent rounded"
+          >No</Button>
+          <Button onClick={()=>onButtonPress(true)} autoFocus
+          className=" bg-transparent hover:bg-purple-700 text-purple-700 font-semibold hover:text-white py-2 px-8 border border-purple-500 hover:border-transparent rounded"
+          >
             Proceed
           </Button>
         </DialogActions>

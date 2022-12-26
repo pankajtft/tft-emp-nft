@@ -133,7 +133,7 @@ const Newform = () => {
                       <Button
                         onClick={handleBack}
                         sx={{ mt: 3, ml: 1 }}
-                        className=" hover:bg-indigo-500 text-purple-500 font-semibold hover:text-white py-1 px-8 border border-purple-500 hover:border-transparent rounded"
+                        className=" hover:bg-purple-700 text-purple-700 font-semibold hover:text-white py-1 px-8 border border-purple-500 hover:border-transparent rounded"
                       >
                         Back
                       </Button>
@@ -145,7 +145,7 @@ const Newform = () => {
                         type="submit"
                         onSubmit={onSubmit}
                         sx={{ mt: 3, ml: 1 }}
-                        className=" bg-transparent hover:bg-indigo-500 text-purple-700 font-semibold hover:text-white py-2 px-8 border border-purple-500 hover:border-transparent rounded"
+                        className=" bg-transparent hover:bg-purple-700 text-purple-700 font-semibold hover:text-white py-2 px-8 border border-purple-500 hover:border-transparent rounded"
                       >
                         Save
                       </Button>
@@ -154,7 +154,7 @@ const Newform = () => {
                         variant="contained"
                         onClick={handleNext}
                         sx={{ mt: 3, ml: 1 }}
-                        className=" bg-purple-700 hover:bg-indigo-500 text-white font-semibold hover:text-white py-2 px-8 border border-purple-500 hover:border-transparent rounded"
+                        className=" bg-white hover:bg-purple-700 text-purple-700 font-semibold hover:text-white py-2 px-8 border border-purple-500 hover:border-transparent rounded"
                       >
                         Next
                       </Button>
