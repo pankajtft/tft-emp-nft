@@ -37,6 +37,7 @@ export const TableRow = ({ data }) => {
     isShow={editModal}
     handleClose={()=>setEditModal(false)}
     data={data}/>
+      <tbody>
       <tr class="bg-white item-center border-black border-separate border border-slate-300">
         <td class="py-4 px-6 text-center capitalize text-sm">
           {data?.empDetail?.name}
@@ -84,6 +85,7 @@ export const TableRow = ({ data }) => {
           }
         </td>
       </tr>
+      </tbody>
     </>
   );
 };

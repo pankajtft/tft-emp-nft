@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from "react";
+import TableFooter from "../Components/Paginator/PaginatedFooter";
 import SearchBar from "../Components/SearchBar";
 import { TableHeader } from "../Components/Table/TableHeader";
 import { TableRow } from "../Components/Table/TableRow";
@@ -6,6 +7,20 @@ import { AuthContext } from "../Context/auth-context";
 const Listing = () => {
   const { employeeData } = useContext(AuthContext);
   const [searchData, setSearchData] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  let dataLimit=5;
+  const pages = Math.round(employeeData?.length / dataLimit);
+  function goToNextPage() {  
+    currentPage !== pages && setCurrentPage((page) => page + 1);
+  }
+   function goToPreviousPage() {
+    currentPage !== 1 && setCurrentPage((page) => page - 1);
+  }
+   const getPaginatedData = () => {
+    const startIndex = currentPage * dataLimit - dataLimit;
+    const endIndex = startIndex + dataLimit;
+    return employeeData.slice(startIndex, endIndex);
+  };
   function setLength() {
     let data = employeeData;
     while (data?.length < 5) {
@@ -51,7 +66,6 @@ const Listing = () => {
   console.log(value)
   return value
 }
-console.log(employeeData, "employeeData")
   return (
     <div className="bg-my_bg_image py-6">
       {/* <h1 className='flex flex-col text-white w-auto border-r rounded-b justify-center items-center justify-center '>NFT Listing</h1> */}
@@ -63,10 +77,16 @@ console.log(employeeData, "employeeData")
         <div className="w-auto border-2 mx-20 border-double">
           <table className="border-collapse">
             <TableHeader />
-            {setLength().map((item) => {
-              return <TableRow data={item} />;
+            {getPaginatedData().map((item,index) => {
+              return <TableRow key={item?._id} data={item} />;
             })}
           </table>
+          <TableFooter
+          pages={employeeData?.length}
+          onPrevButton={()=>goToPreviousPage()}
+          onNextButton={()=>goToNextPage()}
+          isDisabled={currentPage ==1}
+          />
         </div>
       </div>
     </div>
