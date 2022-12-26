@@ -56,7 +56,7 @@ export default function FormModal({ isShow, handleClose, data }) {
                 label="Project Start Date"
                 fullWidth
                 variant="outlined"
-                value={data?.projDetails?.[0]?.projectStartDate ?? ""}
+                defaultValue={data?.projDetails?.[0]?.projectStartDate ?? ""}
                 sx={{
                   pb: 1,
                   mr: 2,
@@ -69,7 +69,7 @@ export default function FormModal({ isShow, handleClose, data }) {
                 name="projDetails.projectEndDate"
                 label="Project End Date"
                 fullWidth
-                value={data?.projDetails?.[0]?.projectEndDate ?? ""}
+                defaultValue={data?.projDetails?.[0]?.projectEndDate ?? ""}
                 variant="outlined"
                 sx={{
                   pb: 2,

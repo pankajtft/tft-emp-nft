@@ -14,11 +14,12 @@ export const getEmployeeData = async () => {
 };
 
 export const postEmployeeData = async (FormData) => {
-  let data={};
-  if(!!FormData?.projDetails?.[0]?.projectName) data= FormData
-  else data.empDetail= FormData?.empDetail  
+  let data=FormData
+  // if(!!FormData?.projDetails?.[0]?.projectName) data= FormData
+  // else data.empDetail= FormData?.empDetail  
   try {
     if(data){
+      console.log(data, "Data inside APi Call")
    const res = await axios.post(`${Path}employee`,data);
     if (!res.ok) {
       throw new Error("Failed to fetch data");
