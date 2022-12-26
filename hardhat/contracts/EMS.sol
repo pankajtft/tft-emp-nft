@@ -110,6 +110,12 @@ import "hardhat/console.sol";
         );
     }
 
+    //Return TokenID
+    function returnToken() external view returns(uint16){
+        uint256 tokenId = NFT._tokenIdCounter();
+        return (uint16(tokenId)-1);
+    }
+
     //Overrides
     function onERC721Received(
         address,
