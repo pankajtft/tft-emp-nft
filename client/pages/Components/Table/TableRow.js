@@ -4,10 +4,12 @@ import moment from "moment";
 import { Web3Context } from "../../Context/web3Context";
 import FormModal from "../Modals";
 import DialogBox from "../ConfirmModal";
+import { deleteData } from "../../utils/apis";
+import { AuthContext } from "../../Context/auth-context";
 export const TableRow = ({ data }) => {
   const { mintEmployeeNFT, updateEmployeeNFT, burnNft } =
     useContext(Web3Context);
-
+  const {isUserAdmin} =useContext(AuthContext)
   const Minted = [{ isMinted: false }];
   const [editModal, setEditModal] = React.useState(false);
   const [deleteModal, setDeleteModal] = React.useState(false)
@@ -37,7 +39,7 @@ export const TableRow = ({ data }) => {
   }
   function handleDeleteOption(val){
     if(val){
-      burnNft(data);
+      data?.tokenId ? burnNft(data) : deleteData(data._id)
       setDeleteModal(false)
       }
     else setDeleteModal(false)
@@ -105,7 +107,8 @@ export const TableRow = ({ data }) => {
           <td className="py-4 px-6 text-center text-sm">
             {data?.projDetails?.[0]?.teamSize}
           </td>
-          <td className="py-2 px-6 text-center text-sm">
+          { isUserAdmin && 
+          <><td className="py-2 px-6 text-center text-sm">
             {!!data?.projDetails?.[0] ? (
               styleForMinted(!!data?.projDetails?.[0]?.projectName)
             ) : (
@@ -131,6 +134,7 @@ export const TableRow = ({ data }) => {
               />
             }
           </td>
+          </>}
         </tr>
       </tbody>
     </>

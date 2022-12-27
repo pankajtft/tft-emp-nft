@@ -1,4 +1,4 @@
-export const TableHeader = ()=>{
+export const TableHeader = ({isAdmin})=>{
     return(
         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 item-center">
             <tr>
@@ -29,12 +29,13 @@ export const TableHeader = ()=>{
                 <th scope="col" className="py-3 px-6 ">
                     Team Size
                 </th>
-                <th scope="col" className="py-3 px-6 ">
+                {
+                    isAdmin && <><th scope="col" className="py-3 px-6 ">
                     Status
                 </th>
                 <th scope="col" className="py-3 px-6 ">
                     Action
-                </th>
+                </th></>}
             </tr>
         </thead>
     )

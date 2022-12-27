@@ -6,7 +6,7 @@ import { TableRow } from "../Components/Table/TableRow";
 import { AuthContext } from "../Context/auth-context";
 import { debounce } from "lodash";
 const Listing = () => {
-  const { employeeData } = useContext(AuthContext);
+  const { employeeData, isUserAdmin } = useContext(AuthContext);
   const [myData, setMyData] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   let dataLimit = 5;
@@ -59,7 +59,7 @@ const Listing = () => {
         </div>
         <div className="w-auto border-2 mx-20 border-double">
           <table className="border-collapse">
-            <TableHeader />
+            <TableHeader isAdmin={isUserAdmin}/>
             {!!myData &&
               getPaginatedData().map((item) => {
                 return <TableRow key={item?.empDetail?.empCode} data={item} />;
