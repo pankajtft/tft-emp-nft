@@ -1,22 +1,19 @@
 import React, { useEffect } from "react";
 
-const TableFooter = ({onPrevButton,onNextButton , pages, isDisabled}) => {
+const TableFooter = ({onPrevButton,onNextButton , pageNo, next}) => {
   return (
 <div className="flex flex-col items-center bg-gray-50">
-  <span className="text-sm text-gray-700 dark:text-gray-400">
-      Showing <span className="font-semibold text-gray-900 dark:text-white">1</span> to <span className="font-semibold text-gray-900 dark:text-white">5</span> of <span className="font-semibold text-gray-900 dark:text-white">{pages}</span> Entries
-  </span>
-  <div className="flex flex-row justify-around">
-      <button 
+  <div className="flex flex-row justify-between p-5 w-full ">
+      {pageNo === 1 ? <div className="px-4 py-2 text-sm font-medium"/> : <button 
       onClick={onPrevButton}
-      className="px-4 py-2 text-sm font-medium text-white bg-gray-800 rounded-l hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+      className="px-4 py-2 text-sm font-medium hover:border-purple-700 text-white bg-purple-700 border-gray-700 border rounded-l hover:bg-white dark:bg-gray-800 dark:border-purple-700 dark:text-purple-700 dark:hover:bg-white dark:hover:text-purple-700 hover:text-purple-700">
           Prev
-      </button>
-      <button 
+      </button>}
+      {!next ? <div className="px-4 py-2 text-sm font-medium"/> :<button 
       onClick={onNextButton}
-      className="px-4 py-2 text-sm font-medium text-white bg-gray-800 border-0 border-l border-gray-700 rounded-r hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+      className="px-4 py-2 text-sm font-medium hover:border-purple-700 text-white bg-purple-700 border border-gray-700 rounded-r hover:bg-white dark:bg-gray-800 dark:border-purple-700 dark:text-purple-700 dark:hover:bg-white dark:hover:text-purple-700 hover:text-purple-700">
           Next
-      </button>
+      </button>}
   </div>
 </div>
 

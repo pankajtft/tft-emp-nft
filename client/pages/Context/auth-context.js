@@ -2,8 +2,7 @@ import React, { useEffect, useCallback } from "react";
 import { useRouter } from "next/router";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "../utils/firebase-config";
-import { getEmployeeData } from "../utils/apis";
-
+import { getEmployeeData ,getAdminUsers} from "../utils/apis";
 const defaultValue = {
   token: null,
   isUserAuthenticated: false,
@@ -15,11 +14,12 @@ const AuthProvider = ({ children }) => {
   const [authState, setAuthState] = React.useState({ token: "" });
   const [isUserAuthenticated, setUserAuthenticated] = React.useState(false);
   const [employeeData, setEmployeeData] = React.useState([]);
-  const [isUserAdmin, setUserAdmin] = React.useState(true);
+  const [isUserAdmin, setUserAdmin] = React.useState(false);
   const router = useRouter();
   const loginWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
     provider.addScope("https://www.googleapis.com/auth/contacts.readonly");
+    const adminUsers = await getAdminUsers();
     await signInWithPopup(auth, provider)
       .then((result) => {
         // This gives you a Google Access Token. You can use it to access the Google API.
@@ -31,15 +31,20 @@ const AuthProvider = ({ children }) => {
           const credential = GoogleAuthProvider.credentialFromResult(result);
           const token = credential?.accessToken;
           console.log({ credential, token, user });
-          return token;
+          return {token,adminUsers, user};
         }
       })
       .then((data) => {
         if (data) {
-          localStorage.setItem("Token", data);
+          const isAdmin = adminUsers.includes(data?.user?.email)
+          const token= data?.token
+          var userData=JSON.stringify({token,isAdmin})
+          localStorage.setItem("Token", userData);
           setUserAuthInfo();
-          setUserAdmin(false);
-          router.reload(window.location.pathname);
+          isAdmin && setUserAdmin(true);
+          setTimeout(() => {
+            router.reload(window.location.pathname);
+          }, 2000);
         } else {
           alert("Domain Specified is not valid");
         }
@@ -71,8 +76,9 @@ const AuthProvider = ({ children }) => {
     setUserAuthenticated(true);
   };
   const setUser = () => {
-    const token = localStorage.getItem("Token");
-    setUserAuthInfo(token);
+    const token = JSON.parse(localStorage.getItem("Token"));
+    console.log(token, "token")
+    setUserAdmin(token?.isAdmin)
   };
   const getData = useCallback(async () => {
     const data = await getEmployeeData();
@@ -83,7 +89,8 @@ const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     getData();
-  }, []);
+    setUser();
+  }, [isUserAdmin]);
 
   return (
     <AuthContext.Provider

@@ -70,3 +70,18 @@ export const deleteData = async (_id) => {
     console.log(e, "Error fetching Employee Details");
   }
 };
+
+export const getAdminUsers = async() => {
+  try{
+    const res = await fetch(`${Path}admin`);
+    if (!res.ok) {
+      throw new Error("Failed to fetch data");
+    }
+    let data = await res?.json();
+    data=data?.[0]?.admins
+    return data;
+  }
+  catch(e){
+    console.log(e, "Error from GetAdminUSers");
+  }
+}

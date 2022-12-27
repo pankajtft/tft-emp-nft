@@ -3,12 +3,14 @@ import React, { useContext, useEffect } from "react";
 import moment from "moment";
 import { Web3Context } from "../../Context/web3Context";
 import FormModal from "../Modals";
+import DialogBox from "../ConfirmModal";
 export const TableRow = ({ data }) => {
   const { mintEmployeeNFT, updateEmployeeNFT, burnNft } =
     useContext(Web3Context);
 
   const Minted = [{ isMinted: false }];
   const [editModal, setEditModal] = React.useState(false);
+  const [deleteModal, setDeleteModal] = React.useState(false)
   useEffect(() => {
     styleForMinted();
   }, [data?.tokenId]);
@@ -33,6 +35,13 @@ export const TableRow = ({ data }) => {
       );
     }
   }
+  function handleDeleteOption(val){
+    if(val){
+      burnNft(data);
+      setDeleteModal(false)
+      }
+    else setDeleteModal(false)
+  }
   return (
     <>
       <FormModal
@@ -40,6 +49,16 @@ export const TableRow = ({ data }) => {
         handleClose={() => setEditModal(false)}
         data={data}
       />
+      {deleteModal && (
+        <DialogBox
+          title={"Are you sure you want to delete this NFT?"}
+          btnTitle1={"Cancel"}
+          btnTitle2={"Delete"}
+          isOpen={deleteModal}
+          handleClose={() => setDeleteModal(false)}
+          onButtonPress={(val) => handleDeleteOption(val)}
+        />
+      )}
       <tbody>
         <tr className="bg-white item-center border-black border-separate border border-slate-300">
           <td className="py-4 px-6 text-center capitalize text-sm">
@@ -108,7 +127,7 @@ export const TableRow = ({ data }) => {
                 isDelete={true}
                 disabled={!!!data}
                 onEditPress={() => setEditModal(true)}
-                onDeletePress={() => burnNft(data)}
+                onDeletePress={() => setDeleteModal(true)}
               />
             }
           </td>

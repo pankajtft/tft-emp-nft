@@ -4,7 +4,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogTitle from '@mui/material/DialogTitle';
 
-export default function DialogBox({handleClose,isOpen, onButtonPress}) {
+export default function DialogBox({handleClose,isOpen, onButtonPress, title , btnTitle1, btnTitle2}) {
 
   return (
     <div>
@@ -15,16 +15,18 @@ export default function DialogBox({handleClose,isOpen, onButtonPress}) {
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">
-          {"Do you want to add Project Details?"}
+          {title? title : "Do you want to add Project Details?"}
         </DialogTitle>
         <DialogActions>
           <Button onClick={()=>onButtonPress(false)}
+          variant="contained"
           className=" bg-transparent hover:bg-purple-700 text-purple-700 font-semibold hover:text-white py-2 px-8 border border-purple-500 hover:border-transparent rounded"
-          >No</Button>
+          >{btnTitle1 ? btnTitle1 : "No"}</Button>
           <Button onClick={()=>onButtonPress(true)} autoFocus
+          variant="contained"
           className=" bg-transparent hover:bg-purple-700 text-purple-700 font-semibold hover:text-white py-2 px-8 border border-purple-500 hover:border-transparent rounded"
           >
-            Proceed
+            {btnTitle2 ? btnTitle2 : "Proceed"}
           </Button>
         </DialogActions>
       </Dialog>

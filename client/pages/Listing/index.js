@@ -17,7 +17,7 @@ const Listing = () => {
   }, [employeeData]);
 
   function goToNextPage() {
-    // currentPage !== pages && 
+    currentPage !== pages && 
     setCurrentPage((page) => page + 1);
   }
   function goToPreviousPage() {
@@ -50,7 +50,7 @@ const Listing = () => {
   return (
     <div className="bg-my_bg_image py-6">
       {/* <h1 className='flex flex-col text-white w-auto border-r rounded-b justify-center items-center justify-center '>NFT Listing</h1> */}
-      <div className="flex flex-col w-auto border-r rounded-b justify-center items-center justify-center ">
+      <div className="flex flex-col w-auto border-r rounded-b justify-center items-center justify-center  ">
         <div className="w-1/2 justify-self-center m-8 shadow-inner">
           <SearchBar
             onSearch={(e) => handleSearch(e.target.value)}
@@ -65,12 +65,14 @@ const Listing = () => {
                 return <TableRow key={item?.empDetail?.empCode} data={item} />;
               })}
           </table>
-          <TableFooter
+          {!!myData && <TableFooter
             pages={employeeData?.length}
+            pageNo={currentPage}
+            next={currentPage !== pages}
             onPrevButton={() => goToPreviousPage()}
             onNextButton={() => goToNextPage()}
             isDisabled={currentPage == 1}
-          />
+          />}
         </div>
       </div>
     </div>
