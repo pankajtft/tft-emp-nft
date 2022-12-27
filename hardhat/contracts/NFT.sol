@@ -14,13 +14,13 @@ contract EmployeeNFT is ERC721, ERC721URIStorage, ERC721Burnable, Ownable {
 
     constructor() ERC721("EMS", "TFT") {}
 
-    function safeMint(string memory uri) public onlyOwner returns (uint256) {
+    function safeMint(string memory uri) public onlyOwner returns (uint8) {
         uint256 tokenId = _tokenIdCounter.current();
         _tokenIdCounter.increment();
         _safeMint(msg.sender, tokenId);
         _setTokenURI(tokenId, uri);
 
-        return tokenId;
+        return uint8(tokenId);
     }
 
     function _beforeTokenTransfer(

@@ -20,27 +20,27 @@ import "hardhat/console.sol";
         bytes32 projDetails;
     }
 
-    mapping(uint256 => Employee) employees;
+    mapping(uint8 => Employee) employees;
 
     event NFTMinted(
-        uint256 _empId,
+        uint16 _empId,
         string employeeName,
         string email,
         string skills,
-        uint256 team_size,
+        uint16 team_size,
         string _projectName,
-        uint256 startTime,
-        uint256 endTime,
-        uint256 tokenId
+        string startTime,
+        string endTime,
+        uint8 tokenId
     );
 
     event NFTChanged(
-        uint256 tokenId,
+        uint16 tokenId,
         string skills,
-        uint256 team_size,
+        uint16 team_size,
         string _projectName,
-        uint256 startTime,
-        uint256 endTime
+        string startTime,
+        string endTime
     );
 
     constructor() {
@@ -49,21 +49,21 @@ import "hardhat/console.sol";
 
     function mintEmployeeNFT(
         string memory _employeeName,
-        uint256 _empId,
+        uint16 _empId,
         string memory email,
         string memory _skills,
-        uint256 team_size,
+        uint16 team_size,
         string memory _projectName,
-        uint256 startTime, //UnixTime
-        uint256 endTime //UnixTime
-    ) public nonReentrant returns (uint256) {
+        string memory startTime, //UnixTime
+        string memory endTime //UnixTime
+    ) public nonReentrant {
         bytes32 empHash = keccak256(abi.encode(_employeeName, _empId, email));
         bytes32 projectHash = keccak256(
             abi.encode(_projectName, startTime, endTime, _skills, team_size)
         );
         bytes32 uriHash = keccak256(abi.encode(empHash, projectHash));
         string memory uri = string(abi.encodePacked(uriHash));
-        uint256 tokenId = NFT.safeMint(uri);
+        uint8 tokenId = NFT.safeMint(uri);
 
         employees[tokenId] = Employee(empHash, projectHash);
 
@@ -79,16 +79,15 @@ import "hardhat/console.sol";
             tokenId
         );
 
-        return tokenId;
     }
 
     function updateEmployeeNFT(
-        uint256 tokenId,
+        uint8 tokenId,
         string memory skills,
-        uint256 team_size,
+        uint16 team_size,
         string memory _projectName,
-        uint256 startTime, //UnixTime
-        uint256 endTime //UnixTime
+        string memory startTime, //UnixTime
+        string memory endTime //UnixTime
     ) public {
         bytes32 projectHash = keccak256(
             abi.encode(_projectName, startTime, endTime, skills, team_size)
@@ -111,9 +110,9 @@ import "hardhat/console.sol";
     }
 
     //Return TokenID
-    function returnToken() external view returns(uint16){
+    function returnToken() external view returns(uint8){
         uint256 tokenId = NFT._tokenIdCounter();
-        return (uint16(tokenId)-1);
+        return (uint8(tokenId)-1);
     }
 
     //Overrides
@@ -127,12 +126,12 @@ import "hardhat/console.sol";
     }
 
     //burn
-    function burn(uint256 tokenId) public virtual onlyOwner {
-        NFT.burn(tokenId);
+    function burn(uint8 tokenId) public virtual onlyOwner {
+        NFT.burn(uint256(tokenId));
     }
 
     //Pure/View Functions
-    function getNFT() public view returns (EmployeeNFT) {
+    function getNFT() public view onlyOwner returns (EmployeeNFT) {
         return NFT;
     }
 }
