@@ -70,14 +70,23 @@ export const TableRow = ({ data }) => {
           {data?.projDetails?.[0]?.teamSize}
         </td>
         <td className="py-2 px-6 text-center text-sm">
-          {!!data?.projDetails?.[0] && styleForMinted()}
+          {!!data?.projDetails?.[0] ? styleForMinted(!!data?.projDetails?.[0]?.projectName) :
+          <>
+           <button 
+          disabled={true}
+          className= "uppercase text-xs bg-slate-300 text-slate-50 font-semibold px-6 mx-4 border rounded"
+          onClick={()=>console.log("isDisabled")}>
+            Mint NFT
+          </button>
+          </>
+          }
         </td>
         <td className="py-4 px-6 w-10 ">
           {
             <ButtonGroupIcon
               isEdit={true}
               isDelete={true}
-              disabled={!!!data?.projDetails?.[0]}
+              disabled={!!!data}
               onEditPress={()=>setEditModal(true)}
               onDeletePress={()=>burnNft(data)}
             />

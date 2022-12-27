@@ -114,7 +114,7 @@ const Web3Provider = ({ children }) => {
       let res = await new contract.updateEmployeeNFT(
         d?.tokenId,
         "New Skills",
-        d?.projDetails?.[0].teamSize,
+        Number(d?.projDetails?.[0].teamSize),
         d?.projDetails?.[0].projectName,
         100000,
         200000

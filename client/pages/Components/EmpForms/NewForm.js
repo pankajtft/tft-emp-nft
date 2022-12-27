@@ -65,7 +65,10 @@ const Newform = () => {
   };
   const onSubmit = async (data) => {
     setFormData(data);
+    methods.reset()
     await postEmployeeData(data);
+    setActiveStep(0);
+    // router.push("Listing")
     console.log(data, "data");
   };
   function getStepContent(step) {

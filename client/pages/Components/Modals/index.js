@@ -15,6 +15,7 @@ import {
 import Box from "@mui/material/Box";
 import { Web3Context } from "../../Context/web3Context";
 import { AuthContext } from "../../Context/auth-context";
+import { updateEmployeeData } from "../../utils/apis";
 
 export default function FormModal({ isShow, handleClose, data }) {
   const {updateEmployeeNFT} = useContext(Web3Context)
@@ -28,8 +29,8 @@ export default function FormModal({ isShow, handleClose, data }) {
   watch((data) => setFormData(data));
   const [formdata, setFormData] = React.useState({});
   const onSubmit = async(projectData) => {
-    console.log(projectData);
-    await updateEmployeeNFT(updated).then(()=>handleClose())
+  if(data?.tokenId) await updateEmployeeNFT(projectData).then(()=>handleClose())
+  else await updateEmployeeData(projectData).then(()=>handleClose())
   };
   return (
     <div className="flex flex-col w-full">
@@ -41,7 +42,7 @@ export default function FormModal({ isShow, handleClose, data }) {
             <RHFTextField
               required={true}
               id="projectName"
-              name="projDetails.projectName"
+              name="projDetails[0].projectName"
               label="Project Name"
               fullWidth
               defaultValue={data?.projDetails?.[0]?.projectName ?? ""}
@@ -54,7 +55,7 @@ export default function FormModal({ isShow, handleClose, data }) {
               <RHDatepicker
                 required={true}
                 id="projectStartDate"
-                name="projDetails.projectStartDate"
+                name="projDetails[0].projectStartDate"
                 label="Project Start Date"
                 fullWidth
                 variant="outlined"
@@ -68,7 +69,7 @@ export default function FormModal({ isShow, handleClose, data }) {
               <RHDatepicker
                 required={true}
                 id="projectEndDate"
-                name="projDetails.projectEndDate"
+                name="projDetails[0].projectEndDate"
                 label="Project End Date"
                 fullWidth
                 defaultValue={data?.projDetails?.[0]?.projectEndDate ?? ""}
@@ -81,7 +82,7 @@ export default function FormModal({ isShow, handleClose, data }) {
             <RHFTextField
               required={true}
               id="designation"
-              name="projDetails.designation"
+              name="projDetails[0].designation"
               label="Designation"
               fullWidth
               defaultValue={data?.projDetails?.[0]?.designation ?? ""}
@@ -94,7 +95,7 @@ export default function FormModal({ isShow, handleClose, data }) {
               required={true}
               fullWidth
               id="teamSize"
-              name="projDetails.teamSize"
+              name="projDetails[0].teamSize"
               label="Team size"
               variant="outlined"
               defaultValue={data?.projDetails?.[0]?.teamSize ?? ""}

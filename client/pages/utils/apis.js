@@ -15,8 +15,10 @@ export const getEmployeeData = async () => {
 
 export const postEmployeeData = async (FormData) => {
   let data = FormData;
-  // if(!!FormData?.projDetails?.[0]?.projectName) data= FormData
-  // else data.empDetail= FormData?.empDetail
+  if(!!!FormData?.projDetails?.[0]?.projectName) {
+    delete data?.projDetails
+  }
+  console.log(data, "Data from API")
   try {
     if (data) {
       console.log(data, "Data inside APi Call");
@@ -32,15 +34,25 @@ export const postEmployeeData = async (FormData) => {
   }
 };
 
-export const updateEmployeeData = async ({ _id, tokenId }) => {
-  console.log(_id, tokenId);
+export const updateEmployeeData = async (formData) => {
+  const id= formData?._id
+  console.log(id, "ID");
+  let data = formData;
+  if(data?.empDetail) {
+    delete data?.updatedAt
+    delete data?.isDeleted
+    delete data?._id
+    delete data?.isActive
+    delete data?.createdAt
+    delete data?.empDetail
+  }
   try {
-    const res = await axios.patch(`${Path}employee/${_id}`, {tokenId});
+    const res = await axios.patch(`${Path}employee/${id}`,data);
     if (!res.ok) {
       throw new Error("Failed to fetch data");
     }
-    let data = res;
-    return data;
+    let resp = res;
+    return resp;
   } catch (e) {
     console.log(e, "Error fetching Employee Details");
   }
