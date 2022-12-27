@@ -92,8 +92,8 @@ const Web3Provider = ({ children }) => {
         d?.empDetail?.skills?.[0].title,
         d?.projDetails?.[0].teamSize,
         d?.projDetails?.[0].projectName,
-        100000,
-        200000
+        d?.projDetails?.[0].projectStartDate,
+        d?.projDetails?.[0].projectEndDate
       );
       res = await res.wait(1);
       if (res) {
@@ -101,7 +101,8 @@ const Web3Provider = ({ children }) => {
         // console.log(id, "token");
         // const finalData = {...d, }
         const _id = d._id;
-        await updateEmployeeData({ _id, tokenId });
+        const formData = { _id, tokenId };
+        await updateEmployeeData(formData);
       }
       console.log(res, "Employee Added");
     } catch (e) {
@@ -131,8 +132,9 @@ const Web3Provider = ({ children }) => {
     try {
       let res = await contract.burn(data?.tokenId);
       res = await res.wait(1);
+      console.log(res);
       if (res) {
-        await deleteData(id);
+        await deleteData(data._id);
       }
     } catch (e) {
       console.log(e, "error _burn");
