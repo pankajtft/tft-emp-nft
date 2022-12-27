@@ -2,7 +2,11 @@ import React, { useState, useEffect } from "react";
 import { contractAddresses, abi } from "../contract-constants";
 import Web3 from "web3";
 import { ethers } from "ethers";
-import {updateEmployeeData, postEmployeeData, deleteData} from "../utils/apis"
+import {
+  updateEmployeeData,
+  postEmployeeData,
+  deleteData,
+} from "../utils/apis";
 const defaultValue = {};
 const Web3Context = React.createContext(defaultValue);
 const { Provider, Consumer } = Web3Context;
@@ -78,60 +82,60 @@ const Web3Provider = ({ children }) => {
       console.log(e);
     }
   }
-  const mintEmployeeNFT = async(d) => {
-    try{
-      console.log(d, "FromDa")
-     let res = await contract.mintEmployeeNFT(
-       d?.empDetail?.name,
-       d?.empDetail?.empCode,
-       d?.empDetail?.email,
-       d?.empDetail?.skills?.[0].title,
-       d?.projDetails?.[0].teamSize, 
-       d?.projDetails?.[0].projectName,
-       100000,
-       200000);
-      res =await res.wait(1)
-      if(res){
-        let id = await contract.returnToken();
-        console.log(id, "token")
-        const finalData = {...d, tokenId: id}
-        await updateEmployeeData(finalData);
+  const mintEmployeeNFT = async (d) => {
+    try {
+      console.log(d, "FromDa");
+      let res = await contract.mintEmployeeNFT(
+        d?.empDetail?.name,
+        d?.empDetail?.empCode,
+        d?.empDetail?.email,
+        d?.empDetail?.skills?.[0].title,
+        d?.projDetails?.[0].teamSize,
+        d?.projDetails?.[0].projectName,
+        100000,
+        200000
+      );
+      res = await res.wait(1);
+      if (res) {
+        let tokenId = await contract.returnToken();
+        // console.log(id, "token");
+        // const finalData = {...d, }
+        const _id = d._id;
+        await updateEmployeeData({ _id, tokenId });
       }
-     console.log(res, "Employee Added") 
-
-    }
-    catch(e){
-      console.log(e, "error mintEmployeeNFT")
+      console.log(res, "Employee Added");
+    } catch (e) {
+      console.log(e, "error mintEmployeeNFT");
     }
   };
-  const updateEmployeeNFT = async(d) => {
-    try{
+  const updateEmployeeNFT = async (d) => {
+    try {
       console.log(d, "D");
       let res = await new contract.updateEmployeeNFT(
         d?.tokenId,
         "New Skills",
-        d?.projDetails?.[0].teamSize, 
+        d?.projDetails?.[0].teamSize,
         d?.projDetails?.[0].projectName,
         100000,
-        200000)
-        console.log(res, "Employee data updated")
-        if(res){
-          await updateEmployeeData(d)
-        }
-    }
-    catch(e){
-      console.log(e, "Error from updateEmployeeNFT")
+        200000
+      );
+      console.log(res, "Employee data updated");
+      if (res) {
+        await updateEmployeeData(d);
+      }
+    } catch (e) {
+      console.log(e, "Error from updateEmployeeNFT");
     }
   };
-  const burnNft = async(data) => {
-    try{
-      let res= await contract.burn(data?.tokenId)
-      res =await res.wait(1);
-      if(res){
-        await deleteData(id)
+  const burnNft = async (data) => {
+    try {
+      let res = await contract.burn(data?.tokenId);
+      res = await res.wait(1);
+      if (res) {
+        await deleteData(id);
       }
-    }catch(e){
-      console.log(e, "error _burn")
+    } catch (e) {
+      console.log(e, "error _burn");
     }
   };
   return (
@@ -151,7 +155,7 @@ const Web3Provider = ({ children }) => {
         isAuthenticated,
         mintEmployeeNFT,
         updateEmployeeNFT,
-        burnNft
+        burnNft,
       }}
     >
       {children}
