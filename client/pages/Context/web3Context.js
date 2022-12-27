@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { contractAddresses, abi } from "../contract-constants";
+import { AuthContext } from "./auth-context";
 import Web3 from "web3";
 import { ethers } from "ethers";
 import {
@@ -30,6 +31,7 @@ const Web3Provider = ({ children }) => {
   const [nonce, setNonce] = useState(undefined);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
+  const { getData } = React.useContext(AuthContext);
   useEffect(() => {
     if (typeof window.ethereum !== "undefined") {
       setHasMetamask(true);
@@ -103,6 +105,7 @@ const Web3Provider = ({ children }) => {
         const _id = d._id;
         const formData = { _id, tokenId };
         await updateEmployeeData(formData);
+        await getData();
       }
       console.log(res, "Employee Added");
     } catch (e) {
@@ -123,6 +126,7 @@ const Web3Provider = ({ children }) => {
       console.log(res, "Employee data updated");
       if (res) {
         await updateEmployeeData(d);
+        await getData();
       }
     } catch (e) {
       console.log(e, "Error from updateEmployeeNFT");
@@ -135,6 +139,7 @@ const Web3Provider = ({ children }) => {
       console.log(res);
       if (res) {
         await deleteData(data._id);
+        await getData();
       }
     } catch (e) {
       console.log(e, "error _burn");
