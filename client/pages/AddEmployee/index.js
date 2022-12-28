@@ -3,7 +3,7 @@ import * as React from "react";
 import Newform from "../Components/EmpForms/NewForm"
 const AddEmployee =()=> {
   return (
-    <div className="bg-my_bg_image">
+    <div className="bg-my_bg_image h-full">
       <Newform />
     </div>
   );
