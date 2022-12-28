@@ -1,7 +1,7 @@
 const MainFooter = () =>{
     return(
 
-<footer className="p-4 bg-gradient-to-r from-[#332575] to-[#928DAB] sm:p-6 dark:bg-gray-900">
+<footer className="p-4 bg-gradient-to-r from-[#332575] to-[#928DAB] sm:p-6 dark:bg-gray-900 static bottom-0 h-auto">
     <div className="md:flex md:justify-between px-32">
         <div className="mb-6 md:mb-0">
             <a href="https://www.tftus.com/" className="flex items-center">

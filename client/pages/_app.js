@@ -34,7 +34,9 @@ export default function App({ Component, pageProps }) {
   return (
     <Web3Provider>
       <AuthProvider>
+      <div class="flex flex-col h-screen justify-between">
         <Stack />
+        </div>
       </AuthProvider>
       </Web3Provider>
   );

@@ -49,7 +49,7 @@ const Listing = () => {
     return value;
   }, 1500);
   return (
-    <div className="bg-my_bg_image py-6">
+    <div className="bg-my_bg_image py-6 h-full">
       {/* <h1 className='flex flex-col text-white w-auto border-r rounded-b justify-center items-center justify-center '>NFT Listing</h1> */}
       <div className="flex flex-col w-auto border-r rounded-b justify-center items-center justify-center  ">
         <div className="w-1/2 justify-self-center m-8 shadow-inner">
