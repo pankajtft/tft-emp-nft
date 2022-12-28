@@ -5,8 +5,9 @@ import { TableHeader } from "../Components/Table/TableHeader";
 import { TableRow } from "../Components/Table/TableRow";
 import { AuthContext } from "../Context/auth-context";
 import { debounce } from "lodash";
+import { getEmployeeData } from "../utils/apis";
 const Listing = () => {
-  const { employeeData, isUserAdmin } = useContext(AuthContext);
+  const { employeeData, isUserAdmin , getData} = useContext(AuthContext);
   const [myData, setMyData] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   let dataLimit = 5;
@@ -17,7 +18,7 @@ const Listing = () => {
   }, [employeeData]);
 
   function goToNextPage() {
-    currentPage !== pages && 
+    currentPage <= pages && 
     setCurrentPage((page) => page + 1);
   }
   function goToPreviousPage() {
@@ -71,7 +72,7 @@ const Listing = () => {
             next={currentPage !== pages}
             onPrevButton={() => goToPreviousPage()}
             onNextButton={() => goToNextPage()}
-            isDisabled={currentPage == 1}
+            // isDisabled={currentPage === pages}
           />}
         </div>
       </div>

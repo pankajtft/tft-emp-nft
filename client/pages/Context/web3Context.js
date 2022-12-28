@@ -115,7 +115,7 @@ const Web3Provider = ({ children }) => {
   const updateEmployeeNFT = async (d) => {
     try {
       console.log(d, "D");
-      let res = await new contract.updateEmployeeNFT(
+      let res = await contract.updateEmployeeNFT(
         d?.tokenId,
         "New Skills",
         Number(d?.projDetails?.[0].teamSize),
@@ -126,7 +126,7 @@ const Web3Provider = ({ children }) => {
       console.log(res, "Employee data updated");
       if (res) {
         await updateEmployeeData(d);
-        await getData();
+        getData();
       }
     } catch (e) {
       console.log(e, "Error from updateEmployeeNFT");
@@ -139,7 +139,7 @@ const Web3Provider = ({ children }) => {
       console.log(res);
       if (res) {
         await deleteData(data._id);
-        await getData();
+        getData();
       }
     } catch (e) {
       console.log(e, "error _burn");

@@ -16,7 +16,7 @@ import Box from "@mui/material/Box";
 import { Web3Context } from "../../Context/web3Context";
 import { AuthContext } from "../../Context/auth-context";
 import { updateEmployeeData } from "../../utils/apis";
-
+import { useRouter } from "next/router";
 export default function FormModal({ isShow, handleClose, data }) {
   const {updateEmployeeNFT} = useContext(Web3Context)
   const methods = useForm({
@@ -28,9 +28,18 @@ export default function FormModal({ isShow, handleClose, data }) {
   const { handleSubmit, trigger, watch } = methods;
   watch((data) => setFormData(data));
   const [formdata, setFormData] = React.useState({});
+  const router = useRouter()
   const onSubmit = async(projectData) => {
-  if(data?.tokenId) await updateEmployeeNFT(projectData).then(()=>handleClose())
-  else await updateEmployeeData(projectData).then(()=>handleClose())
+  if(data.tokenId !== undefined){ 
+    await updateEmployeeNFT(projectData)
+    .then(()=>{
+      handleClose()
+      router.reload(window.location.pathname)
+    })}
+  else await updateEmployeeData(projectData).then(()=>{
+    handleClose()
+    router.reload(window.location.pathname)
+  })
   };
   return (
     <div className="flex flex-col w-full">
