@@ -16,6 +16,8 @@ describe("NFT MARKETPLACE ", () => {
     await deployments.fixture(["ems"]); // Deploys modules with the tags given
     emsContract = await ethers.getContract("EMS");
     ems = emsContract.connect(deployer);
+    ems2 = emsContract.connect(player1);
+    ems3 = emsContract.connect(player2);
   });
 
   describe("Deploying", function () {
@@ -38,5 +40,22 @@ describe("NFT MARKETPLACE ", () => {
         "NFTChanged"
       );
     });
+
+    it("should fetch token ID", async () => {
+      await ems.mintEmployeeNFT("AnuragPathak", 17, "anu@test.com", "react,solidity", 7, "Project1", "100000", "20000");
+      await ems.mintEmployeeNFT("LalitKishor", 10, "lalit@test.com", "react,solidity", 4, "Project2", "11000", "90000");
+      expect(await ems.returnToken()).to.equal(1);
+    });
+
+    it("Should fetch the Token Contract Address", async () => {
+      expect(await ems.getNFT()).to.be.a.properAddress;
+    })
+  });
+  describe("Error Checks", function (){
+      it("Random address trying to burn the token", async () => {
+        await ems.mintEmployeeNFT("AnuragPathak", 17, "anu@test.com", "react,solidity", 7, "Project1", "100000", "20000");
+        let tokenId = await ems.returnToken();
+        expect(await ems2.burn(tokenId)).to.be.reverted;
+      });
   });
 });
