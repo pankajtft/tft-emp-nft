@@ -2,7 +2,7 @@ import React, { useEffect, useCallback } from "react";
 import { useRouter } from "next/router";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "../utils/firebase-config";
-import { getEmployeeData ,getAdminUsers} from "../utils/apis";
+import { getEmployeeData, getAdminUsers } from "../utils/apis";
 const defaultValue = {
   token: null,
   isUserAuthenticated: false,
@@ -31,14 +31,14 @@ const AuthProvider = ({ children }) => {
           const credential = GoogleAuthProvider.credentialFromResult(result);
           const token = credential?.accessToken;
           console.log({ credential, token, user });
-          return {token,adminUsers, user};
+          return { token, adminUsers, user };
         }
       })
       .then((data) => {
         if (data) {
-          const isAdmin = adminUsers.includes(data?.user?.email)
-          const token= data?.token
-          var userData=JSON.stringify({token,isAdmin})
+          const isAdmin = adminUsers.includes(data?.user?.email);
+          const token = data?.token;
+          var userData = JSON.stringify({ token, isAdmin });
           localStorage.setItem("Token", userData);
           setUserAuthInfo();
           isAdmin && setUserAdmin(true);
@@ -76,9 +76,11 @@ const AuthProvider = ({ children }) => {
     setUserAuthenticated(true);
   };
   const setUser = () => {
-    const token = JSON.parse(localStorage.getItem("Token"));
-    console.log(token, "token")
-    setUserAdmin(token?.isAdmin)
+    const tokenRaw = localStorage.getItem("Token");
+    const token = JSON.parse(tokenRaw);
+    console.log(token, "token");
+    console.log(tokenRaw, "tokenraw");
+    setUserAdmin(token?.isAdmin);
   };
   const getData = useCallback(async () => {
     const data = await getEmployeeData();
