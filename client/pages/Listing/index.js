@@ -18,7 +18,7 @@ const Listing = () => {
   }, [employeeData]);
 
   function goToNextPage() {
-    currentPage < pages && currentPage !== pages && 
+    currentPage <= pages  && 
     setCurrentPage((page) => page + 1);
   }
   function goToPreviousPage() {

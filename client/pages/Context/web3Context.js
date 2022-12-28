@@ -8,6 +8,7 @@ import {
   postEmployeeData,
   deleteData,
 } from "../utils/apis";
+import { useRouter } from "next/router";
 const defaultValue = {};
 const Web3Context = React.createContext(defaultValue);
 const { Provider, Consumer } = Web3Context;
@@ -30,7 +31,7 @@ const Web3Provider = ({ children }) => {
   const [provider, setProvider] = useState(undefined);
   const [nonce, setNonce] = useState(undefined);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-
+  const router = useRouter();
   const { getData } = React.useContext(AuthContext);
   useEffect(() => {
     if (typeof window.ethereum !== "undefined") {
@@ -104,8 +105,11 @@ const Web3Provider = ({ children }) => {
         // const finalData = {...d, }
         const _id = d._id;
         const formData = { _id, tokenId };
-        await updateEmployeeData(formData);
-        await getData();
+        await updateEmployeeData(formData).then(()=>{
+          alert("NFT Minted successfully")
+          router.reload(window.location.pathname)
+        })
+        // await getData();
       }
       console.log(res, "Employee Added");
     } catch (e) {
@@ -125,8 +129,11 @@ const Web3Provider = ({ children }) => {
       );
       console.log(res, "Employee data updated");
       if (res) {
-        await updateEmployeeData(d);
-        getData();
+        await updateEmployeeData(d).then(()=>{
+          alert("Details Updated successfully")
+          router.reload(window.location.pathname)
+        })
+        // getData();
       }
     } catch (e) {
       console.log(e, "Error from updateEmployeeNFT");
@@ -138,8 +145,11 @@ const Web3Provider = ({ children }) => {
       res = await res.wait(1);
       console.log(res);
       if (res) {
-        await deleteData(data._id);
-        getData();
+        await deleteData(data._id).then(()=>{
+          alert("NFT burned and deleted successfully")
+          router.reload(window.location.pathname)
+        })
+        // getData();
       }
     } catch (e) {
       console.log(e, "error _burn");
