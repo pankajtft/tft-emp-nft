@@ -18,7 +18,7 @@ const Listing = () => {
   }, [employeeData]);
 
   function goToNextPage() {
-    currentPage <= pages && 
+    currentPage < pages && currentPage !== pages && 
     setCurrentPage((page) => page + 1);
   }
   function goToPreviousPage() {
@@ -33,16 +33,16 @@ const Listing = () => {
   const handleSearch = debounce((search) => {
     console.log(search);
     if (search === "") return setMyData(employeeData);
-    const value = myData.filter((value) => {
-      if (value?.empDetail.name.toLowerCase().includes(search.toLowerCase()))
+    const value = myData.filter((val) => {
+      if (val?.empDetail.name.toLowerCase().includes(search.toLowerCase()))
         return true;
-      if (value?.empDetail.empCode.toString().includes(search.toString()))
+      if (val?.empDetail.empCode.toString().includes(search.toString()))
         return true;
-      if (value?.empDetail.email.toLowerCase().includes(search.toLowerCase()))
+      if (val?.empDetail.email.toLowerCase().includes(search.toLowerCase()))
         return true;
-      if (value?.projDetails?.[0] && value?.projDetails?.[0].projectName.toLowerCase().includes(search.toLowerCase()))
+      if (val?.projDetails?.[0] && val?.projDetails?.[0].projectName.toLowerCase().includes(search.toLowerCase()))
         return true;
-      if (value?.projDetails?.[0] && value?.projDetails?.[0].designation.toLowerCase().includes(search.toLowerCase()))
+      if (val?.projDetails?.[0] && val?.projDetails?.[0].designation.toLowerCase().includes(search.toLowerCase()))
         return true;
     });
     setMyData(value);

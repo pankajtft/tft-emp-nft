@@ -8,7 +8,7 @@ const Review = ({data}) =>{
 
     const {empDetail, projDetails} = data;
     const {email, empCode, name , skills} =empDetail;
-    const{ designation, projectEndDate,projectName, teamSize, projectStartDate}= projDetails
+    // const{ designation, projectEndDate,projectName, teamSize, projectStartDate}= projDetails?.[0]
     const skillArr=[]
     const skillsIs=()=>{
         skills.map((item, index)=>{return skillArr.push(` ${item?.title}`)})
@@ -33,26 +33,26 @@ const Review = ({data}) =>{
         },
         {
             label:"Project Name",
-            value:projectName
+            value:projDetails?.[0].projectName ?? ""
         },
         {
             label:"Designation",
-            value:designation 
+            value:projDetails?.[0].designation ?? ""
         },
         {
             label:"Team Size",
-            value:teamSize 
+            value:projDetails?.[0].teamSize ??" "
         },
         {
             label:"Project Start Date",
-            value:!!projectStartDate&& moment(projectStartDate).format("DD/MM/YYYY")
+            value:!!projDetails?.[0].projectStartDate&& moment(projDetails?.[0].projectStartDate).format("DD/MM/YYYY")
         },
         {
             label:"Project End Date",
-            value:!!projectEndDate && moment(projectEndDate).format("DD/MM/YYYY") 
+            value:!!projDetails?.[0].projectEndDate && moment(projDetails?.[0].projectEndDate).format("DD/MM/YYYY")
         },
     ]
-    console.log(data)
+    console.log(data, "Review")
     return(
         <>
        {!data ? 

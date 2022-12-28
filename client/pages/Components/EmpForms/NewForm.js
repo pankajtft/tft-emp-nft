@@ -16,6 +16,7 @@ import Review from "./Review";
 import { useRouter } from "next/navigation";
 import DialogBox from "../ConfirmModal";
 import { postEmployeeData } from "../../utils/apis";
+import { debounce } from "lodash";
 const Newform = () => {
   const steps = ["Employee Details", "Project Details", "Review"];
   const [activeStep, setActiveStep] = React.useState(0);
@@ -65,10 +66,12 @@ const Newform = () => {
   };
   const onSubmit = async (data) => {
     setFormData(data);
-    methods.reset()
-    await postEmployeeData(data);
-    setActiveStep(0);
-    // router.push("Listing")
+    await postEmployeeData(data).then(()=>{
+      alert("Employee details submitted..")
+      methods.reset()
+      setActiveStep(0);
+      router.push("Listing")
+    })
     console.log(data, "data");
   };
   function getStepContent(step) {
@@ -155,7 +158,7 @@ const Newform = () => {
                     ) : (
                       <Button
                         variant="contained"
-                        onClick={handleNext}
+                        onClick={debounce(() => handleNext())}
                         sx={{ mt: 3, ml: 1 }}
                         className=" bg-white hover:bg-purple-700 text-purple-700 font-semibold hover:text-white py-2 px-8 border border-purple-500 hover:border-transparent rounded"
                       >
