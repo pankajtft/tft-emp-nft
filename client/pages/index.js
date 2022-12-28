@@ -1,11 +1,11 @@
 
-import HomePage from './Components/Home'
+import Home from "./Home"
 
-export default function Home() {
+export default function index() {
   return (
     <>
      <main className="bg-my_bg_image">
-        <HomePage/>
+        <Home/>
       </main>
     </>
   )
