@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, { useContext } from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -18,7 +18,7 @@ import { AuthContext } from "../../Context/auth-context";
 import { updateEmployeeData } from "../../utils/apis";
 import { useRouter } from "next/router";
 export default function FormModal({ isShow, handleClose, data }) {
-  const {updateEmployeeNFT} = useContext(Web3Context)
+  const { updateEmployeeNFT } = useContext(Web3Context);
   const methods = useForm({
     shouldUnregister: false,
     defaultValues: data,
@@ -28,18 +28,16 @@ export default function FormModal({ isShow, handleClose, data }) {
   const { handleSubmit, trigger, watch } = methods;
   watch((data) => setFormData(data));
   const [formdata, setFormData] = React.useState({});
-  const router = useRouter()
-  const onSubmit = async(projectData) => {
-  if(data.tokenId !== undefined){ 
-    await updateEmployeeNFT(projectData)
-    .then(()=>{
-      handleClose()
-      router.reload(window.location.pathname)
-    })}
-  else await updateEmployeeData(projectData).then(()=>{
-    handleClose()
-    router.reload(window.location.pathname)
-  })
+  const router = useRouter();
+  const onSubmit = async (projectData) => {
+    if (data.tokenId !== undefined) {
+      await updateEmployeeNFT(projectData).then(() => {
+        handleClose();
+      });
+    } else
+      await updateEmployeeData(projectData).then(() => {
+        handleClose();
+      });
   };
   return (
     <div className="flex flex-col w-full">

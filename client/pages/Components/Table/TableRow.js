@@ -10,10 +10,10 @@ import { useRouter } from "next/router";
 export const TableRow = ({ data }) => {
   const { mintEmployeeNFT, updateEmployeeNFT, burnNft } =
     useContext(Web3Context);
-  const {isUserAdmin} =useContext(AuthContext)
+  const { isUserAdmin } = useContext(AuthContext);
   const Minted = [{ isMinted: false }];
   const [editModal, setEditModal] = React.useState(false);
-  const [deleteModal, setDeleteModal] = React.useState(false)
+  const [deleteModal, setDeleteModal] = React.useState(false);
   const router = useRouter();
   useEffect(() => {
     styleForMinted();
@@ -31,9 +31,7 @@ export const TableRow = ({ data }) => {
         <>
           <button
             className="uppercase text-xs bg-green-700 hover:bg-white text-white font-semibold hover:text-green-700 px-6 mx-4 border border-green-700 hover:border-green-700 rounded"
-            onClick={() => mintEmployeeNFT(data).then(()=> {
-              router.reload(window.location.pathname)
-            })}
+            onClick={() => mintEmployeeNFT(data)}
           >
             Mint NFT
           </button>
@@ -41,14 +39,11 @@ export const TableRow = ({ data }) => {
       );
     }
   }
-  function handleDeleteOption(val){
-    if(val){
-      data.tokenId !== undefined ?  burnNft(data).then(()=> router.reload(window.location.pathname)) : 
-      deleteData(data._id).then(()=> router.reload(window.location.pathname))
-      setDeleteModal(false)
-      
-      }
-    else setDeleteModal(false)
+  function handleDeleteOption(val) {
+    if (val) {
+      data.tokenId !== undefined ? burnNft(data) : deleteData(data._id);
+      setDeleteModal(false);
+    } else setDeleteModal(false);
   }
   return (
     <>
