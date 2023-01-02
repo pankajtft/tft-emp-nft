@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import { useContext } from 'react';
 import {
   Box,
   Typography,
@@ -15,6 +16,7 @@ import ArrowBackTwoToneIcon from '@mui/icons-material/ArrowBackTwoTone';
 import ArrowForwardTwoToneIcon from '@mui/icons-material/ArrowForwardTwoTone';
 import UploadTwoToneIcon from '@mui/icons-material/UploadTwoTone';
 import MoreHorizTwoToneIcon from '@mui/icons-material/MoreHorizTwoTone';
+import { AuthContext } from '../../../Context/auth-context';
 
 const Input = styled('input')({
   display: 'none'
@@ -80,6 +82,7 @@ const CardCoverAction = styled(Box)(
 
 const ProfileCover = ({ user }) => {
   console.log(user, "user");
+  const {authState} = useContext(AuthContext);
   return (
     <>
       <Box display="flex" mb={3}>
@@ -109,7 +112,7 @@ const ProfileCover = ({ user }) => {
         </CardCoverAction>
       </CardCover>
       <AvatarWrapper>
-        <Avatar variant="rounded" color={"white"} alt={user.name} src={user.avatar} />
+        <Avatar variant="rounded" color={"white"} alt={user.name}  src={authState?.photoUrl} />
         <ButtonUploadWrapper>
           <Input
             accept="image/*"

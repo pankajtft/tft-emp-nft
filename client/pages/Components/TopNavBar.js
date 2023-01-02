@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import ConnectButton from "./ConnectButton";
@@ -8,13 +8,17 @@ const TopNavBar = () => {
 
   const { pathname } = useRouter();
   const { network, isConnected, disconnect,hasMetaMask } = useContext(Web3Context);
-  const {logout, isUserAdmin} = useContext(AuthContext)
+  const {logout, isUserAdmin, authState, setUserAuthInfo} = useContext(AuthContext)
   const selectedItemClass =
     "bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium";
   const otherItemClass =
     "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium";
 
   const [isShow, setIsShow] = useState(false);
+  useEffect(()=>{
+    setUserAuthInfo()
+  },[])
+
   return (
     <nav className="bg-gradient-to-r from-[#332575] to-[#928DAB] sticky top-0 z-50">
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -91,7 +95,7 @@ const TopNavBar = () => {
                     <span className="sr-only">Open user menu</span>
                     <img
                       className="h-8 w-8 rounded-full"
-                      src="https://lumiere-a.akamaihd.net/v1/images/h_blackpanther_mobile_19754_57fe2288.jpeg?region=0,0,640,480"
+                      src={authState?.photoUrl}
                       alt="Profile"
                     />
                   </button>

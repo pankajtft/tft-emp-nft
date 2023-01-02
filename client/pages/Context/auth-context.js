@@ -11,7 +11,7 @@ const AuthContext = React.createContext(defaultValue);
 const { Provider } = AuthContext;
 
 const AuthProvider = ({ children }) => {
-  const [authState, setAuthState] = React.useState({ token: "" });
+  const [authState, setAuthState] = React.useState({ token: "" ,photoUrl: ""});
   const [isUserAuthenticated, setUserAuthenticated] = React.useState(false);
   const [employeeData, setEmployeeData] = React.useState([]);
   const [isUserAdmin, setUserAdmin] = React.useState(false);
@@ -30,13 +30,15 @@ const AuthProvider = ({ children }) => {
         } else {
           const credential = GoogleAuthProvider.credentialFromResult(result);
           const token = credential?.accessToken;
-          console.log({ credential, token, user });
+          console.log({ credential, token, user }, "Helo");
           return { token, adminUsers, user };
         }
       })
       .then((data) => {
         if (data) {
           const isAdmin = adminUsers.includes(data?.user?.email);
+          const photoUrl = data?.user?.photoURL
+          localStorage.setItem("ImageUrl", photoUrl)
           const token = data?.token;
           var userData = JSON.stringify({ token, isAdmin });
           localStorage.setItem("Token", userData);
@@ -68,10 +70,12 @@ const AuthProvider = ({ children }) => {
     router.reload(window.location.pathname);
   };
 
-  const setUserAuthInfo = (data) => {
-    const token = localStorage.getItem("Token");
+  const setUserAuthInfo = async() => {
+    const token = await localStorage.getItem("Token");
+    const photoUrl= await localStorage.getItem("ImageUrl");
     setAuthState({
-      token,
+      token: token,
+      photoUrl : photoUrl
     });
     setUserAuthenticated(true);
   };
@@ -98,13 +102,14 @@ const AuthProvider = ({ children }) => {
     <AuthContext.Provider
       value={{
         authState,
-        setAuthState: (userAuthInfo) => setUserAuthInfo(userAuthInfo),
+        setAuthState,
         isUserAuthenticated,
         loginWithGoogle,
         logout,
         getData,
         employeeData,
         isUserAdmin,
+        setUserAuthInfo
       }}
     >
       {children}
