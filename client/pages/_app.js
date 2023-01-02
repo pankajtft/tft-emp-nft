@@ -5,6 +5,7 @@ import TopNavBar from "./Components/TopNavBar";
 import Login from "./Login";
 import { AuthProvider } from "./Context/auth-context";
 import { Web3Provider } from "./Context/web3Context";
+import ThemeProviderWrapper from "./utils/theme/ThemeProvider";
 
 export default function App({ Component, pageProps }) {
   const [isUserAuthenticated, setIsAuthenticated] = React.useState(false);
@@ -24,7 +25,6 @@ export default function App({ Component, pageProps }) {
       <Login />
     ) : (
       <>
-      
         <TopNavBar />
         <Component {...pageProps} />
         <MainFooter />
@@ -34,9 +34,11 @@ export default function App({ Component, pageProps }) {
   return (
     <Web3Provider>
       <AuthProvider>
+        <ThemeProviderWrapper>
       <div class="flex flex-col h-screen justify-between">
         <Stack />
         </div>
+        </ThemeProviderWrapper>
       </AuthProvider>
       </Web3Provider>
   );

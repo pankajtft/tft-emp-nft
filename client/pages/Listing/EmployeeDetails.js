@@ -1,32 +1,67 @@
-import { useRouter } from 'next/router'
+import Head from 'next/head';
+
+import { Grid, Container } from '@mui/material';
+
+import ProfileCover from '../Components/Users/details/ProfileCover';
+import RecentActivity from '../Components/Users/details/RecentActivity';
+import Feed from '../Components/Users/details/Feed';
+import PopularTags from '../Components/Users/details/PopularTags';
+import MyCards from '../Components/Users/details/MyCards';
+import Addresses from '../Components/Users/details/Addresses';
+
 function EmployeeDetails() {
-  
-  const router = useRouter();
-  const data = router.query;
- 
-console.log(data)
+  const user = {
+    savedCards: 7,
+    name: 'Atul Sharma',
+    empcode:"120120",
+    skills:[{title:"React"}, {title:"Vue"}, {title:"Angular"}],
+    coverImg: "https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cHJvZmlsZXxlbnwwfHwwfHw%3D&w=1000&q=80",
+    avatar: 'https://wallpapers.com/images/featured/4co57dtwk64fb7lv.jpg',
+    description:
+      "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage",
+    jobtitle: 'Web Developer',
+    location: 'Barcelona, Spain',
+    followers: '465'
+  };
+
   return (
-    <div>
-      <h1>Name: {data.name}</h1>
-      <p>Employee Code: {data.employeeCode}</p>
-      <p>Email: {data.email}</p>
-      <p>Experience: {data.experience}</p>
-      <p>Designation: {data.designation}</p>
-      <p>Project Name: {data.projName}</p>
-      <p>Start time: {data.startDate}</p>
-      <p>End time: {data.endDate}</p>
-      <p>Team size: {data.teamSize}</p>    
-      <div>
-        Skills: 
-      {data.skills.map(skills => (
-        <div>
-          <p>{skills}</p>
-        </div> 
-        
-      ))}
-      </div>
+    <div className='bg-my_bg_image py-8'>
+      <Head>
+        <title>Employee Details</title>
+      </Head>
+      <Container sx={{ mt: 3 }} maxWidth="lg">
+        <Grid
+          container
+          direction="row"
+          justifyContent="center"
+          alignItems="stretch"
+          spacing={3}
+          // style={{background:'linear-gradient(to right, #332575, #928DAB)', padding:"2rem", borderRadius:'1rem'}}
+        >
+          <Grid item xs={2} md={12}>
+            <ProfileCover user={user} />
+          {/* </Grid> */}
+          {/* <Grid item xs={12} md={4}>
+             <RecentActivity />
+          </Grid> */}
+          {/* <Grid item xs={12} md={12}> */}
+            <Feed />
+          </Grid>
+          {/* <Grid item xs={12} md={4}>
+            <PopularTags />
+          </Grid> */}
+          <Grid item xs={12} md={12}>
+            <MyCards />
+          </Grid>
+          {/* <Grid item xs={12} md={4}>
+            <Addresses />
+          </Grid> */}
+        </Grid>
+      </Container>
     </div>
   );
 }
+
+
 
 export default EmployeeDetails;
