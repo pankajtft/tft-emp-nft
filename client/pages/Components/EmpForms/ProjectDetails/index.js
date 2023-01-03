@@ -24,7 +24,7 @@ const ProjectDetails = ({ handleSubmitForm, initialData }) => {
           <RHFTextField
             // required
             id="projectName"
-            name="projDetails[0].projectName"
+            name="projDetails.projectName"
             label="Project Name"
             fullWidth
             variant="outlined"
@@ -36,7 +36,7 @@ const ProjectDetails = ({ handleSubmitForm, initialData }) => {
           <RHDatepicker
             // required
             id="projectStartDate"
-            name="projDetails[0].projectStartDate"
+            name="projDetails.projectStartDate"
             label="Project Start Date"
             fullWidth
             variant="outlined"
@@ -49,7 +49,7 @@ const ProjectDetails = ({ handleSubmitForm, initialData }) => {
           <RHDatepicker
             // required
             id="projectEndDate"
-            name="projDetails[0].projectEndDate"
+            name="projDetails.projectEndDate"
             label="Project End Date"
             fullWidth
             variant="outlined"
@@ -61,7 +61,7 @@ const ProjectDetails = ({ handleSubmitForm, initialData }) => {
           <RHFTextField
             // required
             id="designation"
-            name="projDetails[0].designation"
+            name="projDetails.designation"
             label="Designation"
             fullWidth
             variant="outlined"
@@ -73,7 +73,7 @@ const ProjectDetails = ({ handleSubmitForm, initialData }) => {
           // required
           fullWidth
           id="teamSize"
-          name="projDetails[0].teamSize"
+          name="projDetails.teamSize"
           label="Team size"
           variant="outlined"
           sx={{

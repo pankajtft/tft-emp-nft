@@ -33,23 +33,23 @@ const Review = ({data}) =>{
         },
         {
             label:"Project Name",
-            value:projDetails?.[0].projectName ?? ""
+            value:projDetails?.projectName ?? ""
         },
         {
             label:"Designation",
-            value:projDetails?.[0].designation ?? ""
+            value:projDetails?.designation ?? ""
         },
         {
             label:"Team Size",
-            value:projDetails?.[0].teamSize ??" "
+            value:projDetails?.teamSize ??" "
         },
         {
             label:"Project Start Date",
-            value:!!projDetails?.[0].projectStartDate&& moment(projDetails?.[0].projectStartDate).format("DD/MM/YYYY")
+            value:!!projDetails?.projectStartDate&& moment(projDetails?.projectStartDate).format("DD/MM/YYYY")
         },
         {
             label:"Project End Date",
-            value:!!projDetails?.[0].projectEndDate && moment(projDetails?.[0].projectEndDate).format("DD/MM/YYYY")
+            value:!!projDetails?.projectEndDate && moment(projDetails?.projectEndDate).format("DD/MM/YYYY")
         },
     ]
     console.log(data, "Review")

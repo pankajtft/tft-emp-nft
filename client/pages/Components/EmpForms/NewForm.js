@@ -17,6 +17,8 @@ import { useRouter } from "next/navigation";
 import DialogBox from "../ConfirmModal";
 import { postEmployeeData } from "../../utils/apis";
 import { debounce } from "lodash";
+import { validationSchema } from "./schema";
+import {yupResolver} from "@hookform/resolvers/yup"
 const Newform = () => {
   const steps = ["Employee Details", "Project Details", "Review"];
   const [activeStep, setActiveStep] = React.useState(0);
@@ -24,15 +26,15 @@ const Newform = () => {
   const [show, setShow] = React.useState(false);
   const [skip,setSkip] = React.useState(false)
   const router = useRouter();
-  // const currentValidationSchema = validationSchema[activeStep];
+  const currentValidationSchema = validationSchema[activeStep];
   const methods = useForm({
     shouldUnregister: false,
     defaultValues: DEFAULT_DATA_VALUE,
-    // resolver: yupResolver(currentValidationSchema),
+    resolver: activeStep < steps && yupResolver(currentValidationSchema),
     mode: "onChange",
   });
 
-  const { handleSubmit, trigger, watch } = methods;
+  const { handleSubmit, trigger, watch, formState:{errors} } = methods;
   watch((data) => setFormData(data));
   const handleNext = async () => {
     const isStepValid = await trigger();
@@ -41,6 +43,7 @@ const Newform = () => {
       // setActiveStep(activeStep + 1);
     }
   };
+  console.log(errors,currentValidationSchema, "Errors");
   const onSelection = (val) => {
     console.log(val);
     if (val) {
@@ -65,14 +68,19 @@ const Newform = () => {
     else setActiveStep(activeStep+1)
   };
   const onSubmit = async (data) => {
-    setFormData(data);
-    await postEmployeeData(data).then(()=>{
+    let newData = {
+      empDetail: data?.empDetail, 
+      projDetails: [data?.projDetails]
+    }
+    
+    setFormData(newData);
+    await postEmployeeData(newData).then(()=>{
       alert("Employee details submitted..")
       methods.reset()
       setActiveStep(0);
       router.push("Listing")
     })
-    console.log(data, "data");
+    console.log(newData , "NewData");
   };
   function getStepContent(step) {
     switch (step) {
