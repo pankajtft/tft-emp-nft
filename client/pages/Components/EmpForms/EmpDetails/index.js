@@ -50,15 +50,15 @@ const EmpDetails = ({ handleSubmitForm, initialData }) => {
             name="empDetail.skills"
             label="Skills"
             options={
-            [{title:"React"},
-            {title: "Vue"},
-            {title:"React Native"},
-            {title: "Mongo"},
-            {title: "Node"},
-            {title:"Blockchain"},
-            {title:"Solidity"},
-            {title:"JavaScript"},
-            {title:"AWS"}]
+            ["React",
+             "Vue",
+            "React Native",
+            "Mongo",
+            "Node",
+            "Blockchain",
+            "Solidity",
+            "JavaScript",
+            "AWS"]
             } 
             id="skills"
           />

@@ -36,7 +36,7 @@ export default function RHMultiCheckDropdown({
             id={id}
               options={options}
               disableCloseOnSelect
-              getOptionLabel={option => option.title ? option.title : ""}
+              getOptionLabel={option => option ? option : ""}
               onChange={(event, item) => {
                 onChange(item);
             }}
@@ -48,7 +48,7 @@ export default function RHMultiCheckDropdown({
                     style={{ marginRight: 8 }}
                     checked={selected}
                   />
-                  {option.title}
+                  {option}
                 </li>
               )}
               renderInput={(params) => (

@@ -11,7 +11,7 @@ const Review = ({data}) =>{
     // const{ designation, projectEndDate,projectName, teamSize, projectStartDate}= projDetails?.[0]
     const skillArr=[]
     const skillsIs=()=>{
-        skills.map((item, index)=>{return skillArr.push(` ${item?.title}`)})
+        skills.map((item, index)=>{return skillArr.push(` ${item}`)})
         return skillArr
     }
     const finalData =[
