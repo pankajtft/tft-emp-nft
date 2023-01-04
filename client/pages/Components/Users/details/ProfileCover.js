@@ -81,7 +81,6 @@ const CardCoverAction = styled(Box)(
 );
 
 const ProfileCover = ({ user }) => {
-  console.log(user, "user");
   const {authState} = useContext(AuthContext);
   return (
     <>

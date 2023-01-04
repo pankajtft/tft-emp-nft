@@ -6,15 +6,14 @@ import FormModal from "../Modals";
 import DialogBox from "../ConfirmModal";
 import { deleteData } from "../../utils/apis";
 import { AuthContext } from "../../Context/auth-context";
-import { useRouter } from "next/router";
-export const TableRow = ({ data }) => {
+
+export const TableRow = ({ data , handlieOnClick}) => {
   const { mintEmployeeNFT, updateEmployeeNFT, burnNft } =
     useContext(Web3Context);
   const { isUserAdmin } = useContext(AuthContext);
   const Minted = [{ isMinted: false }];
   const [editModal, setEditModal] = React.useState(false);
   const [deleteModal, setDeleteModal] = React.useState(false);
-  const router = useRouter();
   useEffect(() => {
     styleForMinted();
   }, [data?.tokenId]);
@@ -62,7 +61,7 @@ export const TableRow = ({ data }) => {
           onButtonPress={(val) => handleDeleteOption(val)}
         />
       )}
-      <tbody>
+      <tbody onClick={handlieOnClick}>
         <tr className="bg-white item-center border-black border-separate border border-slate-300">
           <td className="py-4 px-6 text-center capitalize text-sm">
             {data?.empDetail?.name}

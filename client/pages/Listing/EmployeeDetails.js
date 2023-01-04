@@ -8,8 +8,12 @@ import Feed from '../Components/Users/details/Feed';
 import PopularTags from '../Components/Users/details/PopularTags';
 import MyCards from '../Components/Users/details/MyCards';
 import Addresses from '../Components/Users/details/Addresses';
+import { useRouter } from 'next/router';
+function EmployeeDetails(props) {
 
-function EmployeeDetails() {
+  const router = useRouter();
+  const data= router.query;
+  const item = JSON.parse(data?.data)
   const user = {
     savedCards: 7,
     name: 'Atul Sharma',
@@ -23,7 +27,7 @@ function EmployeeDetails() {
     location: 'Barcelona, Spain',
     followers: '465'
   };
-
+console.log(item, "Data");
   return (
     <div className='bg-my_bg_image py-8'>
       <Head>

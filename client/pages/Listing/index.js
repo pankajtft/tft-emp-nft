@@ -5,14 +5,15 @@ import { TableHeader } from "../Components/Table/TableHeader";
 import { TableRow } from "../Components/Table/TableRow";
 import { AuthContext } from "../Context/auth-context";
 import { debounce } from "lodash";
-import { getEmployeeData } from "../utils/apis";
+import { useRouter } from "next/router";
+
 const Listing = () => {
   const { employeeData, isUserAdmin , getData} = useContext(AuthContext);
   const [myData, setMyData] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   let dataLimit = 5;
   const pages = Math.round(employeeData?.length / dataLimit);
-
+  const router = useRouter();
   useEffect(() => {
     setMyData(employeeData);
   }, [employeeData]);
@@ -48,6 +49,15 @@ const Listing = () => {
     setMyData(value);
     return value;
   }, 1500);
+
+  function handleClick(values){
+    if(values){
+    router.push({
+      pathname: '/Listing/EmployeeDetails',
+      query: {data: JSON.stringify(values)}
+  }, "/Listing/EmployeeDetails")
+  }
+}
   return (
     <div className="bg-my_bg_image py-6 h-full">
       {/* <h1 className='flex flex-col text-white w-auto border-r rounded-b justify-center items-center justify-center '>NFT Listing</h1> */}
@@ -63,7 +73,7 @@ const Listing = () => {
             <TableHeader isAdmin={isUserAdmin}/>
             {!!myData &&
               getPaginatedData().map((item) => {
-                return <TableRow key={item?.empDetail?.empCode} data={item} />;
+                return <TableRow key={item?.empDetail?.empCode} data={item} handlieOnClick={()=>handleClick(item)} />;
               })}
           </table>
           {!!myData && <TableFooter
