@@ -30,7 +30,7 @@ const Newform = () => {
   const methods = useForm({
     shouldUnregister: false,
     defaultValues: DEFAULT_DATA_VALUE,
-    resolver: activeStep < steps && yupResolver(currentValidationSchema),
+    resolver: activeStep !="2" &&  yupResolver(currentValidationSchema),
     mode: "onChange",
   });
 
@@ -80,7 +80,6 @@ const Newform = () => {
       setActiveStep(0);
       router.push("Listing")
     })
-    console.log(newData , "NewData");
   };
   function getStepContent(step) {
     switch (step) {

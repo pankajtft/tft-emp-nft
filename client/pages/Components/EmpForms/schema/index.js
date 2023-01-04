@@ -16,9 +16,16 @@ const empDetailSchema =  yup.object().shape({
     projDetails :yup.object().shape({
     projectName:yup.string().required("Please enter project name"),
     projectStartDate: yup.date().required("Start Date is required"),
-    projectEndDate: yup.date().required("Project End date is required"),
+    // projectEndDate: yup.date().required("Project End date is required"),
     designation:yup.string().required("Designation cannot be empty"),
-    teamSize:yup.string().required("Team size cannot be empty")
+    teamSize:yup.string().required("Team size cannot be empty"),
+    projectEndDate:yup.date().when('projectStartDate', {
+        is: (projectStartDate=> {
+          return (!!projectStartDate) ? true : false;
+        }),
+        then: yup.date().min(yup.ref('projectStartDate'),
+          "End date can't be before Start date").required('End Date/Time is required')
+      }).nullable(),
   })
   })
 
