@@ -114,12 +114,12 @@ import "hardhat/console.sol";
     }
 
     //Get Current Project
-    function getcurrentProject(uint8 tokenId) external view onlyOwner returns(uint8){
+    function getCurrentProject(uint8 tokenId) external view onlyOwner returns(uint8){
         return employees[tokenId]._currentProject;
     }
 
     //Set Current Project
-    function setcurrentProject(uint8 tokenId,uint8 projectID) public onlyOwner{
+    function setCurrentProject(uint8 tokenId,uint8 projectID) public onlyOwner{
         employees[tokenId]._currentProject = projectID;
     }
 
