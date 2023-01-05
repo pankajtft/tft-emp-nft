@@ -51,7 +51,7 @@ import "hardhat/console.sol";
         string memory _employeeName,
         uint32 _empId,
         string memory email
-    ) public nonReentrant onlyOwner returns(uint8){
+    ) public nonReentrant onlyOwner{
 
         Employee memory emp;
         bytes32 empHash = keccak256(abi.encode(_employeeName, _empId, email));
@@ -67,7 +67,6 @@ import "hardhat/console.sol";
             tokenId,
             empHash
         );
-        return tokenId;
 
     }
 
@@ -95,7 +94,7 @@ import "hardhat/console.sol";
         skillUpdate(tokenId,_skills);
 
         employees[tokenId].projDetails.push(projectHash);
-        if (projectNumber == 1){
+        if (projectNumber == 0){
             setcurrentProject(tokenId, projectNumber);
         }
 
@@ -127,7 +126,7 @@ import "hardhat/console.sol";
    //Edit project
     function editProject(
         uint8 tokenId,
-        string memory skills,
+        string memory _skills,
         uint16 team_size,
         string memory _projectName,
         string memory startTime, //UnixTime
@@ -135,18 +134,18 @@ import "hardhat/console.sol";
         uint8 projectNumber
     ) public {
         bytes32 projectHash = keccak256(
-            abi.encode(_projectName, startTime, endTime, skills, team_size)
+            abi.encode(_projectName, startTime, endTime, _skills, team_size)
         );
-        employees[tokenId].projDetails[projectNumber-1] = projectHash;
+        employees[tokenId].projDetails[projectNumber] = projectHash;
         bytes32 uriHash = keccak256(
-            abi.encode(employees[tokenId].empDetails, employees[tokenId].projDetails[projectNumber-1], employees[tokenId].skillHash)
+            abi.encode(employees[tokenId].empDetails, employees[tokenId].projDetails[projectNumber], employees[tokenId].skillHash)
         );
         string memory uri = string(abi.encodePacked(uriHash));
         NFT.setURI(tokenId, uri);
 
         emit NFTChanged(
             tokenId,
-            skills,
+            _skills,
             team_size,
             _projectName,
             startTime,
@@ -159,11 +158,6 @@ import "hardhat/console.sol";
         return employees[tokenId].projDetails;
     }
 
-    //Return TokenID
-    function returnToken() external view returns(uint8){
-        uint256 tokenId = NFT._tokenIdCounter();
-        return (uint8(tokenId)-1);
-    }
 
     //Overrides
     function onERC721Received(
@@ -176,7 +170,7 @@ import "hardhat/console.sol";
     }
 
     function burnProject(uint8 tokenId, uint8 projectNumber) public onlyOwner {
-        employees[tokenId].projDetails[projectNumber-1] = "";
+        employees[tokenId].projDetails[projectNumber] = "";
     }
 
     //burn
