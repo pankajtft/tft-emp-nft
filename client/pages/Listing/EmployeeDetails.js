@@ -3,7 +3,7 @@ import Head from 'next/head';
 import { Grid, Container } from '@mui/material';
 
 import ProfileCover from '../Components/Users/details/ProfileCover';
-import RecentActivity from '../Components/Users/details/RecentActivity';
+import Transaction from '../Components/Users/details/Transaction';
 import Feed from '../Components/Users/details/Feed';
 import PopularTags from '../Components/Users/details/PopularTags';
 import MyCards from '../Components/Users/details/MyCards';
@@ -16,8 +16,10 @@ function EmployeeDetails(props) {
   const item = JSON.parse(data?.data)
   const user = {
     savedCards: 7,
-    name: 'Atul Sharma',
-    empcode:"120120",
+    name: item?.empDetail?.name,
+    empcode: item?.empDetail?.empCode,
+    email: item?.empDetail?.email,
+    designation: item?.projDetails?.[0].designation,
     skills:[{title:"React"}, {title:"Vue"}, {title:"Angular"}],
     coverImg: "https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cHJvZmlsZXxlbnwwfHwwfHw%3D&w=1000&q=80",
     avatar: 'https://wallpapers.com/images/featured/4co57dtwk64fb7lv.jpg',
@@ -55,11 +57,11 @@ console.log(item, "Data");
             <PopularTags />
           </Grid> */}
           <Grid item xs={12} md={12}>
-            <MyCards />
+            <MyCards project={item?.projDetails}/>
           </Grid>
-          {/* <Grid item xs={12} md={4}>
-            <Addresses />
-          </Grid> */}
+          <Grid item xs={12} md={12}>
+          <Transaction />
+          </Grid>
         </Grid>
       </Container>
     </div>

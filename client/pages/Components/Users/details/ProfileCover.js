@@ -131,10 +131,10 @@ const ProfileCover = ({ user }) => {
         {user.name}
         </Typography>
         <Typography gutterBottom variant="h3" color={"white"}>
-        Sharma.atul@tftus.com
+        {user.email}
         </Typography>
         <Typography gutterBottom variant="h2" color={"white"}>
-         Software Engineer
+         {user.designation}
         </Typography>
 
         <Box
