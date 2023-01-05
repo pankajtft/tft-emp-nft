@@ -51,7 +51,7 @@ import "hardhat/console.sol";
         string memory _employeeName,
         uint32 _empId,
         string memory email
-    ) public nonReentrant onlyOwner{
+    ) public nonReentrant onlyOwner returns(uint8){
 
         Employee memory emp;
         bytes32 empHash = keccak256(abi.encode(_employeeName, _empId, email));
@@ -67,6 +67,7 @@ import "hardhat/console.sol";
             tokenId,
             empHash
         );
+        return tokenId;
 
     }
 
