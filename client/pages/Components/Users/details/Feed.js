@@ -8,42 +8,23 @@ import {
   Grid,
   Button
 } from '@mui/material';
+import { useRouter } from 'next/router';
+
+
 
 import AddTwoToneIcon from '@mui/icons-material/AddTwoTone';
 
 function Feed() {
-  const feed = [
-    {
-      name: 'React',
-      jobtitle: 'Senior Accountant',
-      company: 'Trudoo',
-      avatar: '/static/images/avatars/1.jpg'
-    },
-    {
-      name: 'JavaScript',
-      jobtitle: 'Associate Professor',
-      company: 'Buzzdog',
-      avatar: '/static/images/avatars/2.jpg'
-    },
-    {
-      name: 'Web 3.0',
-      jobtitle: 'Pharmacist',
-      company: 'Yozio',
-      avatar: '/static/images/avatars/3.jpg'
-    },
-    {
-      name: 'Node.Js',
-      jobtitle: 'VP Operations',
-      company: 'Cogibox',
-      avatar: '/static/images/avatars/4.jpg'
-    },
-    {
-      name: 'React Native',
-      jobtitle: 'VP Operations',
-      company: 'Cogibox',
-      avatar: '/static/images/avatars/4.jpg'
-    },
-  ];
+  const router = useRouter();
+  const data = router.query;
+  const item = JSON.parse(data?.data)
+
+  const feed = item?.empDetail?.skills.map((skill) => ({
+    name: skill.title,
+    jobtitle: 'Senior Accountant',
+    company: 'Trudoo',
+    avatar: '/static/images/avatars/1.jpg'
+  }))
 
   return (
     <Card>

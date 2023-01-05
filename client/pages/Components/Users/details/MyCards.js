@@ -82,9 +82,9 @@ const CardCc = styled(Card)(
 `
 );
 
-function MyCards() {
+const MyCards = ({ project }) => {
   const data = {
-    savedCards: 2
+    savedCards: project.length
   };
 
   const [selectedValue, setSelectedValue] = useState('a');
@@ -101,123 +101,66 @@ function MyCards() {
       <Divider />
       <Box p={3}>
         <Grid container spacing={3}>
-          <Grid item xs={12} sm={6}>
-            <CardCc sx={{ px: 2, pt: 2, pb: 1 }}>
-              <Box display="flex" alignItems="center">
-                <CardLogo
-                  src="/static/images/placeholders/logo/visa.png"
-                  alt="Project"
-                />
-                <Box>
-                  <Typography variant="h3" fontWeight="normal">
-                    EMS
-                  </Typography>
-                  <Typography variant="h4" color="text.primary" >
-                      Team Size: 10
-                </Typography>
-                  <Typography variant="subtitle2">
-                    Start Date:{' '}
-                    <Typography component="span" color="text.primary">
-                      12/24/2022
+          {project.map((proj) => (
+            <Grid key={proj.id} item xs={12} sm={6}>
+              <CardCc sx={{ px: 2, pt: 2, pb: 1 }}>
+                <Box display="flex" alignItems="center">
+                  <CardLogo
+                    src="/static/images/placeholders/logo/visa.png"
+                    alt="Project"
+                  />
+                  <Box>
+                    <Typography variant="h3" fontWeight="normal">
+                      {proj.projectName}
                     </Typography>
+                    <Typography variant="h4" color="text.primary" >
+                        Team Size: {proj.teamSize}
                   </Typography>
-                  <Typography variant="subtitle2">
-                    End Date:{' '}
-                    <Typography component="span" color="text.primary">
-                      12/24/2023
+                    <Typography variant="subtitle2">
+                      Start Date:{' '}
+                      <Typography component="span" color="text.primary">
+                        {!!proj.projectStartDate && new Date(proj.projectStartDate).toLocaleDateString()}
+                      </Typography>
                     </Typography>
-                  </Typography>
+                    <Typography variant="subtitle2">
+                      End Date:{' '}
+                      <Typography component="span" color="text.primary">
+                      {!!proj.projectEndDate && new Date(proj.projectEndDate).toLocaleDateString()}
+                      </Typography>
+                    </Typography>
+                  </Box>
+                  {/* <Typography component="span" color="text.primary" style={{padding:"2rem"}}>
+                        Team Size: 10
+                  </Typography> */}
                 </Box>
-                {/* <Typography component="span" color="text.primary" style={{padding:"2rem"}}>
-                      Team Size: 10
-                </Typography> */}
-              </Box>
-              <Box
-                pt={3}
-                display="flex"
-                alignItems="center"
-                justifyContent="space-between"
-              >
-                <FormControlLabel
-                  value="a"
-                  control={
-                    <Radio
-                      checked={selectedValue === 'a'}
-                      onChange={handleChange}
-                      value="a"
-                      color="primary"
-                      name="primary-card"
-                    />
-                  }
-                  label="Set as Current Project"
-                />
-                {/* <Tooltip arrow title="Remove this card">
-                  <IconButtonError onClick={() => handleDelete()}>
-                    <DeleteTwoToneIcon fontSize="small" />
-                  </IconButtonError>
-                </Tooltip> */}
-              </Box>
-            </CardCc>
-            
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <CardCc sx={{ px: 2, pt: 2, pb: 1 }}>
-              <Box display="flex" alignItems="center">
-                <CardLogo
-                  src="/static/images/placeholders/logo/mastercard.png"
-                  alt="Visa"
-                />
-                <Box>
-                  <Typography variant="h3" fontWeight="normal">
-                    NFT Marketplace
-                  </Typography>
-                  <Typography variant="h4" color="text.primary" >
-                      Team Size: 10
-                </Typography>
-                  <Typography variant="subtitle2">
-                  Start Date:{' '}
-                    <Typography component="span" color="text.primary">
-                      6/22/2020
-                    </Typography>
-                  </Typography>
-                  <Typography variant="subtitle2">
-                  End Date:{' '}
-                    <Typography component="span" color="text.primary">
-                      6/22/2021
-                    </Typography>
-                  </Typography>
+                <Box
+                  pt={3}
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="space-between"
+                >
+                  <FormControlLabel
+                    value="a"
+                    control={
+                      <Radio
+                        checked={selectedValue === 'a'}
+                        onChange={handleChange}
+                        value="a"
+                        color="primary"
+                        name="primary-card"
+                      />
+                    }
+                    label="Set as Current Project"
+                  />
+                  {/* <Tooltip arrow title="Remove this card">
+                    <IconButtonError onClick={() => handleDelete()}>
+                      <DeleteTwoToneIcon fontSize="small" />
+                    </IconButtonError>
+                  </Tooltip> */}
                 </Box>
-                {/* <Typography variant="h4" component="span" color="text.primary" style={{padding:"2rem"}}>
-                      Team Size: 10
-                </Typography> */}
-              </Box>
-              <Box
-                pt={3}
-                display="flex"
-                alignItems="center"
-                justifyContent="space-between"
-              >
-                <FormControlLabel
-                  value="b"
-                  control={
-                    <Radio
-                      checked={selectedValue === 'b'}
-                      onChange={handleChange}
-                      value="b"
-                      color="primary"
-                      name="primary-card"
-                    />
-                  }
-                  label="Set as Current Project"
-                />
-                {/* <Tooltip arrow title="Remove this card"> */}
-                  {/* <IconButtonError onClick={() => handleDelete()}> */}
-                    {/* <DeleteTwoToneIcon fontSize="small" /> */}
-                  {/* </IconButtonError> */}
-                {/* </Tooltip> */}
-              </Box>
-            </CardCc>
-          </Grid>
+              </CardCc>
+            </Grid>
+          ))}
           <Grid item xs={12} sm={6}>
             <Tooltip arrow title="Click to add a new card">
               <CardAddAction>
@@ -235,6 +178,7 @@ function MyCards() {
       </Box>
     </Card>
   );
+
 }
 
 export default MyCards;
