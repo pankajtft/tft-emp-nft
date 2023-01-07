@@ -51,6 +51,13 @@ module.exports = {
       // }
       chainId: 31337,
     },
+    matic: {
+      url: "https://polygon-mumbai.g.alchemy.com/v2/ilstxE0yedAjbQEDV1TaurFfb4Po9Hyw",
+      accounts: [
+        `0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80`,
+      ],
+      blockGasLimit: 100000000429720,
+    },
     localhost: {
       chainId: 31337,
     },

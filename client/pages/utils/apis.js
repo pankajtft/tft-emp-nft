@@ -71,17 +71,30 @@ export const deleteData = async (_id) => {
   }
 };
 
-export const getAdminUsers = async() => {
-  try{
+export const getAdminUsers = async () => {
+  try {
     const res = await fetch(`${Path}admin`);
     if (!res.ok) {
       throw new Error("Failed to fetch data");
     }
     let data = await res?.json();
-    data=data?.[0]?.admins
+    data = data?.[0]?.admins;
     return data;
-  }
-  catch(e){
+  } catch (e) {
     console.log(e, "Error from GetAdminUSers");
   }
-}
+};
+
+export const mintEmployee = async (_id) => {
+  console.log(_id);
+  try {
+    const res = await axios.get(`${Path}contract/mintEmployee/${_id}`);
+    if (!res.ok) {
+      throw new Error("Failed to fetch data");
+    }
+    let data = res;
+    return data;
+  } catch (e) {
+    console.log(e, "Error fetching Employee Details");
+  }
+};

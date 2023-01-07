@@ -30,14 +30,14 @@ export default function FormModal({ isShow, handleClose, data }) {
   const [formdata, setFormData] = React.useState({});
   const router = useRouter();
   const onSubmit = async (projectData) => {
-    if (data.tokenId !== undefined) {
-      await updateEmployeeNFT(projectData).then(() => {
-        handleClose();
-      });
-    } else
-      await updateEmployeeData(projectData).then(() => {
-        handleClose();
-      });
+    // if (data.tokenId !== undefined) {
+    //   await updateEmployeeNFT(projectData).then(() => {
+    //     handleClose();
+    //   });
+    // } else
+    await updateEmployeeData(projectData).then(() => {
+      handleClose();
+    });
   };
   return (
     <div className="flex flex-col w-full">
@@ -46,85 +46,85 @@ export default function FormModal({ isShow, handleClose, data }) {
         <DialogContent sx={{ m: 2, flexWrap: "wrap", alignItems: "center" }}>
           <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
             <div className="m-2">
-            <RHFTextField
-              required={true}
-              id="projectName"
-              name="projDetails[0].projectName"
-              label="Project Name"
-              fullWidth
-              defaultValue={data?.projDetails?.[0]?.projectName ?? ""}
-              variant="outlined"
-              sx={{
-                pb: 0,
-              }}
-            />
-            <div className="flex flex-row my-2 mr-2 justify-around">
-              <RHDatepicker
+              <RHFTextField
                 required={true}
-                id="projectStartDate"
-                name="projDetails[0].projectStartDate"
-                label="Project Start Date"
+                id="projectName"
+                name="projDetails[0].projectName"
+                label="Project Name"
                 fullWidth
+                defaultValue={data?.projDetails?.[0]?.projectName ?? ""}
                 variant="outlined"
-                defaultValue={data?.projDetails?.[0]?.projectStartDate ?? ""}
                 sx={{
-                  pb: 1,
-                  mr: 2,
+                  pb: 0,
                 }}
-                className="mr-2 pr-4"
               />
-              <RHDatepicker
+              <div className="flex flex-row my-2 mr-2 justify-around">
+                <RHDatepicker
+                  required={true}
+                  id="projectStartDate"
+                  name="projDetails[0].projectStartDate"
+                  label="Project Start Date"
+                  fullWidth
+                  variant="outlined"
+                  defaultValue={data?.projDetails?.[0]?.projectStartDate ?? ""}
+                  sx={{
+                    pb: 1,
+                    mr: 2,
+                  }}
+                  className="mr-2 pr-4"
+                />
+                <RHDatepicker
+                  required={true}
+                  id="projectEndDate"
+                  name="projDetails[0].projectEndDate"
+                  label="Project End Date"
+                  fullWidth
+                  defaultValue={data?.projDetails?.[0]?.projectEndDate ?? ""}
+                  variant="outlined"
+                  sx={{
+                    pb: 2,
+                  }}
+                />
+              </div>
+              <RHFTextField
                 required={true}
-                id="projectEndDate"
-                name="projDetails[0].projectEndDate"
-                label="Project End Date"
+                id="designation"
+                name="projDetails[0].designation"
+                label="Designation"
                 fullWidth
-                defaultValue={data?.projDetails?.[0]?.projectEndDate ?? ""}
+                defaultValue={data?.projDetails?.[0]?.designation ?? ""}
                 variant="outlined"
                 sx={{
                   pb: 2,
                 }}
               />
-            </div>
-            <RHFTextField
-              required={true}
-              id="designation"
-              name="projDetails[0].designation"
-              label="Designation"
-              fullWidth
-              defaultValue={data?.projDetails?.[0]?.designation ?? ""}
-              variant="outlined"
-              sx={{
-                pb: 2,
-              }}
-            />
-            <RHSelect
-              required={true}
-              fullWidth
-              id="teamSize"
-              name="projDetails[0].teamSize"
-              label="Team size"
-              variant="outlined"
-              defaultValue={data?.projDetails?.[0]?.teamSize ?? ""}
-              sx={{
-                pb: 2,
-              }}
-              className=" p-6"
-              options={[
-                { label: "2", value: "2" },
-                { label: "3", value: "3" },
-                { label: "4", value: "4" },
-                { label: "5", value: "5" },
-                { label: "6", value: "6" },
-                { label: "7", value: "7" },
-                { label: "8", value: "5" },
-                { label: "9", value: "9" },
-                { label: "10", value: "10" },
-                { label: "11", value: "11" },
-                { label: "12", value: "12" },
-                { label: "13", value: "13" },
-              ]}
-            />
+              <RHSelect
+                required={true}
+                fullWidth
+                id="teamSize"
+                name="projDetails[0].teamSize"
+                label="Team size"
+                variant="outlined"
+                defaultValue={data?.projDetails?.[0]?.teamSize ?? ""}
+                sx={{
+                  pb: 2,
+                }}
+                className=" p-6"
+                options={[
+                  { label: "2", value: "2" },
+                  { label: "3", value: "3" },
+                  { label: "4", value: "4" },
+                  { label: "5", value: "5" },
+                  { label: "6", value: "6" },
+                  { label: "7", value: "7" },
+                  { label: "8", value: "5" },
+                  { label: "9", value: "9" },
+                  { label: "10", value: "10" },
+                  { label: "11", value: "11" },
+                  { label: "12", value: "12" },
+                  { label: "13", value: "13" },
+                ]}
+              />
             </div>
             <DialogActions>
               <Button

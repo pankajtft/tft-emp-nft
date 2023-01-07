@@ -19,7 +19,7 @@ function EmployeeDetails(props) {
     name: item?.empDetail?.name,
     empcode: item?.empDetail?.empCode,
     email: item?.empDetail?.email,
-    designation: item?.projDetails?.[0].designation,
+    designation: item?.projDetails?.[0]?.designation,
     skills:[{title:"React"}, {title:"Vue"}, {title:"Angular"}],
     coverImg: "https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cHJvZmlsZXxlbnwwfHwwfHw%3D&w=1000&q=80",
     avatar: 'https://wallpapers.com/images/featured/4co57dtwk64fb7lv.jpg',

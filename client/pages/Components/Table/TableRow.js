@@ -4,10 +4,10 @@ import moment from "moment";
 import { Web3Context } from "../../Context/web3Context";
 import FormModal from "../Modals";
 import DialogBox from "../ConfirmModal";
-import { deleteData } from "../../utils/apis";
+import { deleteData, mintEmployee } from "../../utils/apis";
 import { AuthContext } from "../../Context/auth-context";
 
-export const TableRow = ({ data , handlieOnClick}) => {
+export const TableRow = ({ data, handlieOnClick }) => {
   const { mintEmployeeNFT, updateEmployeeNFT, burnNft } =
     useContext(Web3Context);
   const { isUserAdmin } = useContext(AuthContext);
@@ -30,7 +30,7 @@ export const TableRow = ({ data , handlieOnClick}) => {
         <>
           <button
             className="uppercase text-xs bg-green-700 hover:bg-white text-white font-semibold hover:text-green-700 px-6 mx-4 border border-green-700 hover:border-green-700 rounded"
-            onClick={() => mintEmployeeNFT(data)}
+            onClick={() => mintEmployee(data._id)}
           >
             Mint NFT
           </button>
@@ -40,8 +40,10 @@ export const TableRow = ({ data , handlieOnClick}) => {
   }
   function handleDeleteOption(val) {
     if (val) {
-      data.tokenId !== undefined ? burnNft(data) : deleteData(data._id);
-      setDeleteModal(false);
+      {
+        deleteData(data._id);
+        setDeleteModal(false);
+      }
     } else setDeleteModal(false);
   }
   return (
@@ -61,9 +63,12 @@ export const TableRow = ({ data , handlieOnClick}) => {
           onButtonPress={(val) => handleDeleteOption(val)}
         />
       )}
-      <tbody onClick={handlieOnClick}>
+      <tbody>
         <tr className="bg-white item-center border-black border-separate border border-slate-300">
-          <td className="py-4 px-6 text-center capitalize text-sm">
+          <td
+            onClick={handlieOnClick}
+            className="py-4 px-6 text-center capitalize text-sm"
+          >
             {data?.empDetail?.name}
           </td>
           <td className="py-4 px-6 text-center capitalize text-sm">
@@ -73,7 +78,7 @@ export const TableRow = ({ data , handlieOnClick}) => {
             {data?.empDetail?.email}
           </td>
           <td className="py-4 px-6 text-center text-sm">
-            {data?.projDetails?.[0]?.designation}
+            {data?.projDetails?.[data?.projDetails.length - 1]?.designation}
           </td>
           <td className="py-4 px-6 text-center text-sm">
             {!!data &&
@@ -83,58 +88,66 @@ export const TableRow = ({ data , handlieOnClick}) => {
                     className="text-left item-center text-sm capitalize"
                     key={index}
                   >
-                    {item?.title}
+                    {item}
                   </p>
                 );
               })}
           </td>
           <td className="py-4 px-6 text-center text-sm">
-            {data?.projDetails?.[0]?.projectName}
+            {data?.projDetails?.[data?.projDetails.length - 1]?.projectName}
           </td>
           <td className="py-4 px-6 text-center text-sm">
-            {!!data?.projDetails?.[0]?.projectStartDate &&
-              moment(data?.projDetails?.[0]?.projectStartDate).format(
-                "DD/MM/YYYY"
-              )}
+            {!!data?.projDetails?.[data?.projDetails.length - 1]
+              ?.projectStartDate &&
+              moment(
+                data?.projDetails?.[data?.projDetails.length - 1]
+                  ?.projectStartDate
+              ).format("DD/MM/YYYY")}
           </td>
           <td className="py-4 px-6 text-center text-sm">
             {" "}
-            {!!data?.projDetails?.[0]?.projectEndDate &&
-              moment(data?.projDetails?.[0]?.projectEndDate).format(
-                "DD/MM/YYYY"
-              )}
+            {!!data?.projDetails?.[data?.projDetails.length - 1]
+              ?.projectEndDate &&
+              moment(
+                data?.projDetails?.[data?.projDetails.length - 1]
+                  ?.projectEndDate
+              ).format("DD/MM/YYYY")}
           </td>
           <td className="py-4 px-6 text-center text-sm">
-            {data?.projDetails?.[0]?.teamSize}
+            {data?.projDetails?.[data?.projDetails.length - 1]?.teamSize}
           </td>
-          { isUserAdmin && 
-          <><td className="py-2 px-6 text-center text-sm">
-            {!!data?.projDetails?.[0] ? (
-              styleForMinted(!!data?.projDetails?.[0]?.projectName)
-            ) : (
-              <>
-                <button
-                  disabled={true}
-                  className="uppercase text-xs bg-slate-300 text-slate-50 font-semibold px-6 mx-4 border rounded"
-                  onClick={() => console.log("isDisabled")}
-                >
-                  Mint NFT
-                </button>
-              </>
-            )}
-          </td>
-          <td className="py-4 px-6 w-10 ">
-            {
-              <ButtonGroupIcon
-                isEdit={true}
-                isDelete={true}
-                disabled={!!!data}
-                onEditPress={() => setEditModal(true)}
-                onDeletePress={() => setDeleteModal(true)}
-              />
-            }
-          </td>
-          </>}
+          {isUserAdmin && (
+            <>
+              <td className="py-2 px-6 text-center text-sm">
+                {!!data ? (
+                  styleForMinted()
+                ) : (
+                  // !!data?.projDetails?.[data?.projDetails.length - 1]
+                  //   ?.projectName
+                  <>
+                    <button
+                      // disabled={true}
+                      className="uppercase text-xs bg-slate-300 text-slate-50 font-semibold px-6 mx-4 border rounded"
+                      // onClick={() => console.log("isDisabled")}
+                    >
+                      Mint NFT
+                    </button>
+                  </>
+                )}
+              </td>
+              <td className="py-4 px-6 w-10 ">
+                {
+                  <ButtonGroupIcon
+                    isEdit={true}
+                    isDelete={true}
+                    disabled={!!!data}
+                    onEditPress={() => setEditModal(true)}
+                    onDeletePress={() => setDeleteModal(true)}
+                  />
+                }
+              </td>
+            </>
+          )}
         </tr>
       </tbody>
     </>

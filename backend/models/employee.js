@@ -41,6 +41,22 @@ const employeeSchema = new mongoose.Schema(
         },
       },
     ],
+    transactionDetails: [
+      // {
+      //   transactionHash: {
+      //     type: String,
+      //   },
+      //   eventName: {
+      //     type: String,
+      //   },
+      //   gasUsed: {
+      //     type: Number,
+      //   },
+      //   timestamps: {
+      //     type: String,
+      //   },
+      // },
+    ],
     isActive: {
       type: Boolean,
       default: true,
