@@ -98,7 +98,10 @@ contract EMS is IERC721Receiver, ReentrancyGuard, Ownable {
         employees[tokenId].empDetails = empHash;
         employees[tokenId].skillHash = _skillHash;
         employees[tokenId].projDetails.push(projectHash);
-        setcurrentProject(tokenId, uint8(employees[tokenId].projDetails.length - 1));
+        setcurrentProject(
+            tokenId,
+            uint8(employees[tokenId].projDetails.length - 1)
+        );
         emit NFTMintedWithProject(
             _empId,
             _employeeName,
@@ -140,18 +143,20 @@ contract EMS is IERC721Receiver, ReentrancyGuard, Ownable {
         uint16 team_size,
         string memory _projectName,
         string memory startTime, //UnixTime
-        string memory endTime, //UnixTime
-        uint8 projectNumber
+        string memory endTime //UnixTime
     ) external nonReentrant onlyOwner {
         bytes32 projectHash = keccak256(
             abi.encode(_projectName, startTime, endTime, team_size)
         );
         employees[tokenId].projDetails.push(projectHash);
-        setcurrentProject(tokenId, uint8(employees[tokenId].projDetails.length - 1));
+        setcurrentProject(
+            tokenId,
+            uint8(employees[tokenId].projDetails.length - 1)
+        );
         bytes32 uriHash = keccak256(
             abi.encode(
                 employees[tokenId].empDetails,
-                employees[tokenId].projDetails[projectNumber],
+                employees[tokenId].projDetails[uint8(employees[tokenId].projDetails.length - 1)],
                 employees[tokenId].skillHash
             )
         );

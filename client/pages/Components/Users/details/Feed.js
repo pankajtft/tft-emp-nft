@@ -6,25 +6,23 @@ import {
   Divider,
   Avatar,
   Grid,
-  Button
-} from '@mui/material';
-import { useRouter } from 'next/router';
+  Button,
+} from "@mui/material";
+import { useRouter } from "next/router";
 
+import AddTwoToneIcon from "@mui/icons-material/AddTwoTone";
 
-
-import AddTwoToneIcon from '@mui/icons-material/AddTwoTone';
-
-function Feed() {
+function Feed({ skills }) {
   const router = useRouter();
   const data = router.query;
-  const item = JSON.parse(data?.data)
+  const item = JSON.parse(data?.data);
 
   const feed = item?.empDetail?.skills.map((skill) => ({
     name: skill.title,
-    jobtitle: 'Senior Accountant',
-    company: 'Trudoo',
-    avatar: '/static/images/avatars/1.jpg'
-  }))
+    jobtitle: "Senior Accountant",
+    company: "Trudoo",
+    avatar: "/static/images/avatars/1.jpg",
+  }));
 
   return (
     <Card>
@@ -32,8 +30,8 @@ function Feed() {
       <Divider />
       <Box p={2}>
         <Grid container spacing={0}>
-          {feed.map((_feed) => (
-            <Grid key={_feed.name} item xs={12} sm={6} lg={4}>
+          {skills.map((_feed) => (
+            <Grid key={_feed} item xs={12} sm={6} lg={4}>
               <Box p={3} display="flex" alignItems="flex-start">
                 <Avatar src={_feed.avatar} />
                 <Box pl={2}>
@@ -41,7 +39,7 @@ function Feed() {
                     {_feed.company}
                   </Typography> */}
                   <Typography variant="h4" gutterBottom>
-                    {_feed.name}
+                    {_feed}
                   </Typography>
                   {/* <Typography color="text.primary" sx={{ pb: 2 }}>
                     {_feed.jobtitle}

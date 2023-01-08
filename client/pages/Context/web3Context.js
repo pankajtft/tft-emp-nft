@@ -85,76 +85,76 @@ const Web3Provider = ({ children }) => {
       console.log(e);
     }
   }
-  const mintEmployeeNFT = async (d) => {
-    try {
-      console.log(d, "FromDa");
-      let res = await contract.mintEmployeeNFT(
-        d?.empDetail?.name,
-        d?.empDetail?.empCode,
-        d?.empDetail?.email,
-        d?.empDetail?.skills?.[0].title,
-        d?.projDetails?.[0].teamSize,
-        d?.projDetails?.[0].projectName,
-        d?.projDetails?.[0].projectStartDate,
-        d?.projDetails?.[0].projectEndDate
-      );
-      res = await res.wait(1);
-      if (res) {
-        let tokenId = await contract.returnToken();
-        // console.log(id, "token");
-        // const finalData = {...d, }
-        const _id = d._id;
-        const formData = { _id, tokenId };
-        await updateEmployeeData(formData).then(()=>{
-          alert("NFT Minted successfully")
-          router.reload(window.location.pathname)
-        })
-        // await getData();
-      }
-      console.log(res, "Employee Added");
-    } catch (e) {
-      console.log(e, "error mintEmployeeNFT");
-    }
-  };
-  const updateEmployeeNFT = async (d) => {
-    try {
-      console.log(d, "D");
-      let res = await contract.updateEmployeeNFT(
-        d?.tokenId,
-        "New Skills",
-        Number(d?.projDetails?.[0].teamSize),
-        d?.projDetails?.[0].projectName,
-        100000,
-        200000
-      );
-      console.log(res, "Employee data updated");
-      if (res) {
-        await updateEmployeeData(d).then(()=>{
-          alert("Details Updated successfully")
-          router.reload(window.location.pathname)
-        })
-        // getData();
-      }
-    } catch (e) {
-      console.log(e, "Error from updateEmployeeNFT");
-    }
-  };
-  const burnNft = async (data) => {
-    try {
-      let res = await contract.burn(data?.tokenId);
-      res = await res.wait(1);
-      console.log(res);
-      if (res) {
-        await deleteData(data._id).then(()=>{
-          alert("NFT burned and deleted successfully")
-          router.reload(window.location.pathname)
-        })
-        // getData();
-      }
-    } catch (e) {
-      console.log(e, "error _burn");
-    }
-  };
+  // const mintEmployeeNFT = async (d) => {
+  //   try {
+  //     console.log(d, "FromDa");
+  //     let res = await contract.mintEmployeeNFT(
+  //       d?.empDetail?.name,
+  //       d?.empDetail?.empCode,
+  //       d?.empDetail?.email,
+  //       d?.empDetail?.skills?.[0].title,
+  //       d?.projDetails?.[0].teamSize,
+  //       d?.projDetails?.[0].projectName,
+  //       d?.projDetails?.[0].projectStartDate,
+  //       d?.projDetails?.[0].projectEndDate
+  //     );
+  //     res = await res.wait(1);
+  //     if (res) {
+  //       let tokenId = await contract.returnToken();
+  //       // console.log(id, "token");
+  //       // const finalData = {...d, }
+  //       const _id = d._id;
+  //       const formData = { _id, tokenId };
+  //       await updateEmployeeData(formData).then(()=>{
+  //         alert("NFT Minted successfully")
+  //         router.reload(window.location.pathname)
+  //       })
+  //       // await getData();
+  //     }
+  //     console.log(res, "Employee Added");
+  //   } catch (e) {
+  //     console.log(e, "error mintEmployeeNFT");
+  //   }
+  // };
+  // const updateEmployeeNFT = async (d) => {
+  //   try {
+  //     console.log(d, "D");
+  //     let res = await contract.updateEmployeeNFT(
+  //       d?.tokenId,
+  //       "New Skills",
+  //       Number(d?.projDetails?.[0].teamSize),
+  //       d?.projDetails?.[0].projectName,
+  //       100000,
+  //       200000
+  //     );
+  //     console.log(res, "Employee data updated");
+  //     if (res) {
+  //       await updateEmployeeData(d).then(()=>{
+  //         alert("Details Updated successfully")
+  //         router.reload(window.location.pathname)
+  //       })
+  //       // getData();
+  //     }
+  //   } catch (e) {
+  //     console.log(e, "Error from updateEmployeeNFT");
+  //   }
+  // };
+  // const burnNft = async (data) => {
+  //   try {
+  //     let res = await contract.burn(data?.tokenId);
+  //     res = await res.wait(1);
+  //     console.log(res);
+  //     if (res) {
+  //       await deleteData(data._id).then(()=>{
+  //         alert("NFT burned and deleted successfully")
+  //         router.reload(window.location.pathname)
+  //       })
+  //       // getData();
+  //     }
+  //   } catch (e) {
+  //     console.log(e, "error _burn");
+  //   }
+  // };
   return (
     <Provider
       value={{
@@ -170,9 +170,9 @@ const Web3Provider = ({ children }) => {
         hasMetamask,
         nonce,
         isAuthenticated,
-        mintEmployeeNFT,
-        updateEmployeeNFT,
-        burnNft,
+        // mintEmployeeNFT,
+        // updateEmployeeNFT,
+        // burnNft,
       }}
     >
       {children}

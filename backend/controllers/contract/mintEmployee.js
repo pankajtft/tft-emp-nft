@@ -19,12 +19,13 @@ const mintEmployee = async (req, res) => {
         email,
         skills.join(",")
       );
-       storeTransaction(
-         queryId,
-         contract_response.transactionHash,
-         contract_response.events[1].event,
-         contract_response.gasUsed.hex
-       );
+      
+      storeTransaction(
+        queryId,
+        contract_response.transactionHash,
+        contract_response.events[1].event,
+        Number(contract_response.gasUsed._hex)
+      );
     } else {
       const {
         projectName,
@@ -43,12 +44,12 @@ const mintEmployee = async (req, res) => {
         moment(projectStartDate).format("DD/MM/YYYY"),
         moment(projectEndDate).format("DD/MM/YYYY")
       );
-       storeTransaction(
-         queryId,
-         contract_response.transactionHash,
-         contract_response.events[1].event,
-         contract_response.gasUsed.hex
-       );
+      storeTransaction(
+        queryId,
+        contract_response.transactionHash,
+        contract_response.events[1].event,
+        Number(contract_response.gasUsed._hex)
+      );
     }
     res.status(200).send(contract_response);
   } catch (err) {
