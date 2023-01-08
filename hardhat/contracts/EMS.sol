@@ -98,7 +98,7 @@ contract EMS is IERC721Receiver, ReentrancyGuard, Ownable {
         employees[tokenId].empDetails = empHash;
         employees[tokenId].skillHash = _skillHash;
         employees[tokenId].projDetails.push(projectHash);
-        setcurrentProject(tokenId, employees[tokenId].projDetails.length - 1);
+        setcurrentProject(tokenId, uint8(employees[tokenId].projDetails.length - 1));
         emit NFTMintedWithProject(
             _empId,
             _employeeName,
@@ -147,7 +147,7 @@ contract EMS is IERC721Receiver, ReentrancyGuard, Ownable {
             abi.encode(_projectName, startTime, endTime, team_size)
         );
         employees[tokenId].projDetails.push(projectHash);
-        setcurrentProject(tokenId, employees[tokenId].projDetails.length - 1);
+        setcurrentProject(tokenId, uint8(employees[tokenId].projDetails.length - 1));
         bytes32 uriHash = keccak256(
             abi.encode(
                 employees[tokenId].empDetails,
@@ -183,7 +183,7 @@ contract EMS is IERC721Receiver, ReentrancyGuard, Ownable {
         onlyOwner
     {
         require(
-            employees[tokenId].projDetails.length - 1 >= projectID,
+            (employees[tokenId].projDetails.length - 1) >= projectID,
             "projectID not exist"
         );
         employees[tokenId]._currentProject = projectID;
@@ -211,7 +211,7 @@ contract EMS is IERC721Receiver, ReentrancyGuard, Ownable {
         // );
         // string memory uri = string(abi.encode(uriHash));
         // NFT.setURI(tokenId, uri);
-        emit NFTChanged(tokenId, team_size, _projectName, startTime, endTime);
+        // emit NFTChanged(tokenId, team_size, _projectName, startTime, endTime);
     }
 
     //Get All Projects Hash
