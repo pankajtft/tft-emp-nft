@@ -1,6 +1,7 @@
 const Employee = require("../../models/employee");
 const mongoose = require("mongoose");
 const { burn } = require("../../index");
+const { storeTransaction } = require("../contract/helpers");
 
 const deleteEmployee = async (req, res) => {
   try {
@@ -10,11 +11,19 @@ const deleteEmployee = async (req, res) => {
       isDeleted: true,
     };
     const employee = await Employee.findByIdAndUpdate(queryId, updates);
-    let burnNFT;
+    let contract_response;
     if (employee?.tokenId) {
-      burnNFT = await burn(employee.tokenId);
+      contract_response = await burn(employee.tokenId);
+      console.log(contract_response);
+      storeTransaction(
+        queryId,
+        contract_response.transactionHash,
+        contract_response.events[1].event,
+        Number(contract_response.gasUsed._hex)
+      );
     }
-    res.status(200).send(burnNFT);
+
+    res.status(200).send(contract_response);
   } catch (err) {
     res.status(400).send(err);
   }

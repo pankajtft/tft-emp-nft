@@ -96,7 +96,7 @@ const editProject = async (
   return receipt;
 };
 
-const skillUpdate = async (tokenId, _skills) => {
+const skillsUpdate = async (tokenId, _skills) => {
   const result = await contract.skillUpdate(tokenId, _skills);
   const receipt = await result.wait();
   return receipt;
@@ -124,7 +124,7 @@ module.exports = {
   mintEmployeeNFT,
   mintEmployeeNFTwithProject,
   AddProject,
-  skillUpdate,
+  skillsUpdate,
   setCurrentProject,
   editProject,
   burnProject,

@@ -127,7 +127,7 @@ FactoryContractEthers.on(
 );
 
 FactoryContractEthers.on(
-  "NFTChanged",
+  "projectAdded",
   (tokenId, skills, team_size, _projectName, startTime, endTime) => {
     console.log(tokenId, skills, team_size, _projectName, startTime, endTime);
   }
@@ -148,6 +148,13 @@ FactoryContractEthers.on(
     uriHash
   ) => {
     updateTokenId(_empId, tokenId);
-    console.log(uriHash);
   }
 );
+
+FactoryContractEthers.on("skillUpdated", (tokenId, skills, uriHash) => {
+  console.log("data", tokenId, skills, uriHash);
+});
+
+FactoryContractEthers.on("burnNFT", (tokenId) => {
+  console.log("burned", tokenId);
+});

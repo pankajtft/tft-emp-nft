@@ -34,7 +34,7 @@ export const postEmployeeData = async (FormData) => {
   }
 };
 
-export const updateEmployeeData = async (formData) => {
+export const  updateEmployeeData = async (formData) => {
   const id = formData?._id;
   console.log(formData, "ID");
   let data = formData;
