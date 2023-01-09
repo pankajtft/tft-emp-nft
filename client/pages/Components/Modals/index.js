@@ -14,11 +14,11 @@ import {
 } from "../Hook-form";
 import Box from "@mui/material/Box";
 import { AuthContext } from "../../Context/auth-context";
-import { updateEmployeeData, updateSkills } from "../../utils/apis";
+import { addNewProject,editProject, updateSkills } from "../../utils/apis";
 import { useRouter } from "next/router";
 import RHMultiCheckDropdown from "../Hook-form/RHMultiCheckDropdown";
 
-export default function FormModal({ isShow, handleClose, data, isSkill }) {
+export default function FormModal({ isShow, handleClose, data, isSkill, isEditProject }) {
   const methods = useForm({
     shouldUnregister: false,
     defaultValues: data,
@@ -33,8 +33,13 @@ export default function FormModal({ isShow, handleClose, data, isSkill }) {
       await updateSkills(projectData).then(() => {
         handleClose();
       });
-    } else {
-      await updateEmployeeData(projectData, data._id).then(() => {
+    }
+    else if(!!isEditProject) {
+      await editProject(projectData, data?._id).then(() => {
+        handleClose();
+      });
+    }else {
+      await addNewProject(projectData, data._id).then(() => {
         handleClose();
       });
     }
@@ -47,7 +52,7 @@ export default function FormModal({ isShow, handleClose, data, isSkill }) {
           <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
             {!!isSkill ? (
               <>
-                <div className=" m-2 w-full">
+                <div className=" m-2">
                   <RHMultiCheckDropdown
                     name="skills"
                     label="Skills"
@@ -63,19 +68,20 @@ export default function FormModal({ isShow, handleClose, data, isSkill }) {
                       "AWS",
                     ]}
                     id="skills"
+                    style={{width:'30rem'}}
                   />
                 </div>
               </>
             ) : (
-              <>
+               <>
                 <div className="m-2">
                   <RHFTextField
                     required={true}
                     id="projectName"
-                    name="projDetails[0].projectName"
+                    name="projDetails.projectName"
                     label="Project Name"
                     fullWidth
-                    defaultValue={data?.projDetails?.[0]?.projectName ?? ""}
+                    defaultValue={data?.[0]?.projectName ?? ""}
                     variant="outlined"
                     sx={{
                       pb: 0,
@@ -85,12 +91,12 @@ export default function FormModal({ isShow, handleClose, data, isSkill }) {
                     <RHDatepicker
                       required={true}
                       id="projectStartDate"
-                      name="projDetails[0].projectStartDate"
+                      name="projDetails.projectStartDate"
                       label="Project Start Date"
                       fullWidth
                       variant="outlined"
                       defaultValue={
-                        data?.projDetails?.[0]?.projectStartDate ?? ""
+                        data?.[0]?.projectStartDate?? ""
                       }
                       sx={{
                         pb: 1,
@@ -101,11 +107,11 @@ export default function FormModal({ isShow, handleClose, data, isSkill }) {
                     <RHDatepicker
                       required={true}
                       id="projectEndDate"
-                      name="projDetails[0].projectEndDate"
+                      name="projDetails.projectEndDate"
                       label="Project End Date"
                       fullWidth
                       defaultValue={
-                        data?.projDetails?.[0]?.projectEndDate ?? ""
+                        data?.[0]?.projectEndDate ?? ""
                       }
                       variant="outlined"
                       sx={{
@@ -113,26 +119,26 @@ export default function FormModal({ isShow, handleClose, data, isSkill }) {
                       }}
                     />
                   </div>
-                  <RHFTextField
+                  {/* <RHFTextField
                     required={true}
                     id="designation"
                     name="projDetails[0].designation"
                     label="Designation"
                     fullWidth
-                    defaultValue={data?.projDetails?.[0]?.designation ?? ""}
+                    defaultValue={data?.[0]?.designation ?? ""}
                     variant="outlined"
                     sx={{
                       pb: 2,
                     }}
-                  />
+                  /> */}
                   <RHSelect
                     required={true}
                     fullWidth
                     id="teamSize"
-                    name="projDetails[0].teamSize"
+                    name="projDetails.teamSize"
                     label="Team size"
                     variant="outlined"
-                    defaultValue={data?.projDetails?.[0]?.teamSize ?? ""}
+                    defaultValue={data?.[0]?.teamSize ?? ""}
                     sx={{
                       pb: 2,
                     }}

@@ -6,13 +6,14 @@ import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
  
 import { useFormContext, Controller } from "react-hook-form";
  
-const RHDatepicker = ({ name, label, ...others }) => {
+const RHDatepicker = ({ name, label, defaultValue,...others }) => {
  const { control } = useFormContext();
  
  return (
    <Controller
      name={name}
      control={control}
+     defaultValue={defaultValue}
      render={({ field, fieldState: { error } }) => (
        <LocalizationProvider dateAdapter={AdapterMoment}>
          <DesktopDatePicker

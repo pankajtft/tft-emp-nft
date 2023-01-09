@@ -3,13 +3,14 @@ import { TextField, MenuItem } from '@mui/material';
 import PropTypes from 'prop-types';
 import { useFormContext, Controller } from 'react-hook-form';
  
-const RHSelect = ({ name, label, options, ...others }) => {
+const RHSelect = ({ name, label, options,defaultValue, ...others }) => {
  const { control } = useFormContext();
  
  return (
    <Controller
      name={name}
      control={control}
+     defaultValue={defaultValue}
      render={({ field,fieldState : {error} }) => (
        <TextField
          select

@@ -9,7 +9,6 @@ import PopularTags from "../Components/Users/details/PopularTags";
 import MyCards from "../Components/Users/details/MyCards";
 import Addresses from "../Components/Users/details/Addresses";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
 function EmployeeDetails(props) {
   const router = useRouter();
   const data = router.query;
@@ -55,7 +54,6 @@ function EmployeeDetails(props) {
           justifyContent="center"
           alignItems="stretch"
           spacing={3}
-          // style={{background:'linear-gradient(to right, #332575, #928DAB)', padding:"2rem", borderRadius:'1rem'}}
         >
           <Grid item xs={2} md={12}>
             <ProfileCover user={user} />
