@@ -117,13 +117,23 @@ contract EMS is IERC721Receiver, ReentrancyGuard, Ownable {
     }
 
     //Update Skills
-    function skillUpdate(uint8 tokenId, string memory _skills)
+    function skillUpdate(uint16 tokenId, string memory _skills)
         public
         onlyOwner
     {
+        bytes32 uriHash;
         bytes32 _skillHash = keccak256(abi.encode(_skills));
         employees[tokenId].skillHash = _skillHash;
-        bytes32 uriHash = keccak256(
+        if (employees[tokenId].projDetails.length == 0) {
+            uriHash = keccak256(
+                abi.encode(
+                    employees[tokenId].empDetails,
+                    employees[tokenId].skillHash
+                )
+            );
+        }
+        else{
+            uriHash = keccak256(
             abi.encode(
                 employees[tokenId].empDetails,
                 employees[tokenId].projDetails[
@@ -132,6 +142,7 @@ contract EMS is IERC721Receiver, ReentrancyGuard, Ownable {
                 employees[tokenId].skillHash
             )
         );
+        }
         string memory uri = string(abi.encode(uriHash));
         NFT.setURI(uint256(tokenId), uri);
         emit skillUpdated(tokenId, _skills, _skillHash);
@@ -156,7 +167,9 @@ contract EMS is IERC721Receiver, ReentrancyGuard, Ownable {
         bytes32 uriHash = keccak256(
             abi.encode(
                 employees[tokenId].empDetails,
-                employees[tokenId].projDetails[uint8(employees[tokenId].projDetails.length - 1)],
+                employees[tokenId].projDetails[
+                    uint8(employees[tokenId].projDetails.length - 1)
+                ],
                 employees[tokenId].skillHash
             )
         );
