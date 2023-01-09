@@ -57,6 +57,24 @@ export const  updateEmployeeData = async (formData) => {
     console.log(e, "Error fetching Employee Details");
   }
 };
+export const updateSkills = async (formData) => {
+  const id = formData?.id;
+  
+  let data = formData?.skills;
+  console.log(data,id, "ID");
+  try {
+    const res = await axios.patch(`${Path}employee/skillUpdate/${id}`, {skills: data});
+    if (!res.ok) {
+      throw new Error("Failed to fetch data");
+    }
+    console.log(res, "Resp")
+    let resp = res;
+    
+    return resp;
+  } catch (e) {
+    console.log(e, "Error fetching Employee Details");
+  }
+};
 export const deleteData = async (_id) => {
   console.log(_id);
   try {

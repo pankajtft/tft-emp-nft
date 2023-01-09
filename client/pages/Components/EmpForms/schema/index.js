@@ -6,6 +6,7 @@ const empDetailSchema =  yup.object().shape({
     email: yup.string().email().required("Enter Valid Email"),
     empCode: yup.string().matches(/^[0-9]+$/, "Please enter valid number.").min(6, "Minimum Six digit code required").required("Required"),
     skills: yup.array().min(1, "Atleast 1 value is required").required("Required"),
+    designation:yup.string().required("Designation cannot be empty")
   })
 })
 // /^[0-9]{1,7}$/ 
@@ -17,7 +18,7 @@ const empDetailSchema =  yup.object().shape({
     projectName:yup.string().required("Please enter project name"),
     projectStartDate: yup.date().required("Start Date is required"),
     // projectEndDate: yup.date().required("Project End date is required"),
-    designation:yup.string().required("Designation cannot be empty"),
+    // designation:yup.string().required("Designation cannot be empty"),
     teamSize:yup.string().required("Team size cannot be empty"),
     projectEndDate:yup.date().when('projectStartDate', {
         is: (projectStartDate=> {

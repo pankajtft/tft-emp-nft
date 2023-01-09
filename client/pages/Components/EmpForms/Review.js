@@ -7,7 +7,7 @@ const Review = ({data}) =>{
 
 
     const {empDetail, projDetails} = data;
-    const {email, empCode, name , skills} =empDetail;
+    const {email, empCode, name , skills , designation} =empDetail;
     // const{ designation, projectEndDate,projectName, teamSize, projectStartDate}= projDetails?.[0]
     const skillArr=[]
     const skillsIs=()=>{
@@ -37,7 +37,7 @@ const Review = ({data}) =>{
         },
         {
             label:"Designation",
-            value:projDetails?.designation ?? ""
+            value:designation ?? ""
         },
         {
             label:"Team Size",

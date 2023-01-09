@@ -86,7 +86,7 @@ const ProfileCover = ({ user }) => {
     <>
       <Box display="flex" mb={3}>
         <Box>
-          <Typography variant="h1" component="h3" gutterBottom color={'white'}>
+          <Typography variant="h1" component="h3" gutterBottom color={'black'}>
           
            Employee Code : #{user.empcode}
           </Typography>
@@ -98,7 +98,7 @@ const ProfileCover = ({ user }) => {
       <CardCover>
         <CardMedia image={user.coverImg} />
         <CardCoverAction>
-          <Input accept="image/*" id="change-cover" multiple type="file" />
+          {/* <Input accept="image/*" id="change-cover" multiple type="file" />
           <label htmlFor="change-cover">
             <Button
               startIcon={<UploadTwoToneIcon />}
@@ -107,12 +107,12 @@ const ProfileCover = ({ user }) => {
             >
               Change cover
             </Button>
-          </label>
+          </label> */}
         </CardCoverAction>
       </CardCover>
       <AvatarWrapper>
         <Avatar variant="rounded" color={"white"} alt={user.name}  src={authState?.photoUrl} />
-        <ButtonUploadWrapper>
+        {/* <ButtonUploadWrapper>
           <Input
             accept="image/*"
             id="icon-button-file"
@@ -124,16 +124,16 @@ const ProfileCover = ({ user }) => {
               <UploadTwoToneIcon />
             </IconButton>
           </label>
-        </ButtonUploadWrapper>
+        </ButtonUploadWrapper> */}
       </AvatarWrapper>
       <Box py={2} pl={2} mb={3}>
-        <Typography gutterBottom variant="h1" color={"white"}>
+        <Typography gutterBottom variant="h1" color={"black"}>
         {user.name}
         </Typography>
-        <Typography gutterBottom variant="h3" color={"white"}>
+        <Typography gutterBottom variant="h3" color={"black"}>
         {user.email}
         </Typography>
-        <Typography gutterBottom variant="h2" color={"white"}>
+        <Typography gutterBottom variant="h2" color={"black"}>
          {user.designation}
         </Typography>
 

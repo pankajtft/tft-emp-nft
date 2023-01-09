@@ -9,28 +9,38 @@ import {
   Button,
 } from "@mui/material";
 import { useRouter } from "next/router";
-
+import React from "react";
 import AddTwoToneIcon from "@mui/icons-material/AddTwoTone";
+import { ButtonGroupWithLabel } from "../../GroupButton";
+import FormModal from "../../Modals";
 
 function Feed({ skills }) {
   const router = useRouter();
   const data = router.query;
-  const item = JSON.parse(data?.data);
-
-  const feed = item?.empDetail?.skills.map((skill) => ({
-    name: skill.title,
-    jobtitle: "Senior Accountant",
-    company: "Trudoo",
-    avatar: "/static/images/avatars/1.jpg",
-  }));
-
+  const [editModal, setEditModal] = React.useState(false)
+const skillData = !!skills?.skills ? skills : router.push('Listing')
   return (
+    <>
     <Card>
-      <CardHeader title="Top 5 Skills" />
+    <FormModal
+        isShow={editModal}
+        handleClose={()=>setEditModal(false)}
+        data={skills}
+        isSkill={true}
+      />
+      <div className="flex justify-between w-full py-2 px-5">
+      <h1 className="text-left text-xl ">Top 5 Skills</h1>
+      <ButtonGroupWithLabel
+                    isEdit={true}
+                    disabled={!!!data}
+                    onEditPress={() => setEditModal(true)}
+                  />
+      
+      </div>
       <Divider />
       <Box p={2}>
         <Grid container spacing={0}>
-          {skills.map((_feed) => (
+          { !!skillData && skillData.skills.map((_feed) => (
             <Grid key={_feed} item xs={12} sm={6} lg={4}>
               <Box p={3} display="flex" alignItems="flex-start">
                 <Avatar src={_feed.avatar} />
@@ -58,6 +68,7 @@ function Feed({ skills }) {
         </Grid>
       </Box>
     </Card>
+    </>
   );
 }
 

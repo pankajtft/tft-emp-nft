@@ -1,12 +1,15 @@
+import Image from 'next/image'
 export const TableHeader = ({isAdmin})=>{
     return(
         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 item-center">
             <tr>
-                <th scope="col" className="py-3 px-6 ">
-                   Name
+                <th scope="col" className="py-3 px-6">
                 </th>
                 <th scope="col" className="py-3 px-6">
                     Employee Code
+                </th>
+                <th scope="col" className="py-3 px-6 ">
+                   Name
                 </th>
                 <th scope="col" className="py-3 px-6">
                     Email
@@ -17,7 +20,7 @@ export const TableHeader = ({isAdmin})=>{
                 <th scope="col" className="py-3 px-6">
                    Skills
                 </th>
-                <th scope="col" className="py-3 px-6">
+                {/* <th scope="col" className="py-3 px-6">
                     Project Name
                 </th>
                 <th scope="col" className="py-3 px-6">
@@ -28,7 +31,7 @@ export const TableHeader = ({isAdmin})=>{
                 </th>
                 <th scope="col" className="py-3 px-6 ">
                     Team Size
-                </th>
+                </th> */}
                 {
                     isAdmin && <><th scope="col" className="py-3 px-6 ">
                     Status

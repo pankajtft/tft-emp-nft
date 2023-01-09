@@ -3,6 +3,6 @@ export const INITIAL_PROJECT_DATA = {
     projectStartDate:null,
     projectEndDate:null,
     teamSize:"",
-    designation:""
+    // designation:""
     }
        

@@ -6,7 +6,8 @@ import FormModal from "../Modals";
 import DialogBox from "../ConfirmModal";
 import { deleteData, mintEmployee } from "../../utils/apis";
 import { AuthContext } from "../../Context/auth-context";
-
+import BannerImg from "../../assets/images/ethereum-1.png";
+import Image from "next/image";
 export const TableRow = ({ data, handlieOnClick }) => {
   const { mintEmployeeNFT, updateEmployeeNFT, burnNft } =
     useContext(Web3Context);
@@ -66,19 +67,43 @@ export const TableRow = ({ data, handlieOnClick }) => {
       <tbody>
         <tr className="bg-white item-center border-black border-separate border border-slate-300">
           <td
+            className="py-4 px-6 text-center capitalize text-sm"
+            onClick={handlieOnClick}
+          >
+            <Image
+              src={BannerImg}
+              style={{
+                flex:1,
+                width: "50px",
+                height: "50px",
+                alignSelf: "center",
+                borderRadius:"50%"
+              }}
+            />
+          </td>
+          <td
+            onClick={handlieOnClick}
+            className="py-4 px-6 text-center capitalize text-sm"
+          >
+            {data?.empDetail?.empCode}
+          </td>
+          <td
             onClick={handlieOnClick}
             className="py-4 px-6 text-center capitalize text-sm"
           >
             {data?.empDetail?.name}
           </td>
-          <td className="py-4 px-6 text-center capitalize text-sm">
-            {data?.empDetail?.empCode}
-          </td>
-          <td className="py-4 px-6 text-center text-sm">
+          <td
+            className="py-4 px-6 text-center text-sm"
+            onClick={handlieOnClick}
+          >
             {data?.empDetail?.email}
           </td>
-          <td className="py-4 px-6 text-center text-sm">
-            {data?.projDetails?.[data?.projDetails.length - 1]?.designation}
+          <td
+            className="py-4 px-6 text-center text-sm"
+            onClick={handlieOnClick}
+          >
+            {data?.empDetail?.designation}
           </td>
           <td className="py-4 px-6 text-center text-sm">
             {!!data &&
@@ -86,6 +111,7 @@ export const TableRow = ({ data, handlieOnClick }) => {
                 return (
                   <p
                     className="text-left item-center text-sm capitalize"
+                    onClick={handlieOnClick}
                     key={index}
                   >
                     {item}
@@ -93,7 +119,7 @@ export const TableRow = ({ data, handlieOnClick }) => {
                 );
               })}
           </td>
-          <td className="py-4 px-6 text-center text-sm">
+          {/* <td className="py-4 px-6 text-center text-sm">
             {data?.projDetails?.[data?.projDetails.length - 1]?.projectName}
           </td>
           <td className="py-4 px-6 text-center text-sm">
@@ -115,7 +141,7 @@ export const TableRow = ({ data, handlieOnClick }) => {
           </td>
           <td className="py-4 px-6 text-center text-sm">
             {data?.projDetails?.[data?.projDetails.length - 1]?.teamSize}
-          </td>
+          </td> */}
           {isUserAdmin && (
             <>
               <td className="py-2 px-6 text-center text-sm">
@@ -138,7 +164,7 @@ export const TableRow = ({ data, handlieOnClick }) => {
               <td className="py-4 px-6 w-10 ">
                 {
                   <ButtonGroupIcon
-                    isEdit={true}
+                    isEdit={false}
                     isDelete={true}
                     disabled={!!!data}
                     onEditPress={() => setEditModal(true)}

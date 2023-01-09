@@ -15,9 +15,11 @@ import {
 import Box from "@mui/material/Box";
 import { Web3Context } from "../../Context/web3Context";
 import { AuthContext } from "../../Context/auth-context";
-import { updateEmployeeData } from "../../utils/apis";
+import { updateEmployeeData, updateSkills } from "../../utils/apis";
 import { useRouter } from "next/router";
-export default function FormModal({ isShow, handleClose, data }) {
+import RHMultiCheckDropdown from "../Hook-form/RHMultiCheckDropdown";
+
+export default function FormModal({ isShow, handleClose, data , isSkill }) {
   const { updateEmployeeNFT } = useContext(Web3Context);
   const methods = useForm({
     shouldUnregister: false,
@@ -35,9 +37,16 @@ export default function FormModal({ isShow, handleClose, data }) {
     //     handleClose();
     //   });
     // } else
+    if(!!isSkill){
+      console.log(projectData, ";allala");
+      await updateSkills(projectData).then(()=>{
+        handleClose()
+      })
+    }else{
     await updateEmployeeData(projectData).then(() => {
       handleClose();
     });
+  }
   };
   return (
     <div className="flex flex-col w-full">
@@ -45,6 +54,31 @@ export default function FormModal({ isShow, handleClose, data }) {
         <DialogTitle>Edit Project Details</DialogTitle>
         <DialogContent sx={{ m: 2, flexWrap: "wrap", alignItems: "center" }}>
           <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
+            {
+              !!isSkill ? 
+              <>
+              <div className=" m-2 w-full">
+              <RHMultiCheckDropdown
+            name="skills"
+            label="Skills"
+            options={
+            ["React",
+             "Vue",
+            "React Native",
+            "Mongo",
+            "Node",
+            "Blockchain",
+            "Solidity",
+            "JavaScript",
+            "AWS"]
+            } 
+            id="skills"
+          />
+              </div>
+              </>
+            :
+            <>
+          
             <div className="m-2">
               <RHFTextField
                 required={true}
@@ -126,6 +160,7 @@ export default function FormModal({ isShow, handleClose, data }) {
                 ]}
               />
             </div>
+            </>}
             <DialogActions>
               <Button
                 onClick={handleClose}

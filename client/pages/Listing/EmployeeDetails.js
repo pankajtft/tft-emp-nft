@@ -9,10 +9,12 @@ import PopularTags from "../Components/Users/details/PopularTags";
 import MyCards from "../Components/Users/details/MyCards";
 import Addresses from "../Components/Users/details/Addresses";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 function EmployeeDetails(props) {
   const router = useRouter();
   const data = router.query;
-  const item = JSON.parse(data?.data);
+  const item = !!data?.data ? JSON.parse(data?.data) : router.push("/Listing")
+
   const user = {
     savedCards: 7,
     name: item?.empDetail?.name,
@@ -30,8 +32,13 @@ function EmployeeDetails(props) {
     followers: "465",
   };
   console.log(item, "Data");
+  const skillData= {
+    skills: item?.empDetail?.skills,
+    id: item?._id
+  }
+  
   return (
-    <div className="bg-my_bg_image py-8">
+    <div className="py-8 bg-backGround">
       <Head>
         <title>Employee Details</title>
       </Head>
@@ -51,7 +58,7 @@ function EmployeeDetails(props) {
              <RecentActivity />
           </Grid> */}
             {/* <Grid item xs={12} md={12}> */}
-            <Feed skills={item?.empDetail?.skills} />
+            <Feed skills={skillData} />
           </Grid>
           {/* <Grid item xs={12} md={4}>
             <PopularTags />

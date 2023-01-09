@@ -46,6 +46,17 @@ const EmpDetails = ({ handleSubmitForm, initialData }) => {
               pb: 1,
             }}
           />
+          <RHFTextField
+            // required
+            id="designation"
+            name="empDetail.designation"
+            label="Designation"
+            fullWidth
+            variant="outlined"
+            sx={{
+              pb: 2,
+            }}
+          />
           <RHMultiCheckDropdown
             name="empDetail.skills"
             label="Skills"
@@ -62,6 +73,7 @@ const EmpDetails = ({ handleSubmitForm, initialData }) => {
             } 
             id="skills"
           />
+          
         {/* </Grid> */}
       {/* </Grid> */}
     </div>

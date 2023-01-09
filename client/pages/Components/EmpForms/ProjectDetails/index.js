@@ -58,7 +58,7 @@ const ProjectDetails = ({ handleSubmitForm, initialData }) => {
             }}
           />
           </div>
-          <RHFTextField
+          {/* <RHFTextField
             // required
             id="designation"
             name="projDetails.designation"
@@ -68,7 +68,7 @@ const ProjectDetails = ({ handleSubmitForm, initialData }) => {
             sx={{
               pb: 2,
             }}
-          />
+          /> */}
          <RHSelect
           // required
           fullWidth

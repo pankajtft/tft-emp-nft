@@ -8,6 +8,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      colors:{
+        backGround:'#f7f7f7'
+      },
       backgroundImage: {
         'my_bg_image' : "url('../pages/assets/images/darkBlack.jpeg')",
         'login_form' : "url('../pages/assets/images/web3.jpeg')"
