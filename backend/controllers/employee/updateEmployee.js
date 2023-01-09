@@ -16,7 +16,6 @@ const updateEmployee = async (req, res) => {
     updates.projectName,
     updates.projectStartDate.toString(),
     updates.projectEndDate.toString(),
-    employee.projDetails.length
   );
   storeTransaction(
     queryId,
