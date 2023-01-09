@@ -1,7 +1,6 @@
 import { ButtonGroupIcon } from "../GroupButton";
 import React, { useContext, useEffect } from "react";
 import moment from "moment";
-import { Web3Context } from "../../Context/web3Context";
 import FormModal from "../Modals";
 import DialogBox from "../ConfirmModal";
 import { deleteData, mintEmployee } from "../../utils/apis";
@@ -9,8 +8,6 @@ import { AuthContext } from "../../Context/auth-context";
 import BannerImg from "../../assets/images/ethereum-1.png";
 import Image from "next/image";
 export const TableRow = ({ data, handlieOnClick }) => {
-  const { mintEmployeeNFT, updateEmployeeNFT, burnNft } =
-    useContext(Web3Context);
   const { isUserAdmin } = useContext(AuthContext);
   const Minted = [{ isMinted: false }];
   const [editModal, setEditModal] = React.useState(false);

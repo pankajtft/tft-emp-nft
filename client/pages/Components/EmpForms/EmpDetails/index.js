@@ -1,10 +1,7 @@
 import React from "react";
-import { RHFTextField, RHDatepicker } from "../../Hook-form";
-
-import Grid from "@mui/material/Grid";
+import { RHFTextField } from "../../Hook-form";
 import Typography from "@mui/material/Typography";
 import RHMultiCheckDropdown from "../../Hook-form/RHMultiCheckDropdown";
-import { hexValue } from "ethers/lib/utils";
 
 const EmpDetails = ({ handleSubmitForm, initialData }) => {
   return (
@@ -12,8 +9,6 @@ const EmpDetails = ({ handleSubmitForm, initialData }) => {
       <Typography variant="h6" gutterBottom>
         Employee Details
       </Typography>
-      {/* <Grid container spacing={3}> */}
-        {/* <Grid item xs={12} sm={6}> */}
           <RHFTextField
             id="name"
             name="empDetail.name"
@@ -73,10 +68,7 @@ const EmpDetails = ({ handleSubmitForm, initialData }) => {
             } 
             id="skills"
           />
-          
-        {/* </Grid> */}
-      {/* </Grid> */}
-    </div>
+     </div>
   );
 };
 

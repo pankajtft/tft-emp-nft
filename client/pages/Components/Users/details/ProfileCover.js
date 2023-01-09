@@ -82,6 +82,7 @@ const CardCoverAction = styled(Box)(
 
 const ProfileCover = ({ user }) => {
   const {authState} = useContext(AuthContext);
+  const coverImg = "https://media.istockphoto.com/id/1208738316/photo/abstract-geometric-network-polygon-globe-graphic-background.jpg?s=170667a&w=0&k=20&c=7ItmaMgfIb8j3M-9rWxPGrifEmdoxuM9rLVMlRggDfU="
   return (
     <>
       <Box display="flex" mb={3}>
@@ -96,7 +97,7 @@ const ProfileCover = ({ user }) => {
         </Box>
       </Box>
       <CardCover>
-        <CardMedia image={user.coverImg} />
+        <CardMedia image={coverImg} />
         <CardCoverAction>
           {/* <Input accept="image/*" id="change-cover" multiple type="file" />
           <label htmlFor="change-cover">

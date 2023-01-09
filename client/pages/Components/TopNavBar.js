@@ -3,11 +3,9 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import ConnectButton from "./ConnectButton";
 import { AuthContext } from "../Context/auth-context";
-import { Web3Context } from "../Context/web3Context";
 const TopNavBar = () => {
 
   const { pathname } = useRouter();
-  const { network, isConnected, disconnect,hasMetaMask } = useContext(Web3Context);
   const {logout, isUserAdmin, authState, setUserAuthInfo} = useContext(AuthContext)
   const selectedItemClass =
     "bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium";
@@ -73,15 +71,6 @@ const TopNavBar = () => {
             </div>
           </div>
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-             {isUserAdmin && isConnected ? (
-              <span className="bg-white border-2 rounded-lg shadow-lg px-2 text-md font-semibold">
-                {network}
-              </span>
-            ) : (
-              <></>
-            )}
-            {isUserAdmin && <ConnectButton />}
-
               <div className="relative ml-3">
                 <div>
                   <button

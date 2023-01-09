@@ -13,30 +13,22 @@ import {
   RHSelect,
 } from "../Hook-form";
 import Box from "@mui/material/Box";
-import { Web3Context } from "../../Context/web3Context";
 import { AuthContext } from "../../Context/auth-context";
 import { updateEmployeeData, updateSkills } from "../../utils/apis";
 import { useRouter } from "next/router";
 import RHMultiCheckDropdown from "../Hook-form/RHMultiCheckDropdown";
 
 export default function FormModal({ isShow, handleClose, data, isSkill }) {
-  const { updateEmployeeNFT } = useContext(Web3Context);
   const methods = useForm({
     shouldUnregister: false,
     defaultValues: data,
     mode: "onChange",
   });
-
   const { handleSubmit, trigger, watch } = methods;
   watch((data) => setFormData(data));
   const [formdata, setFormData] = React.useState({});
   const router = useRouter();
   const onSubmit = async (projectData) => {
-    // if (data.tokenId !== undefined) {
-    //   await updateEmployeeNFT(projectData).then(() => {
-    //     handleClose();
-    //   });
-    // } else
     if (!!isSkill) {
       await updateSkills(projectData).then(() => {
         handleClose();
