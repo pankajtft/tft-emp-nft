@@ -3,6 +3,7 @@ const { mintEmployeeNFT, mintEmployeeNFTwithProject } = require("../../index");
 const { storeTransaction } = require("./helpers");
 const mongoose = require("mongoose");
 const moment = require("moment");
+const { ethers } = require("ethers");
 
 const mintEmployee = async (req, res) => {
   try {
@@ -24,7 +25,9 @@ const mintEmployee = async (req, res) => {
         queryId,
         contract_response.transactionHash,
         contract_response.events[1].event,
-        Number(contract_response.gasUsed._hex)
+        ethers.utils.formatEther(
+          contract_response.gasUsed.mul(contract_response.effectiveGasPrice)
+        )
       );
     } else {
       const {
@@ -48,10 +51,12 @@ const mintEmployee = async (req, res) => {
         queryId,
         contract_response.transactionHash,
         contract_response.events[1].event,
-        Number(contract_response.gasUsed._hex)
+        ethers.utils.formatEther(
+          contract_response.gasUsed.mul(contract_response.effectiveGasPrice)
+        )
       );
     }
-    res.status(200).send(contract_response);
+    res.status(200).send("NFT minted successfully");
   } catch (err) {
     res.status(400).send(err);
   }

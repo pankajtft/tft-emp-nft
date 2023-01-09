@@ -18,6 +18,9 @@ const employeeSchema = new mongoose.Schema(
       skills: {
         type: Array,
       },
+      designation: {
+        type: String,
+      },
     },
     tokenId: {
       type: Number,
@@ -35,9 +38,6 @@ const employeeSchema = new mongoose.Schema(
         },
         teamSize: {
           type: Number,
-        },
-        designation: {
-          type: String,
         },
       },
     ],

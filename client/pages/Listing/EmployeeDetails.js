@@ -13,7 +13,7 @@ import { useEffect } from "react";
 function EmployeeDetails(props) {
   const router = useRouter();
   const data = router.query;
-  const item = !!data?.data ? JSON.parse(data?.data) : router.push("/Listing")
+  const item = !!data?.data ? JSON.parse(data?.data) : router.push("/Listing");
 
   const user = {
     savedCards: 7,
@@ -32,11 +32,17 @@ function EmployeeDetails(props) {
     followers: "465",
   };
   console.log(item, "Data");
-  const skillData= {
+  const skillData = {
     skills: item?.empDetail?.skills,
-    id: item?._id
-  }
-  
+    id: item?._id,
+  };
+
+  const projectData = {
+    projects: item?.projDetails,
+    _id: item?._id,
+  };
+  console.log("project", projectData);
+
   return (
     <div className="py-8 bg-backGround">
       <Head>
@@ -64,7 +70,7 @@ function EmployeeDetails(props) {
             <PopularTags />
           </Grid> */}
           <Grid item xs={12} md={12}>
-            <MyCards project={item?.projDetails} />
+            <MyCards project={projectData} />
           </Grid>
           <Grid item xs={12} md={12}>
             <Transaction transaction={item?.transactionDetails} />

@@ -34,20 +34,19 @@ export const postEmployeeData = async (FormData) => {
   }
 };
 
-export const  updateEmployeeData = async (formData) => {
-  const id = formData?._id;
-  console.log(formData, "ID");
-  let data = formData;
-  if (data?.empDetail) {
-    delete data?.updatedAt;
-    delete data?.isDeleted;
-    delete data?._id;
-    delete data?.isActive;
-    delete data?.createdAt;
-    delete data?.empDetail;
-  }
+export const updateEmployeeData = async (formData,_id) => {
+  console.log(formData.projDetails);
+  const projDetails = formData?.projDetails?.[0];
+  // if (data?.empDetail) {
+  //   delete data?.updatedAt;
+  //   delete data?.isDeleted;
+  //   delete data?._id;
+  //   delete data?.isActive;
+  //   delete data?.createdAt;
+  //   delete data?.empDetail;
+  // }
   try {
-    const res = await axios.patch(`${Path}employee/${id}`, data);
+    const res = await axios.patch(`${Path}employee/${_id}`, { projDetails });
     if (!res.ok) {
       throw new Error("Failed to fetch data");
     }
@@ -59,17 +58,19 @@ export const  updateEmployeeData = async (formData) => {
 };
 export const updateSkills = async (formData) => {
   const id = formData?.id;
-  
+
   let data = formData?.skills;
-  console.log(data,id, "ID");
+  console.log(data, id, "ID");
   try {
-    const res = await axios.patch(`${Path}employee/skillUpdate/${id}`, {skills: data});
+    const res = await axios.patch(`${Path}employee/skillUpdate/${id}`, {
+      skills: data,
+    });
     if (!res.ok) {
       throw new Error("Failed to fetch data");
     }
-    console.log(res, "Resp")
+    console.log(res, "Resp");
     let resp = res;
-    
+
     return resp;
   } catch (e) {
     console.log(e, "Error fetching Employee Details");

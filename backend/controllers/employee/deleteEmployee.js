@@ -2,6 +2,7 @@ const Employee = require("../../models/employee");
 const mongoose = require("mongoose");
 const { burn } = require("../../index");
 const { storeTransaction } = require("../contract/helpers");
+const { ethers } = require("ethers");
 
 const deleteEmployee = async (req, res) => {
   try {
@@ -14,16 +15,17 @@ const deleteEmployee = async (req, res) => {
     let contract_response;
     if (employee?.tokenId) {
       contract_response = await burn(employee.tokenId);
-      console.log(contract_response);
       storeTransaction(
         queryId,
         contract_response.transactionHash,
         contract_response.events[1].event,
-        Number(contract_response.gasUsed._hex)
+        ethers.utils.formatEther(
+          contract_response.gasUsed.mul(contract_response.effectiveGasPrice)
+        )
       );
     }
 
-    res.status(200).send(contract_response);
+    res.status(200).send("NFT burned successfully");
   } catch (err) {
     res.status(400).send(err);
   }

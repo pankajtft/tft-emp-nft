@@ -18,7 +18,12 @@ import {
 } from "@mui/material";
 import AddTwoToneIcon from "@mui/icons-material/AddTwoTone";
 import FormModal from "../../Modals";
-import { DragDropContext, Droppable, Draggable ,resetServerContext} from "react-beautiful-dnd";
+import {
+  DragDropContext,
+  Droppable,
+  Draggable,
+  resetServerContext,
+} from "react-beautiful-dnd";
 
 const AvatarAddWrapper = styled(Avatar)(
   ({ theme }) => `
@@ -85,52 +90,52 @@ const CardCc = styled(Card)(
 
 const MyCards = ({ project }) => {
   const data = {
-    savedCards: project.length,
+    savedCards: project?.projects?.length,
   };
   const proj = [
     {
-    projectEndDate: "2023-01-19T18:30:00.000Z",
-    projectName: "asd",
-    projectStartDate: "2023-01-18T18:30:00.000Z",
-    teamSize: 4,
-    _id: "63bb1a3129e32a619312a4"
-  },
+      projectEndDate: "2023-01-19T18:30:00.000Z",
+      projectName: "asd",
+      projectStartDate: "2023-01-18T18:30:00.000Z",
+      teamSize: 4,
+      _id: "63bb1a3129e32a619312a4",
+    },
     {
-    projectEndDate: "2023-01-19T18:30:00.000Z",
-    projectName: "asdasda",
-    projectStartDate: "2023-01-18T18:30:00.000Z",
-    teamSize: 5,
-    _id: "63bb1a3129e32a619312a5"
-  },
+      projectEndDate: "2023-01-19T18:30:00.000Z",
+      projectName: "asdasda",
+      projectStartDate: "2023-01-18T18:30:00.000Z",
+      teamSize: 5,
+      _id: "63bb1a3129e32a619312a5",
+    },
     {
-    projectEndDate: "2023-01-19T18:30:00.000Z",
-    projectName: "asqweqwd",
-    projectStartDate: "2023-01-18T18:30:00.000Z",
-    teamSize: 6,
-    _id: "63bb1a3129e32a619312a6"
-  },
+      projectEndDate: "2023-01-19T18:30:00.000Z",
+      projectName: "asqweqwd",
+      projectStartDate: "2023-01-18T18:30:00.000Z",
+      teamSize: 6,
+      _id: "63bb1a3129e32a619312a6",
+    },
     {
-    projectEndDate: "2023-01-19T18:30:00.000Z",
-    projectName: "asqweqwd",
-    projectStartDate: "2023-01-18T18:30:00.000Z",
-    teamSize: 7,
-    _id: "63bb1a3129e32a619312a7"
-  },
-]
+      projectEndDate: "2023-01-19T18:30:00.000Z",
+      projectName: "asqweqwd",
+      projectStartDate: "2023-01-18T18:30:00.000Z",
+      teamSize: 7,
+      _id: "63bb1a3129e32a619312a7",
+    },
+  ];
   const [selectedValue, setSelectedValue] = useState("a");
   const [editModal, setEditModal] = useState(false);
-  const [projects, setProjects] = useState(project);
+  const [projects, setProjects] = useState(project.projects);
   const handleChange = (event) => {
     setSelectedValue(event.target.value);
   };
   const handleDelete = () => {};
   function handleOnDragEnd(result) {
     if (!result.destination) return;
-    
+
     const items = Array.from(projects);
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
-  
+
     setProjects(items);
     resetServerContext();
   }
@@ -139,19 +144,23 @@ const MyCards = ({ project }) => {
       <FormModal
         isShow={editModal}
         handleClose={() => setEditModal(false)}
-        data={projects}
+        data={project}
       />
       <CardHeader subheader={data.savedCards + " Projects"} title="Projects" />
       <Divider />
-      
+
       <Box p={4}>
-          <DragDropContext onDragEnd={handleOnDragEnd}>
-            <Droppable droppableId="projects">
-              {(provided ) => (
-                <Grid container spacing={4} {...provided.droppableProps}
-                  ref={provided.innerRef}>
-                  
-                  {!!projects && projects.map((proj, index) => {
+        <DragDropContext onDragEnd={handleOnDragEnd}>
+          <Droppable droppableId="projects">
+            {(provided) => (
+              <Grid
+                container
+                spacing={4}
+                {...provided.droppableProps}
+                ref={provided.innerRef}
+              >
+                {!!projects &&
+                  projects.map((proj, index) => {
                     return (
                       <Draggable
                         key={proj?._id}
@@ -159,8 +168,15 @@ const MyCards = ({ project }) => {
                         index={index}
                       >
                         {(provided) => (
-                          <Grid key={proj?.id} item xs={12} sm={8} 
-                          ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+                          <Grid
+                            key={proj?.id}
+                            item
+                            xs={12}
+                            sm={8}
+                            ref={provided.innerRef}
+                            {...provided.draggableProps}
+                            {...provided.dragHandleProps}
+                          >
                             <CardCc sx={{ px: 2, pt: 2, pb: 1 }}>
                               <Box display="flex" alignItems="center">
                                 <CardLogo
@@ -206,37 +222,34 @@ const MyCards = ({ project }) => {
                                 display="flex"
                                 alignItems="center"
                                 justifyContent="space-between"
-                              >
-                              </Box>
+                              ></Box>
                             </CardCc>
                           </Grid>
                         )}
                       </Draggable>
                     );
                   })}
-                  {provided.placeholder}
-                
-                </Grid>
-              )}
-            </Droppable>
-          </DragDropContext>
-                  
-          <Grid item xs={12} sm={12} spacing={2} style={{marginTop:"2rem"}}>
-            <Tooltip arrow title="Click to add a new project">
-              <CardAddAction onClick={() => setEditModal(true)}>
-                <CardActionArea sx={{ px: 1 }}>
-                  <CardContent>
-                    <AvatarAddWrapper>
-                      <AddTwoToneIcon fontSize="large" />
-                    </AvatarAddWrapper>
-                  </CardContent>
-                </CardActionArea>
-              </CardAddAction>
-            </Tooltip>
-          </Grid>
-        {/* </Grid> */}
-        </Box>
+                {provided.placeholder}
+              </Grid>
+            )}
+          </Droppable>
+        </DragDropContext>
 
+        <Grid item xs={12} sm={12} spacing={2} style={{ marginTop: "2rem" }}>
+          <Tooltip arrow title="Click to add a new project">
+            <CardAddAction onClick={() => setEditModal(true)}>
+              <CardActionArea sx={{ px: 1 }}>
+                <CardContent>
+                  <AvatarAddWrapper>
+                    <AddTwoToneIcon fontSize="large" />
+                  </AvatarAddWrapper>
+                </CardContent>
+              </CardActionArea>
+            </CardAddAction>
+          </Tooltip>
+        </Grid>
+        {/* </Grid> */}
+      </Box>
     </Card>
   );
 };
