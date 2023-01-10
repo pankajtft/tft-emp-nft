@@ -34,19 +34,10 @@ export const postEmployeeData = async (FormData) => {
   }
 };
 
-export const addNewProject = async (formData,_id) => {
-  console.log(formData.projDetails);
-  const projDetails = formData?.projDetails?.[0];
-  // if (data?.empDetail) {
-  //   delete data?.updatedAt;
-  //   delete data?.isDeleted;
-  //   delete data?._id;
-  //   delete data?.isActive;
-  //   delete data?.createdAt;
-  //   delete data?.empDetail;
-  // }
+export const addNewProject = async (formData, _id) => {
+  console.log(formData, _id, "Add");
   try {
-    const res = await axios.patch(`${Path}employee/${_id}`, { projDetails });
+    const res = await axios.patch(`${Path}employee/${_id}`, {projDetails: formData?.projDetails} );
     if (!res.ok) {
       throw new Error("Failed to fetch data");
     }
@@ -56,20 +47,10 @@ export const addNewProject = async (formData,_id) => {
     console.log(e, "Error fetching Employee Details");
   }
 };
-export const editProject = async (formData,_id) => {
-  console.log(formData);
-  // const projDetails = formData?.projDetails?.[0];
-  // if (data?.empDetail) {
-  //   delete data?.updatedAt;
-  //   delete data?.isDeleted;
-  //   delete data?._id;
-  //   delete data?.isActive;
-  //   delete data?.createdAt;
-  //   delete data?.empDetail;
-  // }
-  // http://localhost:4080/employee/projectUpdate/user_id/project_id 
+export const editProject = async (formData ,_id , projId) => {
+  console.log(formData?.projDetails,_id);
   try {
-    const res = await axios.patch(`${Path}employee/projectUpdate/${_id}`, { projDetails });
+    const res = await axios.patch(`${Path}employee/projectUpdate/${_id}/${projId}`, formData.projDetails);
     if (!res.ok) {
       throw new Error("Failed to fetch data");
     }

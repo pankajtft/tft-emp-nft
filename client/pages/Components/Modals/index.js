@@ -17,12 +17,15 @@ import { AuthContext } from "../../Context/auth-context";
 import { addNewProject,editProject, updateSkills } from "../../utils/apis";
 import { useRouter } from "next/router";
 import RHMultiCheckDropdown from "../Hook-form/RHMultiCheckDropdown";
-
-export default function FormModal({ isShow, handleClose, data, isSkill, isEditProject }) {
+import {yupResolver} from "@hookform/resolvers/yup"
+import { validationSchema } from "../EmpForms/schema";
+import { INITIAL_PROJECT_DATA } from "../EmpForms/ProjectDetails/cosntant";
+export default function FormModal({ isShow, handleClose, data, isSkill }) {
   const methods = useForm({
-    shouldUnregister: false,
-    defaultValues: data,
+    shouldUnregister: true,
+    defaultValues: !!data ?data?.proj: INITIAL_PROJECT_DATA,
     mode: "onChange",
+    resolver: yupResolver(validationSchema[1]),
   });
   const { handleSubmit, trigger, watch } = methods;
   watch((data) => setFormData(data));
@@ -34,12 +37,12 @@ export default function FormModal({ isShow, handleClose, data, isSkill, isEditPr
         handleClose();
       });
     }
-    else if(!!isEditProject) {
-      await editProject(projectData, data?._id).then(() => {
+    else if(typeof data === "object") {
+      await editProject(projectData, data?._id ,data?.proj?._id ).then(() => {
         handleClose();
       });
     }else {
-      await addNewProject(projectData, data._id).then(() => {
+      await addNewProject(projectData, data).then(() => {
         handleClose();
       });
     }
@@ -81,7 +84,7 @@ export default function FormModal({ isShow, handleClose, data, isSkill, isEditPr
                     name="projDetails.projectName"
                     label="Project Name"
                     fullWidth
-                    defaultValue={data?.[0]?.projectName ?? ""}
+                    defaultValue={data?.proj?.projectName ?? ""}
                     variant="outlined"
                     sx={{
                       pb: 0,
@@ -96,7 +99,7 @@ export default function FormModal({ isShow, handleClose, data, isSkill, isEditPr
                       fullWidth
                       variant="outlined"
                       defaultValue={
-                        data?.[0]?.projectStartDate?? ""
+                        data?.proj?.projectStartDate?? ""
                       }
                       sx={{
                         pb: 1,
@@ -111,7 +114,7 @@ export default function FormModal({ isShow, handleClose, data, isSkill, isEditPr
                       label="Project End Date"
                       fullWidth
                       defaultValue={
-                        data?.[0]?.projectEndDate ?? ""
+                        data?.proj?.projectEndDate ?? ""
                       }
                       variant="outlined"
                       sx={{
@@ -138,7 +141,7 @@ export default function FormModal({ isShow, handleClose, data, isSkill, isEditPr
                     name="projDetails.teamSize"
                     label="Team size"
                     variant="outlined"
-                    defaultValue={data?.[0]?.teamSize ?? ""}
+                    defaultValue={data?.proj?.teamSize ?? ""}
                     sx={{
                       pb: 2,
                     }}

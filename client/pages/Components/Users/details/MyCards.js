@@ -126,10 +126,7 @@ const MyCards = ({ project }) => {
   ];
   const [editModal, setEditModal] = useState(false);
   const [projects, setProjects] = useState(project.projects);
-  const handleChange = (event) => {
-    setSelectedValue(event.target.value);
-  };
-  const handleDelete = () => {};
+  const [isNew,setNew] = useState("")
   function handleOnDragEnd(result) {
     if (!result.destination) return;
 
@@ -140,12 +137,16 @@ const MyCards = ({ project }) => {
     setProjects(items);
     resetServerContext();
   }
+  async function handleAddOrUpdateProject(isNewProj){
+    setNew(isNewProj)
+    return true
+  } 
   return (
     <Card>
       <FormModal
         isShow={editModal}
         handleClose={() => setEditModal(false)}
-        data={project?.projects}
+        data={isNew}
       />
       <CardHeader subheader={data.savedCards + " Projects"} title="Projects" />
       <Divider />
@@ -231,10 +232,10 @@ const MyCards = ({ project }) => {
                                 justifyContent="flex-end"
                               >
                                 <ButtonGroupWithLabel
-                    isEdit={true}
-                    disabled={!!!data}
-                    onEditPress={() => setEditModal(true)}
-                  />
+                                  isEdit={true}
+                                  disabled={!!!data}
+                                  onEditPress={() => handleAddOrUpdateProject({proj:proj,_id:project._id}) && setEditModal(true)}
+                                />
                               </Box>
                             </CardCc>
                           </Grid>
@@ -251,7 +252,7 @@ const MyCards = ({ project }) => {
 
         <Grid item xs={12} sm={12} spacing={2} style={{ marginTop: "2rem" }}>
           <Tooltip arrow title="Click to add a new project">
-            <CardAddAction onClick={() => setEditModal(true)}>
+            <CardAddAction onClick={() => handleAddOrUpdateProject(project?._id) && setEditModal(true)}>
               <CardActionArea sx={{ px: 1 }}>
                 <CardContent>
                   <AvatarAddWrapper>

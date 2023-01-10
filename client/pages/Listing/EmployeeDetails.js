@@ -9,10 +9,11 @@ import PopularTags from "../Components/Users/details/PopularTags";
 import MyCards from "../Components/Users/details/MyCards";
 import Addresses from "../Components/Users/details/Addresses";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 function EmployeeDetails(props) {
   const router = useRouter();
   const data = router.query;
-  const item = !!data?.data ? JSON.parse(data?.data) : router.push("/Listing");
+  const item = JSON.parse(data?.data);
 
   const user = {
     savedCards: 7,
@@ -30,6 +31,11 @@ function EmployeeDetails(props) {
     location: "Barcelona, Spain",
     followers: "465",
   };
+  useEffect(()=>{
+    if(!data){
+      router.push("/")
+    }
+  },[data])
   console.log(item, "Data");
   const skillData = {
     skills: item?.empDetail?.skills,
@@ -40,8 +46,6 @@ function EmployeeDetails(props) {
     projects: item?.projDetails,
     _id: item?._id,
   };
-  console.log("project", projectData);
-
   return (
     <div className="py-8 bg-backGround">
       <Head>
@@ -57,16 +61,8 @@ function EmployeeDetails(props) {
         >
           <Grid item xs={2} md={12}>
             <ProfileCover user={user} />
-            {/* </Grid> */}
-            {/* <Grid item xs={12} md={4}>
-             <RecentActivity />
-          </Grid> */}
-            {/* <Grid item xs={12} md={12}> */}
             <Feed skills={skillData} />
           </Grid>
-          {/* <Grid item xs={12} md={4}>
-            <PopularTags />
-          </Grid> */}
           <Grid item xs={12} md={12}>
             <MyCards project={projectData} />
           </Grid>

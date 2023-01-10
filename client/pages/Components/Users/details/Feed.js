@@ -18,7 +18,7 @@ function Feed({ skills }) {
   const router = useRouter();
   const data = router.query;
   const [editModal, setEditModal] = React.useState(false)
-const skillData = !!skills?.skills ? skills : router.push('Listing')
+  const skillData = skills;
   return (
     <>
     <Card>
