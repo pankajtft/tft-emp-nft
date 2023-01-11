@@ -1,5 +1,5 @@
 import { ButtonGroupIcon } from "../GroupButton";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import moment from "moment";
 import FormModal from "../Modals";
 import DialogBox from "../ConfirmModal";
@@ -7,14 +7,31 @@ import { deleteData, mintEmployee } from "../../utils/apis";
 import { AuthContext } from "../../Context/auth-context";
 import BannerImg from "../../assets/images/ethereum-1.png";
 import Image from "next/image";
-export const TableRow = ({ data, handlieOnClick }) => {
+import { useRouter } from "next/router";
+import { Link } from "next/link";
+export const TableRow = ({ data }) => {
   const { isUserAdmin } = useContext(AuthContext);
   const Minted = [{ isMinted: false }];
   const [editModal, setEditModal] = React.useState(false);
   const [deleteModal, setDeleteModal] = React.useState(false);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const router = useRouter();
+
   useEffect(() => {
     styleForMinted();
   }, [data?.tokenId]);
+
+  function handleClick() {
+    if (data) {
+      router.push(
+        {
+          pathname: "/Listing/EmployeeDetails",
+          query: { data: JSON.stringify(data) },
+        },
+        "/Listing/EmployeeDetails"
+      );
+    }
+  }
 
   function styleForMinted() {
     if (data.tokenId !== undefined) {
@@ -28,7 +45,9 @@ export const TableRow = ({ data, handlieOnClick }) => {
         <>
           <button
             className="uppercase text-xs bg-green-700 hover:bg-white text-white font-semibold hover:text-green-700 px-6 mx-4 border border-green-700 hover:border-green-700 rounded"
-            onClick={() => mintEmployee(data._id)}
+            onClick={() => {
+              mintEmployee(data._id);
+            }}
           >
             Mint NFT
           </button>
@@ -65,41 +84,40 @@ export const TableRow = ({ data, handlieOnClick }) => {
         <tr className="bg-white item-center border-black border-separate border border-slate-300">
           <td
             className="py-4 px-6 text-center capitalize text-sm"
-            onClick={handlieOnClick}
+            onClick={handleClick}
           >
             <Image
               src={BannerImg}
               style={{
-                flex:1,
+                flex: 1,
                 width: "50px",
                 height: "50px",
                 alignSelf: "center",
-                borderRadius:"50%"
+                borderRadius: "50%",
               }}
             />
           </td>
           <td
-            onClick={handlieOnClick}
+            onClick={handleClick}
             className="py-4 px-6 text-center capitalize text-sm"
           >
             {data?.empDetail?.empCode}
           </td>
           <td
-            onClick={handlieOnClick}
+            onClick={handleClick}
             className="py-4 px-6 text-center capitalize text-sm"
           >
-            {data?.empDetail?.name}
+            {/* <Link
+              href={`/Listing/EmployeeDetails?data=${JSON.stringify(data)}`}
+              as="/Listing/EmployeeDetails"
+            > */}
+            <a> {data?.empDetail?.name}</a>
+            {/* </Link> */}
           </td>
-          <td
-            className="py-4 px-6 text-center text-sm"
-            onClick={handlieOnClick}
-          >
+          <td className="py-4 px-6 text-center text-sm" onClick={handleClick}>
             {data?.empDetail?.email}
           </td>
-          <td
-            className="py-4 px-6 text-center text-sm"
-            onClick={handlieOnClick}
-          >
+          <td className="py-4 px-6 text-center text-sm" onClick={handleClick}>
             {data?.empDetail?.designation}
           </td>
           <td className="py-4 px-6 text-center text-sm">
@@ -108,7 +126,7 @@ export const TableRow = ({ data, handlieOnClick }) => {
                 return (
                   <p
                     className="text-left item-center text-sm capitalize"
-                    onClick={handlieOnClick}
+                    onClick={handleClick}
                     key={index}
                   >
                     {item}
@@ -148,11 +166,7 @@ export const TableRow = ({ data, handlieOnClick }) => {
                   // !!data?.projDetails?.[data?.projDetails.length - 1]
                   //   ?.projectName
                   <>
-                    <button
-                      // disabled={true}
-                      className="uppercase text-xs bg-slate-300 text-slate-50 font-semibold px-6 mx-4 border rounded"
-                      // onClick={() => console.log("isDisabled")}
-                    >
+                    <button className="uppercase text-xs bg-slate-300 text-slate-50 font-semibold px-6 mx-4 border rounded">
                       Mint NFT
                     </button>
                   </>

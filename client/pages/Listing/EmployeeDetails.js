@@ -1,6 +1,7 @@
 import Head from "next/head";
 
 import { Grid, Container } from "@mui/material";
+import { useState } from "react";
 
 import ProfileCover from "../Components/Users/details/ProfileCover";
 import Transaction from "../Components/Users/details/Transaction";
@@ -31,12 +32,12 @@ function EmployeeDetails(props) {
     location: "Barcelona, Spain",
     followers: "465",
   };
-  useEffect(()=>{
-    if(!data){
-      router.push("/")
+  useEffect(() => {
+    if (!data) {
+      router.push("/");
     }
-  },[data])
-  console.log(item, "Data");
+  }, [data]);
+  
   const skillData = {
     skills: item?.empDetail?.skills,
     id: item?._id,

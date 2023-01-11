@@ -131,17 +131,16 @@ contract EMS is IERC721Receiver, ReentrancyGuard, Ownable {
                     employees[tokenId].skillHash
                 )
             );
-        }
-        else{
+        } else {
             uriHash = keccak256(
-            abi.encode(
-                employees[tokenId].empDetails,
-                employees[tokenId].projDetails[
-                    employees[tokenId]._currentProject
-                ],
-                employees[tokenId].skillHash
-            )
-        );
+                abi.encode(
+                    employees[tokenId].empDetails,
+                    employees[tokenId].projDetails[
+                        employees[tokenId]._currentProject
+                    ],
+                    employees[tokenId].skillHash
+                )
+            );
         }
         string memory uri = string(abi.encode(uriHash));
         NFT.setURI(uint256(tokenId), uri);

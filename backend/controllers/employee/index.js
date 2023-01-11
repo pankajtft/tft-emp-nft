@@ -4,6 +4,7 @@ const { getAllEmployees } = require("./getAllEmployees");
 const { deleteEmployee } = require("./deleteEmployee");
 const { skillUpdate } = require("./skillUpdate");
 const { editProject } = require("./editProject");
+const { getEmployee } = require("./getEmployee");
 
 module.exports = {
   createEmployee,
@@ -12,4 +13,5 @@ module.exports = {
   deleteEmployee,
   skillUpdate,
   editProject,
+  getEmployee,
 };

@@ -11,9 +11,9 @@ const AuthContext = React.createContext(defaultValue);
 const { Provider } = AuthContext;
 
 const AuthProvider = ({ children }) => {
-  const [authState, setAuthState] = React.useState({ token: "" ,photoUrl: ""});
+  const [authState, setAuthState] = React.useState({ token: "", photoUrl: "" });
   const [isUserAuthenticated, setUserAuthenticated] = React.useState(false);
-  const [employeeData, setEmployeeData] = React.useState([]);
+  // const [employeeData, setEmployeeData] = React.useState([]);
   const [isUserAdmin, setUserAdmin] = React.useState(false);
   const router = useRouter();
   const loginWithGoogle = async () => {
@@ -37,8 +37,8 @@ const AuthProvider = ({ children }) => {
       .then((data) => {
         if (data) {
           const isAdmin = adminUsers.includes(data?.user?.email);
-          const photoUrl = data?.user?.photoURL
-          localStorage.setItem("ImageUrl", photoUrl)
+          const photoUrl = data?.user?.photoURL;
+          localStorage.setItem("ImageUrl", photoUrl);
           const token = data?.token;
           var userData = JSON.stringify({ token, isAdmin });
           localStorage.setItem("Token", userData);
@@ -70,12 +70,12 @@ const AuthProvider = ({ children }) => {
     router.reload(window.location.pathname);
   };
 
-  const setUserAuthInfo = async() => {
+  const setUserAuthInfo = async () => {
     const token = await localStorage.getItem("Token");
-    const photoUrl= await localStorage.getItem("ImageUrl");
+    const photoUrl = await localStorage.getItem("ImageUrl");
     setAuthState({
       token: token,
-      photoUrl : photoUrl
+      photoUrl: photoUrl,
     });
     setUserAuthenticated(true);
   };
@@ -86,15 +86,15 @@ const AuthProvider = ({ children }) => {
     console.log(tokenRaw, "tokenraw");
     setUserAdmin(token?.isAdmin);
   };
-  const getData = useCallback(async () => {
-    const data = await getEmployeeData();
-    if (data) {
-      setEmployeeData(data);
-    } else return null;
-  }, [employeeData]);
+  // const getData = useCallback(async () => {
+  //   const data = await getEmployeeData();
+  //   if (data) {
+  //     setEmployeeData(data);
+  //   } else return null;
+  // }, [employeeData]);
 
   useEffect(() => {
-    getData();
+    // getData();
     setUser();
   }, [isUserAdmin]);
 
@@ -106,10 +106,10 @@ const AuthProvider = ({ children }) => {
         isUserAuthenticated,
         loginWithGoogle,
         logout,
-        getData,
-        employeeData,
+        // getData,
+        // employeeData,
         isUserAdmin,
-        setUserAuthInfo
+        setUserAuthInfo,
       }}
     >
       {children}

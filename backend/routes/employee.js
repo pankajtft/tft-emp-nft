@@ -7,9 +7,11 @@ const {
   deleteEmployee,
   skillUpdate,
   editProject,
+  getEmployee,
 } = require("../controllers/employee");
 
 router.get("/", getAllEmployees);
+router.get("/:id", getEmployee);
 router.post("/", createEmployee);
 router.patch("/:id", updateEmployee);
 router.delete("/:id", deleteEmployee);
