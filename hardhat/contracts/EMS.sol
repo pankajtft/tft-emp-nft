@@ -18,6 +18,7 @@ contract EMS is IERC721Receiver, ReentrancyGuard, Ownable {
         bytes32 skillHash;
         uint8 _currentProject;
         bytes32[] projDetails;
+        bool[] exists;
     }
     mapping(uint16 => Employee) employees;
     event NFTMinted(
@@ -48,8 +49,18 @@ contract EMS is IERC721Receiver, ReentrancyGuard, Ownable {
         string endTime,
         bytes32 uriHash
     );
+    event projectEdited(
+        uint16 tokenId,
+        uint16 team_size,
+        string _projectName,
+        string startTime,
+        string endTime,
+        bytes32 uriHash
+    );
 
     event skillUpdated(uint16 tokenId, string skills, bytes32 uriHash);
+
+    event buurnProject(uint8 tokenId, uint8 projectNumber);
 
     event burnNFT(uint16 tokenId);
 
@@ -102,6 +113,7 @@ contract EMS is IERC721Receiver, ReentrancyGuard, Ownable {
             tokenId,
             uint8(employees[tokenId].projDetails.length - 1)
         );
+        employees[tokenId].exists.push(true);
         emit NFTMintedWithProject(
             _empId,
             _employeeName,
@@ -131,17 +143,16 @@ contract EMS is IERC721Receiver, ReentrancyGuard, Ownable {
                     employees[tokenId].skillHash
                 )
             );
-        }
-        else{
+        } else {
             uriHash = keccak256(
-            abi.encode(
-                employees[tokenId].empDetails,
-                employees[tokenId].projDetails[
-                    employees[tokenId]._currentProject
-                ],
-                employees[tokenId].skillHash
-            )
-        );
+                abi.encode(
+                    employees[tokenId].empDetails,
+                    employees[tokenId].projDetails[
+                        employees[tokenId]._currentProject
+                    ],
+                    employees[tokenId].skillHash
+                )
+            );
         }
         string memory uri = string(abi.encode(uriHash));
         NFT.setURI(uint256(tokenId), uri);
@@ -164,6 +175,7 @@ contract EMS is IERC721Receiver, ReentrancyGuard, Ownable {
             tokenId,
             uint8(employees[tokenId].projDetails.length - 1)
         );
+        employees[tokenId].exists.push(true);
         bytes32 uriHash = keccak256(
             abi.encode(
                 employees[tokenId].empDetails,
@@ -205,6 +217,17 @@ contract EMS is IERC721Receiver, ReentrancyGuard, Ownable {
             "projectID not exist"
         );
         employees[tokenId]._currentProject = projectID;
+        bytes32 uriHash = keccak256(
+            abi.encode(
+                employees[tokenId].empDetails,
+                employees[tokenId].projDetails[
+                    employees[tokenId]._currentProject
+                ],
+                employees[tokenId].skillHash
+            )
+        );
+        string memory uri = string(abi.encode(uriHash));
+        NFT.setURI(uint256(tokenId), uri);
     }
 
     //Edit project
@@ -216,6 +239,7 @@ contract EMS is IERC721Receiver, ReentrancyGuard, Ownable {
         string memory endTime, //UnixTime
         uint8 projectNumber
     ) public {
+        require(employees[tokenId].exists[projectNumber], "Project does not exist");
         bytes32 projectHash = keccak256(
             abi.encode(_projectName, startTime, endTime, team_size)
         );
@@ -230,6 +254,14 @@ contract EMS is IERC721Receiver, ReentrancyGuard, Ownable {
         // string memory uri = string(abi.encode(uriHash));
         // NFT.setURI(tokenId, uri);
         // emit NFTChanged(tokenId, team_size, _projectName, startTime, endTime);
+        emit projectEdited(
+            tokenId,
+            team_size,
+            _projectName,
+            startTime,
+            endTime,
+            projectHash
+        );
     }
 
     //Get All Projects Hash
@@ -260,6 +292,8 @@ contract EMS is IERC721Receiver, ReentrancyGuard, Ownable {
 
     function burnProject(uint8 tokenId, uint8 projectNumber) public onlyOwner {
         employees[tokenId].projDetails[projectNumber] = "";
+        employees[tokenId].exists[projectNumber] = false;
+        emit buurnProject(tokenId,projectNumber);
     }
 
     //burn
