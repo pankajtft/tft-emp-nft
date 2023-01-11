@@ -9,12 +9,15 @@ import {
   Button,
 } from "@mui/material";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useContext } from "react";
 import AddTwoToneIcon from "@mui/icons-material/AddTwoTone";
 import { ButtonGroupWithLabel } from "../../GroupButton";
 import FormModal from "../../Modals";
+import { AuthContext } from "../../../Context/auth-context";
+
 
 function Feed({ skills }) {
+  const { isUserAdmin } = useContext(AuthContext);
   const router = useRouter();
   const data = router.query;
   const [editModal, setEditModal] = React.useState(false)
@@ -31,7 +34,7 @@ function Feed({ skills }) {
       <div className="flex justify-between w-full py-2 px-5">
       <h1 className="text-left text-xl ">Top 5 Skills</h1>
       <ButtonGroupWithLabel
-                    isEdit={true}
+                    isEdit={isUserAdmin}
                     disabled={!!!data}
                     onEditPress={() => setEditModal(true)}
                   />
