@@ -21,6 +21,10 @@ const employeeSchema = new mongoose.Schema(
       designation: {
         type: String,
       },
+      isSkillSynced: {
+        type: Boolean,
+        default: false,
+      },
     },
     tokenId: {
       type: Number,
@@ -38,6 +42,14 @@ const employeeSchema = new mongoose.Schema(
         },
         teamSize: {
           type: Number,
+        },
+        isEdited: {
+          type: Boolean,
+          default: false,
+        },
+        isSynced: {
+          type: Boolean,
+          default: false,
         },
       },
     ],

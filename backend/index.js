@@ -16,9 +16,9 @@ const mintEmployeeNFT = async (emp_name, emp_id, emp_email, _skills) => {
     emp_id,
     emp_email,
     _skills,
-    {
-      gasLimit: process.env.GAS_LIMIT,
-    }
+    // {
+    //   gasLimit: process.env.GAS_LIMIT,
+    // }
   );
   const receipt = await result.wait();
   return receipt;
@@ -43,9 +43,9 @@ const mintEmployeeNFTwithProject = async (
     team_size,
     startTime,
     endTime,
-    {
-      gasLimit: process.env.GAS_LIMIT,
-    }
+    // {
+    //   gasLimit: process.env.GAS_LIMIT,
+    // }
   );
   const receipt = await result.wait();
   return receipt;
@@ -65,9 +65,9 @@ const AddProject = async (
     _projectName,
     startTime,
     endTime,
-    {
-      gasLimit: process.env.GAS_LIMIT,
-    }
+    // {
+    //   gasLimit: process.env.GAS_LIMIT,
+    // }
   );
   const receipt = await result.wait();
   return receipt;
@@ -75,57 +75,63 @@ const AddProject = async (
 
 const editProject = async (
   tokenId,
-  _skills,
   team_size,
-  _projectName,
+  projectName,
   startTime,
   endTime,
   projectNumber
 ) => {
   const result = await contract.editProject(
     tokenId,
-    _skills,
     team_size,
-    _projectName,
+    projectName,
     startTime,
     endTime,
     projectNumber,
-    {
-      gasLimit: process.env.GAS_LIMIT,
-    }
+    // {
+    //   gasLimit: process.env.GAS_LIMIT,
+    // }
   );
   const receipt = await result.wait();
   return receipt;
 };
 
 const skillsUpdate = async (tokenId, _skills) => {
-  const result = await contract.skillUpdate(tokenId, _skills, {
-    gasLimit: process.env.GAS_LIMIT,
-  });
+  const result = await contract.skillUpdate(tokenId, _skills, 
+  //   {
+  //   gasLimit: process.env.GAS_LIMIT,
+  // }
+  );
   const receipt = await result.wait();
   return receipt;
 };
 
 const setCurrentProject = async (tokenId, projectID) => {
-  const result = await contract.setCurrentProject(tokenId, projectID, {
-    gasLimit: process.env.GAS_LIMIT,
-  });
+  const result = await contract.setCurrentProject(tokenId, projectID,
+  //    {
+  //   gasLimit: process.env.GAS_LIMIT,
+  // }
+  );
   const receipt = await result.wait();
   return receipt;
 };
 
 const burnProject = async (tokenId, projectNumber) => {
-  const result = await contract.burnProject(tokenId, projectNumber, {
-    gasLimit: process.env.GAS_LIMIT,
-  });
+  const result = await contract.burnProject(tokenId, projectNumber, 
+  //   {
+  //   gasLimit: process.env.GAS_LIMIT,
+  // }
+  );
   const receipt = await result.wait();
   return receipt;
 };
 
 const burn = async (tokenId) => {
-  const result = await contract.burn(tokenId, {
-    gasLimit: process.env.GAS_LIMIT,
-  });
+  const result = await contract.burn(tokenId, 
+  //   {
+  //   gasLimit: process.env.GAS_LIMIT,
+  // }
+  );
   const receipt = await result.wait();
   return receipt;
 };

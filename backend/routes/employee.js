@@ -3,7 +3,7 @@ const router = express.Router();
 const {
   getAllEmployees,
   createEmployee,
-  updateEmployee,
+  addNewProject,
   deleteEmployee,
   skillUpdate,
   editProject,
@@ -13,7 +13,7 @@ const {
 router.get("/", getAllEmployees);
 router.get("/:id", getEmployee);
 router.post("/", createEmployee);
-router.patch("/:id", updateEmployee);
+router.patch("/:id", addNewProject);
 router.delete("/:id", deleteEmployee);
 router.patch("/skillUpdate/:id", skillUpdate);
 router.patch("/projectUpdate/:id/:projId", editProject);

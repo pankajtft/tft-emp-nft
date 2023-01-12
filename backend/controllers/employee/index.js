@@ -1,5 +1,5 @@
 const { createEmployee } = require("./createEmployee");
-const { updateEmployee } = require("./updateEmployee");
+const { addNewProject } = require("./addNewProject");
 const { getAllEmployees } = require("./getAllEmployees");
 const { deleteEmployee } = require("./deleteEmployee");
 const { skillUpdate } = require("./skillUpdate");
@@ -8,7 +8,7 @@ const { getEmployee } = require("./getEmployee");
 
 module.exports = {
   createEmployee,
-  updateEmployee,
+  addNewProject,
   getAllEmployees,
   deleteEmployee,
   skillUpdate,

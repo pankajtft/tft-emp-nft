@@ -3,7 +3,6 @@ const express = require("express");
 const initMongo = require("./config/mongo");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const { mintEmployee } = require("./index");
 const app = express();
 
 const { ethers } = require("ethers");
