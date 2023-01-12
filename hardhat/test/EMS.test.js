@@ -127,4 +127,26 @@ describe("NFT MARKETPLACE ", () => {
       });
     });
   });
+
+  describe("---NEGATIVE CASES---", () => {
+
+    describe("Deploying", function () {
+      it("Should deploy NFT contract, but won't let fetch address of NFT contract when requested from another address", async () => {
+        expect(await ems.getNFT()).to.be.a.properAddress;
+        await expect(
+          ems2.getNFT()
+        ).to.be.reverted;
+      });
+    });
+
+    describe("Minting", function () {
+      it("Should not mint employee from other address", async () => {
+        await expect(
+          ems2.mintEmployeeNFT("AnuragPathak", 566721, "anu@test.com", "react,solidity")
+        ).to.be.reverted;
+      });
+
+      it("Should ")
+    });
+  });
 });
