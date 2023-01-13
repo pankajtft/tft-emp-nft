@@ -7,7 +7,7 @@ const { ethers } = require("ethers");
 const addProjects = async (employee) => {
   console.log("hii");
   if (employee?.projDetails) {
-    employee?.projDetails?.forEach(async (project, index) => {
+  for (const [index, project] of employee.projDetails.entries()) {
       if (!project?.isSynced) {
         console.log(project.projectName, " adding to contract.....");
         const contract_response = await AddProject(
@@ -27,7 +27,10 @@ const addProjects = async (employee) => {
         );
         await Employee.updateOne(
           { _id: employee._id },
-          { $set: { [`projDetails.${index}.isSynced`]: true } }
+          { $set: { 
+        [`projDetails.${index}.isSynced`]: true,
+        [`projDetails.${index}.isEdited`]: false
+    }}
         );
       } else if (project?.isEdited) {
         console.log(project.projectName, " updating in contract.....");
@@ -52,7 +55,7 @@ const addProjects = async (employee) => {
           { $set: { [`projDetails.${index}.isEdited`]: false } }
         );
       }
-    });
+    };
   }
 };
 

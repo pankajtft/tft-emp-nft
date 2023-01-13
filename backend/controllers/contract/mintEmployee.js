@@ -20,7 +20,7 @@ const mintEmployee = async (req, res) => {
         email,
         skills.join(",")
       );
-      
+
       storeTransaction(
         queryId,
         contract_response.transactionHash,
@@ -29,6 +29,10 @@ const mintEmployee = async (req, res) => {
           contract_response.gasUsed.mul(contract_response.effectiveGasPrice)
         )
       );
+      const skill_update = await Employee.findByIdAndUpdate(employee._id, {
+        "empDetail.isSkillSynced": true,
+      });
+      console.log("skill updated");
     } else {
       const {
         projectName,
@@ -55,6 +59,10 @@ const mintEmployee = async (req, res) => {
           contract_response.gasUsed.mul(contract_response.effectiveGasPrice)
         )
       );
+      const skill_update = await Employee.findByIdAndUpdate(employee._id, {
+        "empDetail.isSkillSynced": true,
+      });
+      console.log("skill updated");
     }
     res.status(200).send("NFT minted successfully");
   } catch (err) {
