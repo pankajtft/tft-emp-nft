@@ -38,10 +38,11 @@ module.exports = {
   },
   gasReporter: {
     enabled: true,
-    currency: "USD",
+    currency: "INR",
     outputFile: "gas-report.txt",
     noColors: true,
     coinmarketcap: coinMarketCapKey,
+    token: 'MATIC',
   },
   networks: {
     hardhat: {
@@ -54,7 +55,7 @@ module.exports = {
     matic: {
       url: "https://polygon-mumbai.g.alchemy.com/v2/ilstxE0yedAjbQEDV1TaurFfb4Po9Hyw",
       accounts: [
-        `0xb815be93479f82444892f891b117c7919cb232624e82487f8cd5d7c3fefea026`,
+        `0x7d674e715215ce1d7db8ea53930163c44d2ca181abe7a9d8a4a74a2a8eb43313`,
       ],
     },
     localhost: {
