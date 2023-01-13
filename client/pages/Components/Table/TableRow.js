@@ -81,7 +81,7 @@ export const TableRow = ({ data }) => {
         />
       )}
       <tbody>
-        <tr className="bg-white item-center border-black border-separate border border-slate-300">
+        <tr className="bg-white item-center border-black border-separate border border-slate-300 transition duration-500 hover:rounded-md  hover:scale-110 hover:bg-gray-200 ">
           <td
             className="py-4 px-6 text-center capitalize text-sm"
             onClick={handleClick}
