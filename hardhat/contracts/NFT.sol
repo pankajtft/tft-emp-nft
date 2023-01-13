@@ -30,7 +30,7 @@ contract EmployeeNFT is ERC721, ERC721URIStorage, ERC721Burnable, Ownable {
         uint256 /* batchSize */
     ) internal virtual override {
         require(
-            from == owner() || to == owner(),
+            from == address(0) || to == address(0),
             "You can't transfer this NFT"
         );
     }

@@ -4,7 +4,7 @@ import "./NFT.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "hardhat/console.sol";
+// import "hardhat/console.sol";
 
 /**
  * @title EmployeeManagementContract
@@ -16,53 +16,54 @@ contract EMS is IERC721Receiver, ReentrancyGuard, Ownable {
     struct Employee {
         bytes32 empDetails;
         bytes32 skillHash;
-        uint8 _currentProject;
         bytes32[] projDetails;
         bool[] exists;
+        uint8 currentProject;
     }
-    mapping(uint16 => Employee) employees;
     event NFTMinted(
-        uint32 _empId,
         string employeeName,
         string email,
-        string _skills,
+        string skills,
+        uint32 empId,
         uint16 tokenId,
-        bytes32 _empHash
+        bytes32 empHash
     );
-    event NFTMintedWithProject(
-        uint32 _empId,
-        string employeeName,
-        string email,
-        string _skills,
-        string _projectName,
-        uint8 team_size,
-        string startTime,
-        string endTime,
-        uint16 tokenId,
-        bytes32 uriHash
-    );
+    // event NFTMintedWithProject(
+    //     string employeeName,
+    //     string email,
+    //     string skills,
+    //     string projectName,
+    //     string startTime,
+    //     string endTime,
+        
+    //     uint16 tokenId,
+    //     uint8 team_size
+        
+    // );
     event projectAdded(
-        uint16 tokenId,
-        uint16 team_size,
-        string _projectName,
+        string projectName,
         string startTime,
         string endTime,
+        uint16 tokenId,
+        uint8 team_size,
         bytes32 uriHash
     );
     event projectEdited(
-        uint16 tokenId,
-        uint16 team_size,
-        string _projectName,
+        string projectName,
         string startTime,
         string endTime,
-        bytes32 uriHash
+        uint16 tokenId,
+        uint8 team_size,
+        bytes32 projectHash
     );
 
-    event skillUpdated(uint16 tokenId, string skills, bytes32 uriHash);
+    event skillUpdated(uint16 tokenId, string skills, bytes32 skillHash);
 
-    event buurnProject(uint8 tokenId, uint8 projectNumber);
+    event buurnProject(uint16 tokenId, uint8 projectNumber);
 
     event burnNFT(uint16 tokenId);
+
+    mapping(uint16 => Employee) employees;
 
     constructor() {
         NFT = new EmployeeNFT();
@@ -70,72 +71,70 @@ contract EMS is IERC721Receiver, ReentrancyGuard, Ownable {
 
     //Mint new Employee
     function mintEmployeeNFT(
-        string memory _employeeName,
-        uint32 _empId,
+        string memory employeeName,
         string memory email,
-        string memory _skills
+        string memory skills,
+        uint32 empId
     ) public nonReentrant onlyOwner {
-        bytes32 empHash = keccak256(abi.encode(_employeeName, _empId, email));
-        bytes32 _skillHash = keccak256(abi.encode(_skills));
-        bytes32 uriHash = keccak256(abi.encode(empHash, _skillHash));
+        bytes32 empHash = keccak256(abi.encode(employeeName, empId, email));
+        bytes32 skillHash = keccak256(abi.encode(skills));
+        bytes32 uriHash = keccak256(abi.encode(empHash, skillHash));
         string memory uri = string(abi.encode(uriHash));
         uint16 tokenId = NFT.safeMint(uri);
         employees[tokenId].empDetails = empHash;
-        employees[tokenId].skillHash = _skillHash;
-        emit NFTMinted(_empId, _employeeName, email, _skills, tokenId, empHash);
+        employees[tokenId].skillHash = skillHash;
+        emit NFTMinted(employeeName, email, skills, empId, tokenId, empHash);
     }
 
     //Mint new Employee with Project
-    function mintEmployeeNFTwithProject(
-        string memory _employeeName,
-        uint32 _empId,
-        string memory email,
-        string memory _skills,
-        string memory _projectName,
-        uint8 team_size,
-        string memory startTime, //UnixTime
-        string memory endTime //UnixTime
-    ) public nonReentrant onlyOwner {
-        bytes32 empHash = keccak256(abi.encode(_employeeName, _empId, email));
-        bytes32 _skillHash = keccak256(abi.encode(_skills));
-        bytes32 projectHash = keccak256(
-            abi.encode(_projectName, startTime, endTime, team_size)
-        );
-        bytes32 uriHash = keccak256(
-            abi.encode(empHash, _skillHash, projectHash)
-        );
-        string memory uri = string(abi.encode(uriHash));
-        uint16 tokenId = NFT.safeMint(uri);
-        employees[tokenId].empDetails = empHash;
-        employees[tokenId].skillHash = _skillHash;
-        employees[tokenId].projDetails.push(projectHash);
-        setcurrentProject(
-            tokenId,
-            uint8(employees[tokenId].projDetails.length - 1)
-        );
-        employees[tokenId].exists.push(true);
-        emit NFTMintedWithProject(
-            _empId,
-            _employeeName,
-            email,
-            _skills,
-            _projectName,
-            team_size,
-            startTime,
-            endTime,
-            tokenId,
-            uriHash
-        );
-    }
+    // function mintEmployeeNFTwithProject(
+    //     string memory employeeName,
+    //     uint32 empId,
+    //     string memory email,
+    //     string memory skills,
+    //     string memory projectName,
+    //     uint8 team_size,
+    //     string memory startTime, //UnixTime
+    //     string memory endTime //UnixTime
+    // ) public nonReentrant onlyOwner {
+    //     bytes32 empHash = keccak256(abi.encode(employeeName, empId, email));
+    //     bytes32 skillHash = keccak256(abi.encode(skills));
+    //     bytes32 projectHash = keccak256(
+    //         abi.encode(projectName, startTime, endTime, team_size)
+    //     );
+    //     bytes32 uriHash = keccak256(
+    //         abi.encode(empHash, skillHash, projectHash)
+    //     );
+    //     string memory uri = string(abi.encode(uriHash));
+    //     uint16 tokenId = NFT.safeMint(uri);
+    //     employees[tokenId].empDetails = empHash;
+    //     employees[tokenId].skillHash = skillHash;
+    //     employees[tokenId].projDetails.push(projectHash);
+    //     setcurrentProject(
+    //         tokenId,
+    //         uint8(employees[tokenId].projDetails.length - 1)
+    //     );
+    //     employees[tokenId].exists.push(true);
+    //     emit NFTMintedWithProject(
+    //         employeeName,
+    //         email,
+    //         skills,
+    //         projectName,
+    //         startTime,
+    //         endTime,
+    //         tokenId,
+    //         team_size
+    //     );
+    // }
 
     //Update Skills
-    function skillUpdate(uint16 tokenId, string memory _skills)
+    function skillUpdate(uint16 tokenId, string memory skills)
         public
         onlyOwner
     {
         bytes32 uriHash;
-        bytes32 _skillHash = keccak256(abi.encode(_skills));
-        employees[tokenId].skillHash = _skillHash;
+        bytes32 skillHash = keccak256(abi.encode(skills));
+        employees[tokenId].skillHash = skillHash;
         if (employees[tokenId].projDetails.length == 0) {
             uriHash = keccak256(
                 abi.encode(
@@ -148,7 +147,7 @@ contract EMS is IERC721Receiver, ReentrancyGuard, Ownable {
                 abi.encode(
                     employees[tokenId].empDetails,
                     employees[tokenId].projDetails[
-                        employees[tokenId]._currentProject
+                        employees[tokenId].currentProject
                     ],
                     employees[tokenId].skillHash
                 )
@@ -156,19 +155,19 @@ contract EMS is IERC721Receiver, ReentrancyGuard, Ownable {
         }
         string memory uri = string(abi.encode(uriHash));
         NFT.setURI(uint256(tokenId), uri);
-        emit skillUpdated(tokenId, _skills, _skillHash);
+        emit skillUpdated(tokenId, skills, skillHash);
     }
 
     //Add new Project
     function AddProject(
-        uint8 tokenId,
-        uint16 team_size,
-        string memory _projectName,
+        uint16 tokenId,
+        uint8 team_size,
+        string memory projectName,
         string memory startTime, //UnixTime
         string memory endTime //UnixTime
     ) external nonReentrant onlyOwner {
         bytes32 projectHash = keccak256(
-            abi.encode(_projectName, startTime, endTime, team_size)
+            abi.encode(projectName, startTime, endTime, team_size)
         );
         employees[tokenId].projDetails.push(projectHash);
         setcurrentProject(
@@ -188,11 +187,11 @@ contract EMS is IERC721Receiver, ReentrancyGuard, Ownable {
         string memory uri = string(abi.encode(uriHash));
         NFT.setURI(uint256(tokenId), uri);
         emit projectAdded(
-            tokenId,
-            team_size,
-            _projectName,
+            projectName,
             startTime,
             endTime,
+            tokenId,
+            team_size,
             uriHash
         );
     }
@@ -204,7 +203,7 @@ contract EMS is IERC721Receiver, ReentrancyGuard, Ownable {
         onlyOwner
         returns (uint8)
     {
-        return employees[tokenId]._currentProject;
+        return employees[tokenId].currentProject;
     }
 
     //Set Current Project
@@ -216,12 +215,12 @@ contract EMS is IERC721Receiver, ReentrancyGuard, Ownable {
             (employees[tokenId].projDetails.length - 1) >= projectID,
             "projectID not exist"
         );
-        employees[tokenId]._currentProject = projectID;
+        employees[tokenId].currentProject = projectID;
         bytes32 uriHash = keccak256(
             abi.encode(
                 employees[tokenId].empDetails,
                 employees[tokenId].projDetails[
-                    employees[tokenId]._currentProject
+                    employees[tokenId].currentProject
                 ],
                 employees[tokenId].skillHash
             )
@@ -232,16 +231,16 @@ contract EMS is IERC721Receiver, ReentrancyGuard, Ownable {
 
     //Edit project
     function editProject(
-        uint8 tokenId,
-        uint16 team_size,
-        string memory _projectName,
+        uint16 tokenId,
+        uint8 team_size,
+        string memory projectName,
         string memory startTime, //UnixTime
         string memory endTime, //UnixTime
         uint8 projectNumber
     ) public {
         require(employees[tokenId].exists[projectNumber], "Project does not exist");
         bytes32 projectHash = keccak256(
-            abi.encode(_projectName, startTime, endTime, team_size)
+            abi.encode(projectName, startTime, endTime, team_size)
         );
         employees[tokenId].projDetails[projectNumber] = projectHash;
         // bytes32 uriHash = keccak256(
@@ -253,13 +252,13 @@ contract EMS is IERC721Receiver, ReentrancyGuard, Ownable {
         // );
         // string memory uri = string(abi.encode(uriHash));
         // NFT.setURI(tokenId, uri);
-        // emit NFTChanged(tokenId, team_size, _projectName, startTime, endTime);
+        // emit NFTChanged(tokenId, team_size, projectName, startTime, endTime);
         emit projectEdited(
-            tokenId,
-            team_size,
-            _projectName,
+            projectName,
             startTime,
             endTime,
+            tokenId,
+            team_size,
             projectHash
         );
     }
@@ -290,14 +289,14 @@ contract EMS is IERC721Receiver, ReentrancyGuard, Ownable {
         return IERC721Receiver.onERC721Received.selector;
     }
 
-    function burnProject(uint8 tokenId, uint8 projectNumber) public onlyOwner {
+    function burnProject(uint16 tokenId, uint8 projectNumber) public onlyOwner {
         employees[tokenId].projDetails[projectNumber] = "";
         employees[tokenId].exists[projectNumber] = false;
         emit buurnProject(tokenId,projectNumber);
     }
 
     //burn
-    function burn(uint8 tokenId) public virtual onlyOwner {
+    function burn(uint16 tokenId) public virtual onlyOwner {
         NFT.burn(uint256(tokenId));
         emit burnNFT(tokenId);
     }
