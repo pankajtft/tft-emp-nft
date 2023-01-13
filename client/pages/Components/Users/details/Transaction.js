@@ -34,10 +34,11 @@ function Transaction({ transaction }) {
         </thead>
         {transaction?.map((trans) => (
           <tbody>
-            <tr className="bg-white item-center border-black border-separate border border-slate-300">
-              <td className="py-4 px-6 text-center capitalize text-sm">
+            <tr className="bg-white item-center border-black border-separate border border-slate-300  hover:bg-gray-500 active:bg-gray-500">
+              <td className="py-4 px-6 text-center capitalize text-sm hover:bg-gray-500 active:bg-gray-500">
                 <a
                   href={`https://mumbai.polygonscan.com/tx/${trans.transactionHash}`}
+                  target="_blank"
                 >
                   {trans.transactionHash}
                 </a>
