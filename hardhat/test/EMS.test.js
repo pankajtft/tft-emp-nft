@@ -15,9 +15,12 @@ describe("NFT MARKETPLACE ", () => {
     player2 = accounts[2];
     await deployments.fixture(["ems"]); // Deploys modules with the tags given
     emsContract = await ethers.getContract("EMS");
+    // nftContract = await ethers.getContract("NFT");
     ems = emsContract.connect(deployer);
     ems2 = emsContract.connect(player1);
     ems3 = emsContract.connect(player2);
+    // nft = nftContract.connect(deployer);
+    // nft2 = nftContract.connect(player1);
   });
   describe("---POSITIVE CASES---", () => {
 
@@ -152,7 +155,39 @@ describe("NFT MARKETPLACE ", () => {
         ).to.be.reverted;
       });
 
-      it("Should ")
+      // it("Should not able to Reentrant", async () => {
+      //   ems.mintEmployeeNFT("AnuragPathak", "anurag@tftus.com", "react,solidity", 566721);
+      //   await expect(
+      //     ems.mintEmployeeNFT("LalitKishor", "lalit@tftus.com", "react,solidity,nodejs", 288722)
+      //   ).to.be.reverted;
+      // });
+    });
+
+    describe("Skill Update", function () {
+      it("Should not update from another address", async () => {
+        await ems.mintEmployeeNFT("AnuragPathak", "anurag@tftus.com", "react,solidity", 566721);
+        await expect(
+          ems2.skillUpdate(0,"react,solidity,nodejs")
+        ).to.be.reverted;
+      });
+
+      it("Should throw error when given wrong token ID", async () => {
+        await ems.mintEmployeeNFT("AnuragPathak", "anurag@tftus.com", "react,solidity", 566721);
+        await expect(
+          ems.skillUpdate(1,"react,solidity,nodejs")
+        ).to.be.reverted;
+      });
+    });
+
+    describe("Add Project", function () {
+      it("Should not add project from another address", async () => {
+        await ems.mintEmployeeNFT("AnuragPathak", "anurag@tftus.com", "react,solidity", 566721);
+        await expect(
+          ems2.AddProject(0,5,"Blockchain","2500284","03022023")
+        ).to.be.reverted;
+      });
+
+      it("Should not add project to wrong token")
     });
   });
 });

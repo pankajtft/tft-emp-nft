@@ -41,7 +41,7 @@ module.exports = {
     currency: "INR",
     outputFile: "gas-report.txt",
     noColors: true,
-    coinmarketcap: coinMarketCapKey,
+    coinmarketcap: "88b2d178-bd26-49f6-84f9-758ea99ed704",
     token: 'MATIC',
   },
   networks: {
