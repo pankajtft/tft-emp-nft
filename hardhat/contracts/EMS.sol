@@ -90,7 +90,7 @@ contract EMS is IERC721Receiver, ReentrancyGuard, Ownable {
         public
         onlyOwner
     {
-        require(tokenId >= 0 && tokenId <= NFT._tokenIdCounter(), "Token ID must be valid");
+        require(tokenId >= 0 && tokenId <= returnToken(), "Token ID must be valid");
         require(bytes(skills).length > 0, "Skills cannot be empty");
 
         bytes32 uriHash;
@@ -127,7 +127,7 @@ contract EMS is IERC721Receiver, ReentrancyGuard, Ownable {
         string memory startTime, //UnixTime
         string memory endTime //UnixTime
     ) external nonReentrant onlyOwner {
-        require(tokenId >= 0 && tokenId <= NFT._tokenIdCounter(), "Token ID must be valid");
+        require(tokenId >= 0 && tokenId <= returnToken(), "Token ID must be valid");
         require(team_size >= 1 && team_size <= 10, "Invalid team size");
         require(bytes(projectName).length > 0, "Project name cannot be empty");
 
@@ -135,11 +135,11 @@ contract EMS is IERC721Receiver, ReentrancyGuard, Ownable {
             abi.encode(projectName, startTime, endTime, team_size)
         );
         employees[tokenId].projDetails.push(projectHash);
-        setcurrentProject(
-            tokenId,
-            uint8(employees[tokenId].projDetails.length - 1)
-        );
         employees[tokenId].exists.push(true);
+         setcurrentProject(
+            tokenId,
+            uint8(employees[tokenId].projDetails.length-1)
+        );
         bytes32 uriHash = keccak256(
             abi.encode(
                 employees[tokenId].empDetails,
@@ -168,7 +168,7 @@ contract EMS is IERC721Receiver, ReentrancyGuard, Ownable {
         onlyOwner
         returns (uint8)
     {
-        require(tokenId >= 0 && tokenId <= NFT._tokenIdCounter(), "Token ID must be valid");
+        require(tokenId >= 0 && tokenId <= returnToken(), "Token ID must be valid");
         return employees[tokenId].currentProject;
     }
 
@@ -177,18 +177,16 @@ contract EMS is IERC721Receiver, ReentrancyGuard, Ownable {
         public
         onlyOwner
     {
-        require(tokenId >= 0 && tokenId <= NFT._tokenIdCounter(), "Token ID must be valid");
+        require(tokenId >= 0 && tokenId <= returnToken(), "Token ID must be valid");
         require(employees[tokenId].currentProject == uint8(0), "Current project is already set");
-        require(projectID < employees[tokenId].projDetails.length, "Invalid project ID");
+        require(projectID+1 <= employees[tokenId].projDetails.length, "Invalid project ID");
         require(employees[tokenId].exists[projectID], "Project not exists");
 
         employees[tokenId].currentProject = projectID;
         bytes32 uriHash = keccak256(
             abi.encode(
                 employees[tokenId].empDetails,
-                employees[tokenId].projDetails[
-                    employees[tokenId].currentProject
-                ],
+                employees[tokenId].projDetails[projectID],
                 employees[tokenId].skillHash
             )
         );
@@ -206,7 +204,7 @@ contract EMS is IERC721Receiver, ReentrancyGuard, Ownable {
         uint8 projectNumber
     ) public {
         require(team_size >= 1 && team_size <= 10, "Invalid team size");
-        require(tokenId >= 0 && tokenId <= NFT._tokenIdCounter(), "Token ID must be valid");
+        require(tokenId >= 0 && tokenId <= returnToken(), "Token ID must be valid");
         require(bytes(projectName).length > 0, "Project name cannot be empty");
         require(employees[tokenId].exists[projectNumber], "Project not exists");
         require(projectNumber < employees[tokenId].projDetails.length, "Invalid project ID");
@@ -232,14 +230,14 @@ contract EMS is IERC721Receiver, ReentrancyGuard, Ownable {
         onlyOwner
         returns (bytes32[] memory)
     {
-        require(tokenId >= 0 && tokenId <= NFT._tokenIdCounter(), "Token ID must be valid");
+        require(tokenId >= 0 && tokenId <= returnToken(), "Token ID must be valid");
         return employees[tokenId].projDetails;
     }
 
     //Return TokenID
-    function returnToken() external view returns (uint8) {
+    function returnToken() internal view returns (uint16) {
         uint256 tokenId = NFT._tokenIdCounter();
-        return (uint8(tokenId) - 1);
+        return (uint16(tokenId) - 1);
     }
 
     //Overrides
@@ -253,8 +251,7 @@ contract EMS is IERC721Receiver, ReentrancyGuard, Ownable {
     }
 
     function burnProject(uint16 tokenId, uint8 projectID) public onlyOwner {
-        require(tokenId >= 0 && tokenId <= NFT._tokenIdCounter(), "Token ID must be valid");
-        require(employees[tokenId].currentProject == uint8(0), "Current project is already set");
+        require(tokenId >= 0 && tokenId <= returnToken(), "Token ID must be valid");
         require(projectID < employees[tokenId].projDetails.length, "Invalid project ID");
         require(employees[tokenId].exists[projectID], "Project not exists");
 
@@ -265,7 +262,7 @@ contract EMS is IERC721Receiver, ReentrancyGuard, Ownable {
 
     //burn
     function burn(uint16 tokenId) public virtual onlyOwner {
-        require(tokenId >= 0 && tokenId <= NFT._tokenIdCounter(), "Token ID must be valid");
+        require(tokenId >= 0 && tokenId <= returnToken(), "Token ID must be valid");
         NFT.burn(uint256(tokenId));
         emit burnNFT(tokenId);
     }

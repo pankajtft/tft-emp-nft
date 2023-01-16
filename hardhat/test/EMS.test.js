@@ -15,12 +15,9 @@ describe("NFT MARKETPLACE ", () => {
     player2 = accounts[2];
     await deployments.fixture(["ems"]); // Deploys modules with the tags given
     emsContract = await ethers.getContract("EMS");
-    // nftContract = await ethers.getContract("NFT");
     ems = emsContract.connect(deployer);
     ems2 = emsContract.connect(player1);
     ems3 = emsContract.connect(player2);
-    // nft = nftContract.connect(deployer);
-    // nft2 = nftContract.connect(player1);
   });
   describe("---POSITIVE CASES---", () => {
 
@@ -36,12 +33,6 @@ describe("NFT MARKETPLACE ", () => {
           await ems.mintEmployeeNFT("AnuragPathak", "anurag@tftus.com", "react,solidity", 566721)
         ).to.emit('NFTMinted', { count: 6 });
       });
-
-      // it("should mint Employee NFT with project", async () => {
-      //   expect(
-      //     await ems.mintEmployeeNFTwithProject("AnuragPathak", 566721, "anu@test.com", "react,solidity", "Blockchain", 5, "25022022", "31032023")
-      //   ).to.emit('NFTMinted', { count: 10 });
-      // });
     });
 
     describe("Updating Skills", function () {
@@ -52,12 +43,7 @@ describe("NFT MARKETPLACE ", () => {
         ).to.emit('skillUpdated', { count: 3 });
       });
 
-      // it("should Update skill with project", async () => {
-      //   await ems.mintEmployeeNFTwithProject("AnuragPathak", 566721, "anu@test.com", "react,solidity", "Blockchain", 5, "25022022", "31032023");
-      //   expect(
-      //     await ems.skillUpdate(0, "react,solidity,node,hardhat")
-      //   ).to.emit('skillUpdated', { count: 3 });
-      // });
+     
     });
 
     describe("Adding new projects", function () {
@@ -68,12 +54,7 @@ describe("NFT MARKETPLACE ", () => {
         ).to.emit('projectAdded', { count: 6 });
       });
 
-      // it("Should add project for an Employee having multiple project", async () => {
-      //   await ems.mintEmployeeNFTwithProject("AnuragPathak", 566721, "anu@test.com", "react,solidity", "Blockchain", 5, "25022022", "31032023");
-      //   expect(
-      //     await ems.AddProject(0, 2, "Blockchain Software Developer", "26022022", "02032023")
-      //   ).to.emit('projectAdded', { count: 6 });
-      // });
+      
     });
 
     describe("Updating Projects", function () {
@@ -155,12 +136,29 @@ describe("NFT MARKETPLACE ", () => {
         ).to.be.reverted;
       });
 
-      // it("Should not able to Reentrant", async () => {
-      //   ems.mintEmployeeNFT("AnuragPathak", "anurag@tftus.com", "react,solidity", 566721);
-      //   await expect(
-      //     ems.mintEmployeeNFT("LalitKishor", "lalit@tftus.com", "react,solidity,nodejs", 288722)
-      //   ).to.be.reverted;
-      // });
+      it("Employee name should not be empty", async () => {
+        await expect(
+          ems.mintEmployeeNFT("", "anu@test.com", "react,solidity", 655782)
+        ).to.be.reverted;
+      });
+
+      it("Email cannot be empty", async () => {
+        await expect(
+          ems.mintEmployeeNFT("AnuragPathak", "", "react,solidity", 655782)
+        ).to.be.reverted;
+      });
+
+      it("Skills cannot be empty", async () => {
+        await expect(
+          ems.mintEmployeeNFT("AnuragPathak", "anu@test.com", "", 655782)
+        ).to.be.reverted;
+      });
+
+      it("Employee ID must be valid", async () => {
+        await expect(
+          ems.mintEmployeeNFT("AnuragPathak", "anu@test.com", "react,solidity", 6557821)
+        ).to.be.reverted;
+      });
     });
 
     describe("Skill Update", function () {
@@ -187,7 +185,12 @@ describe("NFT MARKETPLACE ", () => {
         ).to.be.reverted;
       });
 
-      it("Should not add project to wrong token")
+      it("Should not add project to wrong token", async () => {
+        await ems.mintEmployeeNFT("AnuragPathak", "anurag@tftus.com", "react,solidity", 566721);
+        await expect(
+          ems.AddProject(1,5,"Blockchain","2500284","03022023")
+        ).to.be.reverted;
+      });
     });
   });
 });
