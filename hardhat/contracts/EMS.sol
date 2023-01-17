@@ -179,8 +179,8 @@ contract EMS is IERC721Receiver, ReentrancyGuard, Ownable {
     {
         require(tokenId >= 0 && tokenId <= returnToken(), "Token ID must be valid");
         require(employees[tokenId].currentProject == uint8(0), "Current project is already set");
-        require(projectID+1 <= employees[tokenId].projDetails.length, "Invalid project ID");
         require(employees[tokenId].exists[projectID], "Project not exists");
+        require(employees[tokenId].currentProject != projectID, "Current project is same as project ID");
 
         employees[tokenId].currentProject = projectID;
         bytes32 uriHash = keccak256(

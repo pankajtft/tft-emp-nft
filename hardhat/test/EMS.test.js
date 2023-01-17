@@ -43,18 +43,30 @@ describe("NFT MARKETPLACE ", () => {
         ).to.emit('skillUpdated', { count: 3 });
       });
 
-     
+
     });
 
     describe("Adding new projects", function () {
-      it("Should add new project for new Employee without project", async () => {
+      it("Should add new project for new Employee", async () => {
         await ems.mintEmployeeNFT("AnuragPathak", "anurag@tftus.com", "react,solidity", 566721);
         expect(
           await ems.AddProject(0, 5, "Blockchain", "25022022", "31032023")
         ).to.emit('projectAdded', { count: 6 });
       });
+    });
 
-      
+    describe("Get Current Project", function () {
+      it("Should return current project ID", async () => {
+        await ems.mintEmployeeNFT("AnuragPathak", "anurag@tftus.com", "react,solidity", 566721);
+        await ems.AddProject(0, 5, "Blockchain", "2500284", "03022023");
+        expect(
+          await ems.getcurrentProject(0)
+        ).to.equal(0);
+      });
+    });
+
+    describe("Set Current Project", function () {
+      //it("Should ")
     });
 
     describe("Updating Projects", function () {
@@ -165,14 +177,14 @@ describe("NFT MARKETPLACE ", () => {
       it("Should not update from another address", async () => {
         await ems.mintEmployeeNFT("AnuragPathak", "anurag@tftus.com", "react,solidity", 566721);
         await expect(
-          ems2.skillUpdate(0,"react,solidity,nodejs")
+          ems2.skillUpdate(0, "react,solidity,nodejs")
         ).to.be.reverted;
       });
 
       it("Should throw error when given wrong token ID", async () => {
         await ems.mintEmployeeNFT("AnuragPathak", "anurag@tftus.com", "react,solidity", 566721);
         await expect(
-          ems.skillUpdate(1,"react,solidity,nodejs")
+          ems.skillUpdate(1, "react,solidity,nodejs")
         ).to.be.reverted;
       });
     });
@@ -181,16 +193,88 @@ describe("NFT MARKETPLACE ", () => {
       it("Should not add project from another address", async () => {
         await ems.mintEmployeeNFT("AnuragPathak", "anurag@tftus.com", "react,solidity", 566721);
         await expect(
-          ems2.AddProject(0,5,"Blockchain","2500284","03022023")
+          ems2.AddProject(0, 5, "Blockchain", "2500284", "03022023")
         ).to.be.reverted;
       });
 
       it("Should not add project to wrong token", async () => {
         await ems.mintEmployeeNFT("AnuragPathak", "anurag@tftus.com", "react,solidity", 566721);
         await expect(
-          ems.AddProject(1,5,"Blockchain","2500284","03022023")
+          ems.AddProject(1, 5, "Blockchain", "2500284", "03022023")
         ).to.be.reverted;
       });
+
+      it("Should not take invalid team size", async () => {
+        await ems.mintEmployeeNFT("AnuragPathak", "anurag@tftus.com", "react,solidity", 566721);
+        await expect(
+          ems.AddProject(0, 11, "Blockchain", "2500284", "03022023")
+        ).to.be.reverted;
+      });
+
+      it("Should not take empty project name", async () => {
+        await ems.mintEmployeeNFT("AnuragPathak", "anurag@tftus.com", "react,solidity", 566721);
+        await expect(
+          ems.AddProject(0, 5, "", "2500284", "03022023")
+        ).to.be.reverted;
+      });
+    });
+
+    describe("Get Current Project", function () {
+      it("Should not give current project for another address", async () => {
+        await ems.mintEmployeeNFT("AnuragPathak", "anurag@tftus.com", "react,solidity", 566721);
+        await ems.AddProject(0, 5, "Blockchain", "2500284", "03022023");
+        await expect(
+          ems2.getcurrentProject(0)
+        ).to.be.reverted;
+      });
+
+      it("Should not take invalid token ID", async () => {
+        await ems.mintEmployeeNFT("AnuragPathak", "anurag@tftus.com", "react,solidity", 566721);
+        await ems.AddProject(0, 5, "Blockchain", "2500284", "03022023");
+        await expect(
+          ems.getcurrentProject(1)
+        ).to.be.reverted;
+      });
+    });
+
+    describe("Set Current Project", function () {
+      it("Should not set project from other address", async () => {
+        await ems.mintEmployeeNFT("AnuragPathak", "anurag@tftus.com", "react,solidity", 566721);
+        await ems.AddProject(0, 5, "Blockchain", "2500284", "03022023");
+        await ems.AddProject(0, 7, "React.js", "2500284", "03022023");
+        await expect(
+          ems2.setcurrentProject(0, 1)
+        ).to.be.reverted;
+      });
+
+      it("Should not take invalid TokenID", async () => {
+        await ems.mintEmployeeNFT("AnuragPathak", "anurag@tftus.com", "react,solidity", 566721);
+        await ems.AddProject(0, 5, "Blockchain", "2500284", "03022023");
+        await ems.AddProject(0, 7, "React.js", "2500284", "03022023");
+        await expect(
+          ems.setcurrentProject(1, 1)
+        ).to.be.reverted;
+      });
+
+      it("Should not set same project ID", async () => {
+        await ems.mintEmployeeNFT("AnuragPathak", "anurag@tftus.com", "react,solidity", 566721);
+        await ems.AddProject(0, 5, "Blockchain", "2500284", "03022023");
+        await ems.AddProject(0, 7, "React.js", "2500284", "03022023");
+        await expect(
+          ems.setcurrentProject(0, 0)
+        ).to.be.revertedWith('Current project is already set');
+      });
+
+      it("Should not take invalid project ID", async () => {
+        await ems.mintEmployeeNFT("AnuragPathak", "anurag@tftus.com", "react,solidity", 566721);
+        await ems.AddProject(0, 5, "Blockchain", "2500284", "03022023");
+        await ems.AddProject(0, 7, "React.js", "2500284", "03022023");
+        await expect(
+          ems.setcurrentProject(0, 2)
+        ).to.be.reverted;
+      });
+
+      
     });
   });
 });
