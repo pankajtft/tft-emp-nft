@@ -16,6 +16,7 @@ const provider = new ethers.providers.JsonRpcProvider(process.env.POLYGON_URL);
 
 var signer = new ethers.Wallet(process.env.POLY_PRIVATE_KEY, provider);
 const FactoryContractEthers = new ethers.Contract(address[0], abi, signer);
+module.exports = { FactoryContractEthers };
 
 app.use(
   bodyParser.json({
@@ -49,41 +50,60 @@ initMongo();
 
 FactoryContractEthers.on(
   "NFTMinted",
-  (_empId, _employeeName, email, _skills, tokenId) => {
-    updateTokenId(_empId, tokenId);
-    console.log(_empId, _employeeName, email, tokenId);
+  (employeeName, email, skills, empId, tokenId, empHash) => {
+    updateTokenId(empId, tokenId);
+    console.log(
+      "nft minted with details ",
+      employeeName,
+      email,
+      skills,
+      empId,
+      tokenId,
+      empHash
+    );
   }
 );
 
 FactoryContractEthers.on(
   "projectAdded",
-  (tokenId, skills, team_size, _projectName, startTime, endTime) => {
-    console.log(tokenId, skills, team_size, _projectName, startTime, endTime);
+  (projectName, startTime, endTime, tokenId, team_size, uriHash) => {
+    console.log(
+      "project added with details ",
+      projectName,
+      startTime,
+      endTime,
+      tokenId,
+      team_size,
+      uriHash
+    );
   }
 );
 
 FactoryContractEthers.on(
-  "NFTMintedWithProject",
-  (
-    _empId,
-    _employeeName,
-    email,
-    _skills,
-    _projectName,
-    team_size,
-    startTime,
-    endTime,
-    tokenId,
-    uriHash
-  ) => {
-    updateTokenId(_empId, tokenId);
+  "projectEdited",
+  (projectName, startTime, endTime, tokenId, team_size, projectHash) => {
+    console.log(
+      "project edited with details ",
+      projectName,
+      startTime,
+      endTime,
+      tokenId,
+      team_size,
+      projectHash
+    );
   }
 );
 
 FactoryContractEthers.on("skillUpdated", (tokenId, skills, uriHash) => {
-  console.log("data", tokenId, skills, uriHash);
+  console.log("skill updated with details", tokenId, skills, uriHash);
 });
 
 FactoryContractEthers.on("burnNFT", (tokenId) => {
-  console.log("burned", tokenId);
+  console.log("Nft burned ", tokenId);
 });
+
+FactoryContractEthers.on("buurnProject", (tokenId, projectNumber) => {
+  console.log("project details burned ", tokenId, projectNumber);
+});
+
+

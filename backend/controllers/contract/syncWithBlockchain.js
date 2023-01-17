@@ -52,7 +52,12 @@ const addProjects = async (employee) => {
         );
         await Employee.updateOne(
           { _id: employee._id },
-          { $set: { [`projDetails.${index}.isEdited`]: false } }
+          {
+            $set: {
+              [`projDetails.${index}.isSynced`]: true,
+              [`projDetails.${index}.isEdited`]: false,
+            },
+          }
         );
       }
     };
