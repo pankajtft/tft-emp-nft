@@ -22,7 +22,7 @@ const Listing = () => {
     if (data) {
       setEmployeeData(data);
     } else return null;
-  }, [employeeData]); 
+  }, [employeeData]);
 
   useEffect(() => {
     getData();
@@ -63,7 +63,7 @@ const Listing = () => {
         return true;
       if (
         val?.projDetails?.[0] &&
-        val?.projDetails?.[0].designation
+        val?.empDetails?.designation
           .toLowerCase()
           .includes(search.toLowerCase())
       )

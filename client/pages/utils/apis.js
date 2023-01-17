@@ -139,3 +139,17 @@ export const mintEmployee = async (_id) => {
     console.log(e, "Error fetching Employee Details");
   }
 };
+
+export const syncWithBlockchain = async (_id) => {
+  console.log(_id);
+  try {
+    const res = await axios.get(`${Path}contract/syncWithBlockchain/${_id}`);
+    if (!res.ok) {
+      throw new Error("Failed to fetch data");
+    }
+    let data = res;
+    return data;
+  } catch (e) {
+    console.log(e, "Error fetching Employee Details");
+  }
+};

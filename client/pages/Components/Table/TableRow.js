@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import moment from "moment";
 import FormModal from "../Modals";
 import DialogBox from "../ConfirmModal";
-import { deleteData, mintEmployee } from "../../utils/apis";
+import { deleteData, mintEmployee, syncWithBlockchain } from "../../utils/apis";
 import { AuthContext } from "../../Context/auth-context";
 import BannerImg from "../../assets/images/ethereum-1.png";
 import Image from "next/image";
@@ -58,7 +58,8 @@ export const TableRow = ({ data }) => {
   function handleDeleteOption(val) {
     if (val) {
       {
-        deleteData(data._id);
+        syncWithBlockchain(data._id);
+        // deleteData(data._id);
         setDeleteModal(false);
       }
     } else setDeleteModal(false);
