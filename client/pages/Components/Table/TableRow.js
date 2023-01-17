@@ -13,6 +13,7 @@ export const TableRow = ({ data }) => {
   const { isUserAdmin } = useContext(AuthContext);
   const Minted = [{ isMinted: false }];
   const [editModal, setEditModal] = React.useState(false);
+  const [syncModal, setSyncModal] = React.useState(false);
   const [deleteModal, setDeleteModal] = React.useState(false);
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const router = useRouter();
@@ -58,11 +59,60 @@ export const TableRow = ({ data }) => {
   function handleDeleteOption(val) {
     if (val) {
       {
-        syncWithBlockchain(data._id);
-        // deleteData(data._id);
+        deleteData(data._id);
         setDeleteModal(false);
       }
     } else setDeleteModal(false);
+  }
+  function handleSync(val) {
+    if (val) {
+      {
+        syncWithBlockchain(data._id);
+        setSyncModal(false);
+      }
+    } else setSyncModal(false);
+  }
+
+  const PopUpOptions=()=>{
+    return(
+    <div className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                  style={{
+                    display: !deleteModal === false ? "none" : "",
+                  }}
+                  role="menu"
+                  aria-orientation="vertical"
+                  aria-labelledby="user-menu-button"
+                  tabIndex={-1}
+                >
+                  <Link
+                    href="/Profile"
+                    className="block px-4 py-2 text-sm text-gray-700"
+                    role="menuitem"
+                    tabIndex={-1}
+                    id="user-menu-item-0"
+                    // onClick={() => setIsShow((prev) => !prev)}
+                  >
+                    Your Profile
+                  </Link>
+                  <a
+                    href="#"
+                    className="block px-4 py-2 text-sm text-gray-700"
+                    role="menuitem"
+                    tabIndex={-1}
+                    id="user-menu-item-1"
+                  >
+                    Settings
+                  </a>
+                  <button
+                    href="#"
+                    className="block px-4 py-2 text-sm text-gray-700"
+                    role="menuitem"
+                    id="user-menu-item-2"
+                    // onClick={()=>logout()}
+                  >
+                    Sign out
+                  </button>
+                </div>)
   }
   return (
     <>
@@ -79,6 +129,16 @@ export const TableRow = ({ data }) => {
           isOpen={deleteModal}
           handleClose={() => setDeleteModal(false)}
           onButtonPress={(val) => handleDeleteOption(val)}
+        />
+      )}
+      {syncModal && (
+        <DialogBox
+          title={"Sync data with blockchain ?"}
+          btnTitle1={"Cancel"}
+          btnTitle2={"Sync"}
+          isOpen={syncModal}
+          handleClose={() => setSyncModal(false)}
+          onButtonPress={(val) => handleSync(val)}
         />
       )}
       <tbody>
@@ -176,11 +236,12 @@ export const TableRow = ({ data }) => {
               <td className="py-4 px-6 w-10 ">
                 {
                   <ButtonGroupIcon
-                    isEdit={false}
+                    isView={true}
                     isDelete={true}
                     disabled={!!!data}
                     onEditPress={() => setEditModal(true)}
                     onDeletePress={() => setDeleteModal(true)}
+                    onViewPress={()=> setSyncModal(true)}
                   />
                 }
               </td>

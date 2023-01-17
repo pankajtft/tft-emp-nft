@@ -1,5 +1,5 @@
 import React from "react";
-import { RHFTextField } from "../../Hook-form";
+import { RHFTextField, RHSelect } from "../../Hook-form";
 import Typography from "@mui/material/Typography";
 import RHMultiCheckDropdown from "../../Hook-form/RHMultiCheckDropdown";
 import RHSingleCheckDropDown from "../../Hook-form/RHSingleCheckDropDown";
@@ -42,7 +42,34 @@ const EmpDetails = ({ handleSubmitForm, initialData }) => {
           pb: 1,
         }}
       />
-      <RHSingleCheckDropDown
+      <RHSelect
+      required
+      id="designation"
+      name="empDetail.designation"
+      label="Designation"
+      options={
+        [{label:"Unassigned", value:1},
+        {label:"Mang",value:2}, 
+        {label:"QA",value:3}, 
+        {label:"IT",value:4}, 
+        {label:"HR",value:5}, 
+        {label:"Development",value:6}, 
+        {label:"Admin",value:7}, 
+        {label:"ACCOUNTS",value:8}, 
+        {label:"SALES",value:9}, 
+        {label:"LEGAL",value:10}, 
+        {label:"DESIGN",value:11}, 
+        {label:"TA",value:12}, 
+        {label:"Product",value:13}, 
+        {label:"Support",value:14}, 
+        {label:"Analyst",value:15}, 
+        {label:"Resources",value:16}]
+      }
+      sx={{
+        pb: 1
+      }}
+      />
+      {/* <RHSingleCheckDropDown
         required
         id="designation"
         name="empDetail.designation"
@@ -67,7 +94,7 @@ const EmpDetails = ({ handleSubmitForm, initialData }) => {
         sx={{
           pb: 1,
         }}
-      />
+      /> */}
       <RHMultiCheckDropdown
         required
         name="empDetail.skills"
@@ -85,6 +112,7 @@ const EmpDetails = ({ handleSubmitForm, initialData }) => {
         }
         id="skills"
         sx={{
+          pt:1,
           pb: 1,
         }}
       />
