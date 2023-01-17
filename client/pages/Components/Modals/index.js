@@ -20,12 +20,13 @@ import RHMultiCheckDropdown from "../Hook-form/RHMultiCheckDropdown";
 import {yupResolver} from "@hookform/resolvers/yup"
 import { validationSchema } from "../EmpForms/schema";
 import { INITIAL_PROJECT_DATA } from "../EmpForms/ProjectDetails/cosntant";
+import { INITIAL_EMPLOYEE_DATA } from "../EmpForms/EmpDetails/cosntant";
 export default function FormModal({ isShow, handleClose, data, isSkill }) {
   const methods = useForm({
     shouldUnregister: true,
-    defaultValues: !!data ?data?.proj: INITIAL_PROJECT_DATA,
+    defaultValues: !!data ? !isSkill ? data?.proj : INITIAL_EMPLOYEE_DATA.skills: INITIAL_PROJECT_DATA,
     mode: "onChange",
-    resolver: yupResolver(validationSchema[1]),
+    resolver: !!isSkill ? "" :yupResolver(validationSchema[1]),
   });
   const { handleSubmit, trigger, watch } = methods;
   watch((data) => setFormData(data));
@@ -33,7 +34,7 @@ export default function FormModal({ isShow, handleClose, data, isSkill }) {
   const router = useRouter();
   const onSubmit = async (projectData) => {
     if (!!isSkill) {
-      await updateSkills(projectData).then(() => {
+      await updateSkills(projectData, data?.id).then(() => {
         handleClose();
       });
     }
@@ -54,7 +55,6 @@ export default function FormModal({ isShow, handleClose, data, isSkill }) {
         <DialogContent sx={{ m: 2, flexWrap: "wrap", alignItems: "center" }}>
           <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
             {!!isSkill ? (
-              <>
                 <div className=" m-2">
                   <RHMultiCheckDropdown
                     name="skills"
@@ -74,7 +74,6 @@ export default function FormModal({ isShow, handleClose, data, isSkill }) {
                     style={{width:'30rem'}}
                   />
                 </div>
-              </>
             ) : (
                <>
                 <div className="m-2">
@@ -122,18 +121,6 @@ export default function FormModal({ isShow, handleClose, data, isSkill }) {
                       }}
                     />
                   </div>
-                  {/* <RHFTextField
-                    required={true}
-                    id="designation"
-                    name="projDetails[0].designation"
-                    label="Designation"
-                    fullWidth
-                    defaultValue={data?.[0]?.designation ?? ""}
-                    variant="outlined"
-                    sx={{
-                      pb: 2,
-                    }}
-                  /> */}
                   <RHSelect
                     required={true}
                     fullWidth

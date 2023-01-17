@@ -78,11 +78,9 @@ export const editProject = async (formData, _id, projId) => {
     console.log(e, "Error fetching Employee Details");
   }
 };
-export const updateSkills = async (formData) => {
-  const id = formData?.id;
+export const updateSkills = async (formData , id) => {
 
   let data = formData?.skills;
-  console.log(data, id, "ID");
   try {
     const res = await axios.patch(`${Path}employee/skillUpdate/${id}`, {
       skills: data,
