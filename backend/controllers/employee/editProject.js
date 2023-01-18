@@ -18,6 +18,7 @@ const editProject = async (req, res) => {
       ...employee.projDetails[projectIndex],
       ...req.body,
       isEdited: true,
+      isSynced: employee.projDetails[projectIndex].isSynced,
     };
 
     // Save the updated employee document

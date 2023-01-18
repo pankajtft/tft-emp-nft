@@ -73,47 +73,49 @@ export const TableRow = ({ data }) => {
     } else setSyncModal(false);
   }
 
-  const PopUpOptions=()=>{
-    return(
-    <div className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-                  style={{
-                    display: !deleteModal === false ? "none" : "",
-                  }}
-                  role="menu"
-                  aria-orientation="vertical"
-                  aria-labelledby="user-menu-button"
-                  tabIndex={-1}
-                >
-                  <Link
-                    href="/Profile"
-                    className="block px-4 py-2 text-sm text-gray-700"
-                    role="menuitem"
-                    tabIndex={-1}
-                    id="user-menu-item-0"
-                    // onClick={() => setIsShow((prev) => !prev)}
-                  >
-                    Your Profile
-                  </Link>
-                  <a
-                    href="#"
-                    className="block px-4 py-2 text-sm text-gray-700"
-                    role="menuitem"
-                    tabIndex={-1}
-                    id="user-menu-item-1"
-                  >
-                    Settings
-                  </a>
-                  <button
-                    href="#"
-                    className="block px-4 py-2 text-sm text-gray-700"
-                    role="menuitem"
-                    id="user-menu-item-2"
-                    // onClick={()=>logout()}
-                  >
-                    Sign out
-                  </button>
-                </div>)
-  }
+  const PopUpOptions = () => {
+    return (
+      <div
+        className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+        style={{
+          display: !deleteModal === false ? "none" : "",
+        }}
+        role="menu"
+        aria-orientation="vertical"
+        aria-labelledby="user-menu-button"
+        tabIndex={-1}
+      >
+        <Link
+          href="/Profile"
+          className="block px-4 py-2 text-sm text-gray-700"
+          role="menuitem"
+          tabIndex={-1}
+          id="user-menu-item-0"
+          // onClick={() => setIsShow((prev) => !prev)}
+        >
+          Your Profile
+        </Link>
+        <a
+          href="#"
+          className="block px-4 py-2 text-sm text-gray-700"
+          role="menuitem"
+          tabIndex={-1}
+          id="user-menu-item-1"
+        >
+          Settings
+        </a>
+        <button
+          href="#"
+          className="block px-4 py-2 text-sm text-gray-700"
+          role="menuitem"
+          id="user-menu-item-2"
+          // onClick={()=>logout()}
+        >
+          Sign out
+        </button>
+      </div>
+    );
+  };
   return (
     <>
       <FormModal
@@ -131,7 +133,7 @@ export const TableRow = ({ data }) => {
           onButtonPress={(val) => handleDeleteOption(val)}
         />
       )}
-      {syncModal && (
+      {syncModal && data?.tokenId && (
         <DialogBox
           title={"Sync data with blockchain ?"}
           btnTitle1={"Cancel"}
@@ -241,7 +243,7 @@ export const TableRow = ({ data }) => {
                     disabled={!!!data}
                     onEditPress={() => setEditModal(true)}
                     onDeletePress={() => setDeleteModal(true)}
-                    onViewPress={()=> setSyncModal(true)}
+                    onViewPress={() => setSyncModal(true)}
                   />
                 }
               </td>
