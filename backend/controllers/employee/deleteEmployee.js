@@ -12,9 +12,7 @@ const deleteEmployee = async (req, res) => {
       isDeleted: true,
     };
     const employee = await Employee.findByIdAndUpdate(queryId, updates);
-    let contract_response;
-    if (employee?.tokenId) {
-      contract_response = await burn(employee.tokenId);
+     let contract_response = await burn(employee?.empDetail?.empCode);
       storeTransaction(
         queryId,
         contract_response.transactionHash,
@@ -23,7 +21,6 @@ const deleteEmployee = async (req, res) => {
           contract_response.gasUsed.mul(contract_response.effectiveGasPrice)
         )
       );
-    }
 
     res.status(200).send("NFT burned successfully");
   } catch (err) {

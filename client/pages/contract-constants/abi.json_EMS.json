@@ -1,1 +1,452 @@
-[{"type":"constructor","payable":false,"inputs":[]},{"type":"event","anonymous":false,"name":"NFTMinted","inputs":[{"type":"uint32","name":"_empId","indexed":false},{"type":"string","name":"employeeName","indexed":false},{"type":"string","name":"email","indexed":false},{"type":"string","name":"_skills","indexed":false},{"type":"uint16","name":"tokenId","indexed":false},{"type":"bytes32","name":"_empHash","indexed":false}]},{"type":"event","anonymous":false,"name":"NFTMintedWithProject","inputs":[{"type":"uint32","name":"_empId","indexed":false},{"type":"string","name":"employeeName","indexed":false},{"type":"string","name":"email","indexed":false},{"type":"string","name":"_skills","indexed":false},{"type":"string","name":"_projectName","indexed":false},{"type":"uint8","name":"team_size","indexed":false},{"type":"string","name":"startTime","indexed":false},{"type":"string","name":"endTime","indexed":false},{"type":"uint16","name":"tokenId","indexed":false},{"type":"bytes32","name":"uriHash","indexed":false}]},{"type":"event","anonymous":false,"name":"OwnershipTransferred","inputs":[{"type":"address","name":"previousOwner","indexed":true},{"type":"address","name":"newOwner","indexed":true}]},{"type":"event","anonymous":false,"name":"burnNFT","inputs":[{"type":"uint16","name":"tokenId","indexed":false}]},{"type":"event","anonymous":false,"name":"buurnProject","inputs":[{"type":"uint8","name":"tokenId","indexed":false},{"type":"uint8","name":"projectNumber","indexed":false}]},{"type":"event","anonymous":false,"name":"projectAdded","inputs":[{"type":"uint16","name":"tokenId","indexed":false},{"type":"uint16","name":"team_size","indexed":false},{"type":"string","name":"_projectName","indexed":false},{"type":"string","name":"startTime","indexed":false},{"type":"string","name":"endTime","indexed":false},{"type":"bytes32","name":"uriHash","indexed":false}]},{"type":"event","anonymous":false,"name":"projectEdited","inputs":[{"type":"uint16","name":"tokenId","indexed":false},{"type":"uint16","name":"team_size","indexed":false},{"type":"string","name":"_projectName","indexed":false},{"type":"string","name":"startTime","indexed":false},{"type":"string","name":"endTime","indexed":false},{"type":"bytes32","name":"uriHash","indexed":false}]},{"type":"event","anonymous":false,"name":"skillUpdated","inputs":[{"type":"uint16","name":"tokenId","indexed":false},{"type":"string","name":"skills","indexed":false},{"type":"bytes32","name":"uriHash","indexed":false}]},{"type":"function","name":"AddProject","constant":false,"payable":false,"gas":29000000,"inputs":[{"type":"uint8","name":"tokenId"},{"type":"uint16","name":"team_size"},{"type":"string","name":"_projectName"},{"type":"string","name":"startTime"},{"type":"string","name":"endTime"}],"outputs":[]},{"type":"function","name":"burn","constant":false,"payable":false,"gas":29000000,"inputs":[{"type":"uint8","name":"tokenId"}],"outputs":[]},{"type":"function","name":"burnProject","constant":false,"payable":false,"gas":29000000,"inputs":[{"type":"uint8","name":"tokenId"},{"type":"uint8","name":"projectNumber"}],"outputs":[]},{"type":"function","name":"editProject","constant":false,"payable":false,"gas":29000000,"inputs":[{"type":"uint8","name":"tokenId"},{"type":"uint16","name":"team_size"},{"type":"string","name":"_projectName"},{"type":"string","name":"startTime"},{"type":"string","name":"endTime"},{"type":"uint8","name":"projectNumber"}],"outputs":[]},{"type":"function","name":"getAllProject","constant":true,"stateMutability":"view","payable":false,"gas":29000000,"inputs":[{"type":"uint8","name":"tokenId"}],"outputs":[{"type":"bytes32[]"}]},{"type":"function","name":"getNFT","constant":true,"stateMutability":"view","payable":false,"gas":29000000,"inputs":[],"outputs":[{"type":"address"}]},{"type":"function","name":"getcurrentProject","constant":true,"stateMutability":"view","payable":false,"gas":29000000,"inputs":[{"type":"uint16","name":"tokenId"}],"outputs":[{"type":"uint8"}]},{"type":"function","name":"mintEmployeeNFT","constant":false,"payable":false,"gas":29000000,"inputs":[{"type":"string","name":"_employeeName"},{"type":"uint32","name":"_empId"},{"type":"string","name":"email"},{"type":"string","name":"_skills"}],"outputs":[]},{"type":"function","name":"mintEmployeeNFTwithProject","constant":false,"payable":false,"gas":29000000,"inputs":[{"type":"string","name":"_employeeName"},{"type":"uint32","name":"_empId"},{"type":"string","name":"email"},{"type":"string","name":"_skills"},{"type":"string","name":"_projectName"},{"type":"uint8","name":"team_size"},{"type":"string","name":"startTime"},{"type":"string","name":"endTime"}],"outputs":[]},{"type":"function","name":"onERC721Received","constant":true,"stateMutability":"pure","payable":false,"gas":29000000,"inputs":[{"type":"address"},{"type":"address"},{"type":"uint256"},{"type":"bytes"}],"outputs":[{"type":"bytes4"}]},{"type":"function","name":"owner","constant":true,"stateMutability":"view","payable":false,"gas":29000000,"inputs":[],"outputs":[{"type":"address"}]},{"type":"function","name":"renounceOwnership","constant":false,"payable":false,"gas":29000000,"inputs":[],"outputs":[]},{"type":"function","name":"returnToken","constant":true,"stateMutability":"view","payable":false,"gas":29000000,"inputs":[],"outputs":[{"type":"uint8"}]},{"type":"function","name":"setcurrentProject","constant":false,"payable":false,"gas":29000000,"inputs":[{"type":"uint16","name":"tokenId"},{"type":"uint8","name":"projectID"}],"outputs":[]},{"type":"function","name":"skillUpdate","constant":false,"payable":false,"gas":29000000,"inputs":[{"type":"uint16","name":"tokenId"},{"type":"string","name":"_skills"}],"outputs":[]},{"type":"function","name":"transferOwnership","constant":false,"payable":false,"gas":29000000,"inputs":[{"type":"address","name":"newOwner"}],"outputs":[]}]
+[
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "employeeName",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "email",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "skills",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint32",
+        "name": "empId",
+        "type": "uint32"
+      },
+      {
+        "indexed": false,
+        "internalType": "bytes32",
+        "name": "empHash",
+        "type": "bytes32"
+      }
+    ],
+    "name": "NFTMinted",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint32",
+        "name": "empId",
+        "type": "uint32"
+      }
+    ],
+    "name": "burnNFT",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint32",
+        "name": "empId",
+        "type": "uint32"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint8",
+        "name": "projectNumber",
+        "type": "uint8"
+      }
+    ],
+    "name": "buurnProject",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "projectName",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "startTime",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "endTime",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint32",
+        "name": "empId",
+        "type": "uint32"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint8",
+        "name": "team_size",
+        "type": "uint8"
+      },
+      {
+        "indexed": false,
+        "internalType": "bytes32",
+        "name": "uriHash",
+        "type": "bytes32"
+      }
+    ],
+    "name": "projectAdded",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "projectName",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "startTime",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "endTime",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint32",
+        "name": "empId",
+        "type": "uint32"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint8",
+        "name": "team_size",
+        "type": "uint8"
+      },
+      {
+        "indexed": false,
+        "internalType": "bytes32",
+        "name": "projectHash",
+        "type": "bytes32"
+      }
+    ],
+    "name": "projectEdited",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint32",
+        "name": "empId",
+        "type": "uint32"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "skills",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "bytes32",
+        "name": "skillHash",
+        "type": "bytes32"
+      }
+    ],
+    "name": "skillUpdated",
+    "type": "event"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint32",
+        "name": "empId",
+        "type": "uint32"
+      },
+      {
+        "internalType": "uint8",
+        "name": "team_size",
+        "type": "uint8"
+      },
+      {
+        "internalType": "string",
+        "name": "projectName",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "startTime",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "endTime",
+        "type": "string"
+      }
+    ],
+    "name": "AddProject",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint32",
+        "name": "empId",
+        "type": "uint32"
+      }
+    ],
+    "name": "burn",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint32",
+        "name": "empId",
+        "type": "uint32"
+      },
+      {
+        "internalType": "uint8",
+        "name": "projectID",
+        "type": "uint8"
+      }
+    ],
+    "name": "burnProject",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "called",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint32",
+        "name": "empId",
+        "type": "uint32"
+      },
+      {
+        "internalType": "uint8",
+        "name": "team_size",
+        "type": "uint8"
+      },
+      {
+        "internalType": "string",
+        "name": "projectName",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "startTime",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "endTime",
+        "type": "string"
+      },
+      {
+        "internalType": "uint8",
+        "name": "projectNumber",
+        "type": "uint8"
+      }
+    ],
+    "name": "editProject",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint32",
+        "name": "empId",
+        "type": "uint32"
+      }
+    ],
+    "name": "getAllProject",
+    "outputs": [
+      {
+        "internalType": "bytes32[]",
+        "name": "",
+        "type": "bytes32[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint32",
+        "name": "empId",
+        "type": "uint32"
+      }
+    ],
+    "name": "getEmployee",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint32",
+        "name": "empId",
+        "type": "uint32"
+      }
+    ],
+    "name": "getcurrentProject",
+    "outputs": [
+      {
+        "internalType": "uint8",
+        "name": "",
+        "type": "uint8"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "employeeName",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "email",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "skills",
+        "type": "string"
+      },
+      {
+        "internalType": "uint32",
+        "name": "empId",
+        "type": "uint32"
+      }
+    ],
+    "name": "mintEmployeeNFT",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bytes",
+        "name": "",
+        "type": "bytes"
+      }
+    ],
+    "name": "onERC721Received",
+    "outputs": [
+      {
+        "internalType": "bytes4",
+        "name": "",
+        "type": "bytes4"
+      }
+    ],
+    "stateMutability": "pure",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint32",
+        "name": "empId",
+        "type": "uint32"
+      },
+      {
+        "internalType": "uint8",
+        "name": "projectID",
+        "type": "uint8"
+      }
+    ],
+    "name": "setcurrentProject",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint32",
+        "name": "empId",
+        "type": "uint32"
+      },
+      {
+        "internalType": "string",
+        "name": "skills",
+        "type": "string"
+      }
+    ],
+    "name": "skillUpdate",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+]

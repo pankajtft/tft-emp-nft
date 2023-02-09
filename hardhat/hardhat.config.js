@@ -6,6 +6,7 @@ require("dotenv").config();
 require("@nomiclabs/hardhat-ethers");
 require("solidity-coverage");
 require("hardhat-deploy");
+require("@openzeppelin/hardhat-upgrades");
 
 const TEST_NET_INFURA = process.env.TEST_NET_INFURA;
 const PRIVATE_KEY = process.env.ACCOUNT;
@@ -42,7 +43,7 @@ module.exports = {
     outputFile: "gas-report.txt",
     noColors: true,
     coinmarketcap: "88b2d178-bd26-49f6-84f9-758ea99ed704",
-    token: 'MATIC',
+    token: "MATIC",
   },
   networks: {
     hardhat: {
@@ -56,6 +57,7 @@ module.exports = {
       url: "https://polygon-mumbai.g.alchemy.com/v2/ilstxE0yedAjbQEDV1TaurFfb4Po9Hyw",
       accounts: [
         `0x7d674e715215ce1d7db8ea53930163c44d2ca181abe7a9d8a4a74a2a8eb43313`,
+        //  `0xb815be93479f82444892f891b117c7919cb232624e82487f8cd5d7c3fefea026`,
       ],
     },
     localhost: {

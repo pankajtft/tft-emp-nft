@@ -7,8 +7,8 @@ const { network } = require("hardhat");
 
 module.exports = async () => {
   console.log("Writing to front end...");
-  await updateContractAddresses("EMS");
-  await updateAbi("EMS");
+  await updateContractAddresses("EMSV2");
+  await updateAbi("EMSV2");
   console.log("Front end written!");
 };
 

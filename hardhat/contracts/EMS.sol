@@ -1,17 +1,19 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.9;
 import "./NFT.sol";
-import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
 
 /**
  * @title EmployeeManagementContract
- * @author Shivam Arora
+ * @author Anurag 
  * @dev Employee Management Contract allows users to create employeesNFTs and manage them
  */
-contract EMS is IERC721Receiver, ReentrancyGuard, Ownable {
+contract EMS is
+    IERC721Receiver
+{
     EmployeeNFT internal NFT;
+    address private _owner;
+    bool public called;
     struct Employee {
         bytes32 empDetails;
         bytes32 skillHash;
@@ -24,15 +26,13 @@ contract EMS is IERC721Receiver, ReentrancyGuard, Ownable {
         string email,
         string skills,
         uint32 empId,
-        uint16 tokenId,
         bytes32 empHash
     );
-
     event projectAdded(
         string projectName,
         string startTime,
         string endTime,
-        uint16 tokenId,
+        uint32 empId,
         uint8 team_size,
         bytes32 uriHash
     );
@@ -40,21 +40,35 @@ contract EMS is IERC721Receiver, ReentrancyGuard, Ownable {
         string projectName,
         string startTime,
         string endTime,
-        uint16 tokenId,
+        uint32 empId,
         uint8 team_size,
         bytes32 projectHash
     );
+    event skillUpdated(uint32 empId, string skills, bytes32 skillHash);
+    event buurnProject(uint32 empId, uint8 projectNumber);
+    event burnNFT(uint32 empId);
+    mapping(uint32 => Employee) employees;
 
-    event skillUpdated(uint16 tokenId, string skills, bytes32 skillHash);
+    modifier onlyOwner() {
+        require(msg.sender == _owner, "caller is not the owner !");
+        _;
+    }
 
-    event buurnProject(uint16 tokenId, uint8 projectNumber);
+    modifier validEmpId(uint32 empId) {
+        require(empId >= 100000 && empId <= 999999, "emp ID must be valid");
+        _;
+    }
 
-    event burnNFT(uint16 tokenId);
+    modifier nonReentrant() {
+        require(!called);
+        called = true;
+        _;
+        called = false;
+    }
 
-    mapping(uint16 => Employee) employees;
-
-    constructor() {
+    function initilize() public {
         NFT = new EmployeeNFT();
+        _owner = msg.sender;
     }
 
     //Mint new Employee
@@ -63,183 +77,185 @@ contract EMS is IERC721Receiver, ReentrancyGuard, Ownable {
         string memory email,
         string memory skills,
         uint32 empId
-    ) public nonReentrant onlyOwner {
+    )
+        public
+        nonReentrant
+        onlyOwner
+        validEmpId(empId)
+    {
         require(
             bytes(employeeName).length > 0,
             "Employee name cannot be empty"
         );
         require(bytes(email).length > 0, "Email cannot be empty");
         require(bytes(skills).length > 0, "Skills cannot be empty");
-        require(
-            empId >= 100000 && empId <= 999999,
-            "Employee ID must be valid"
+        bytes32 empHash = keccak256(
+            abi.encodePacked(employeeName, empId, email)
         );
-
-        bytes32 empHash = keccak256(abi.encode(employeeName, empId, email));
-        bytes32 skillHash = keccak256(abi.encode(skills));
-        bytes32 uriHash = keccak256(abi.encode(empHash, skillHash));
-        string memory uri = string(abi.encode(uriHash));
-        uint16 tokenId = NFT.safeMint(uri);
-        employees[tokenId].empDetails = empHash;
-        employees[tokenId].skillHash = skillHash;
-        emit NFTMinted(employeeName, email, skills, empId, tokenId, empHash);
+        bytes32 skillHash = keccak256(abi.encodePacked(skills));
+        bytes32 uriHash = keccak256(abi.encodePacked(empHash, skillHash));
+        string memory uri = string(abi.encodePacked(uriHash));
+        NFT.safeMint(uri, empId);
+        employees[empId].empDetails = empHash;
+        employees[empId].skillHash = skillHash;
+        emit NFTMinted(employeeName, email, skills, empId, empHash);
     }
 
     //Update Skills
-    function skillUpdate(uint16 tokenId, string memory skills)
+    function skillUpdate(uint32 empId, string memory skills)
         public
         onlyOwner
+        validEmpId(empId)
     {
-        require(tokenId >= 0 && tokenId <= returnToken(), "Token ID must be valid");
         require(bytes(skills).length > 0, "Skills cannot be empty");
-
         bytes32 uriHash;
-        bytes32 skillHash = keccak256(abi.encode(skills));
-        employees[tokenId].skillHash = skillHash;
-        if (employees[tokenId].projDetails.length == 0) {
+        bytes32 skillHash = keccak256(abi.encodePacked(skills));
+        employees[empId].skillHash = skillHash;
+        if (employees[empId].projDetails.length == 0) {
             uriHash = keccak256(
-                abi.encode(
-                    employees[tokenId].empDetails,
-                    employees[tokenId].skillHash
+                abi.encodePacked(
+                    employees[empId].empDetails,
+                    employees[empId].skillHash
                 )
             );
         } else {
             uriHash = keccak256(
-                abi.encode(
-                    employees[tokenId].empDetails,
-                    employees[tokenId].projDetails[
-                        employees[tokenId].currentProject
+                abi.encodePacked(
+                    employees[empId].empDetails,
+                    employees[empId].projDetails[
+                        employees[empId].currentProject
                     ],
-                    employees[tokenId].skillHash
+                    employees[empId].skillHash
                 )
             );
         }
-        string memory uri = string(abi.encode(uriHash));
-        NFT.setURI(uint256(tokenId), uri);
-        emit skillUpdated(tokenId, skills, skillHash);
+        string memory uri = string(abi.encodePacked(uriHash));
+        NFT.setURI(empId, uri);
+        emit skillUpdated(empId, skills, skillHash);
     }
 
     //Add new Project
-    function AddProject(
-        uint16 tokenId,
-        uint8 team_size,
-        string memory projectName,
-        string memory startTime, //UnixTime
-        string memory endTime //UnixTime
-    ) external nonReentrant onlyOwner {
-        require(tokenId >= 0 && tokenId <= returnToken(), "Token ID must be valid");
-        require(team_size >= 1 && team_size <= 10, "Invalid team size");
-        require(bytes(projectName).length > 0, "Project name cannot be empty");
+    // function AddProject(
+    //     uint32 empId,
+    //     uint8 team_size,
+    //     string memory projectName,
+    //     string memory startTime, //UnixTime
+    //     string memory endTime //UnixTime
+    // ) external
+    // //  nonReentrant
+    //   onlyOwner validEmpId(empId) {
+    //     require(team_size >= 1, "Invalid team size");
+    //     require(bytes(projectName).length > 0, "Project name cannot be empty");
+    //     bytes32 projectHash = keccak256(
+    //         abi.encodePacked(projectName, startTime, endTime, team_size)
+    //     );
+    //     employees[empId].projDetails.push(projectHash);
+    //     uint8 index = uint8(employees[empId].projDetails.length - 1);
+    //     employees[empId].exists.push(true);
+    //     setcurrentProject(empId, index);
+    //     bytes32 uriHash = keccak256(
+    //         abi.encodePacked(
+    //             employees[empId].empDetails,
+    //             employees[empId].projDetails[index],
+    //             employees[empId].skillHash
+    //         )
+    //     );
+    //     string memory uri = string(abi.encodePacked(uriHash));
+    //     NFT.setURI(empId, uri);
+    //     emit projectAdded(
+    //         projectName,
+    //         startTime,
+    //         endTime,
+    //         empId,
+    //         team_size,
+    //         uriHash
+    //     );
+    // }
 
-        bytes32 projectHash = keccak256(
-            abi.encode(projectName, startTime, endTime, team_size)
-        );
-        employees[tokenId].projDetails.push(projectHash);
-        employees[tokenId].exists.push(true);
-         setcurrentProject(
-            tokenId,
-            uint8(employees[tokenId].projDetails.length-1)
-        );
-        bytes32 uriHash = keccak256(
-            abi.encode(
-                employees[tokenId].empDetails,
-                employees[tokenId].projDetails[
-                    uint8(employees[tokenId].projDetails.length - 1)
-                ],
-                employees[tokenId].skillHash
-            )
-        );
-        string memory uri = string(abi.encode(uriHash));
-        NFT.setURI(uint256(tokenId), uri);
-        emit projectAdded(
-            projectName,
-            startTime,
-            endTime,
-            tokenId,
-            team_size,
-            uriHash
-        );
-    }
+    // //Get Current Project
+    // function getcurrentProject(uint32 empId)
+    //     external
+    //     view
+    //     onlyOwner
+    //     validEmpId(empId)
+    //     returns (uint8)
+    // {
+    //     return employees[empId].currentProject;
+    // }
 
-    //Get Current Project
-    function getcurrentProject(uint16 tokenId)
-        external
-        view
-        onlyOwner
-        returns (uint8)
-    {
-        require(tokenId >= 0 && tokenId <= returnToken(), "Token ID must be valid");
-        return employees[tokenId].currentProject;
-    }
+    // //Set Current Project
+    // function setcurrentProject(uint32 empId, uint8 projectID)
+    //     public
+    //     onlyOwner
+    //     validEmpId(empId)
+    // {
+    //     // require(
+    //     //     employees[empId].currentProject == uint8(0),
+    //     //     "Current project is already set"
+    //     // );
+    //     require(
+    //         projectID + 1 <= employees[empId].projDetails.length,
+    //         "Invalid project ID"
+    //     );
+    //     require(employees[empId].exists[projectID], "Project not exists");
+    //     employees[empId].currentProject = projectID;
+    //     bytes32 uriHash = keccak256(
+    //         abi.encodePacked(
+    //             employees[empId].empDetails,
+    //             employees[empId].projDetails[projectID],
+    //             employees[empId].skillHash
+    //         )
+    //     );
+    //     string memory uri = string(abi.encodePacked(uriHash));
+    //     NFT.setURI(empId, uri);
+    // }
 
-    //Set Current Project
-    function setcurrentProject(uint16 tokenId, uint8 projectID)
-        public
-        onlyOwner
-    {
-        require(tokenId >= 0 && tokenId <= returnToken(), "Token ID must be valid");
-        require(employees[tokenId].currentProject == uint8(0), "Current project is already set");
-        require(projectID+1 <= employees[tokenId].projDetails.length, "Invalid project ID");
-        require(employees[tokenId].exists[projectID], "Project not exists");
+    // //Edit project
+    // function editProject(
+    //     uint32 empId,
+    //     uint8 team_size,
+    //     string memory projectName,
+    //     string memory startTime, //UnixTime
+    //     string memory endTime, //UnixTime
+    //     uint8 projectNumber
+    // ) external onlyOwner validEmpId(empId) {
+    //     require(team_size >= 1 && team_size <= 10, "Invalid team size");
+    //     require(bytes(projectName).length > 0, "Project name cannot be empty");
+    //     require(employees[empId].exists[projectNumber], "Project not exists");
+    //     // require(
+    //     //     projectNumber < employees[empId].projDetails.length,
+    //     //     "Invalid project ID"
+    //     // );
+    //     bytes32 projectHash = keccak256(
+    //         abi.encodePacked(projectName, startTime, endTime, team_size)
+    //     );
+    //     employees[empId].projDetails[projectNumber] = projectHash;
+    //     emit projectEdited(
+    //         projectName,
+    //         startTime,
+    //         endTime,
+    //         empId,
+    //         team_size,
+    //         projectHash
+    //     );
+    // }
 
-        employees[tokenId].currentProject = projectID;
-        bytes32 uriHash = keccak256(
-            abi.encode(
-                employees[tokenId].empDetails,
-                employees[tokenId].projDetails[projectID],
-                employees[tokenId].skillHash
-            )
-        );
-        string memory uri = string(abi.encode(uriHash));
-        NFT.setURI(uint256(tokenId), uri);
-    }
+    // //Get All Projects Hash
+    // function getAllProject(uint32 empId)
+    //     public
+    //     view
+    //     onlyOwner
+    //     validEmpId(empId)
+    //     returns (bytes32[] memory)
+    // {
+    //     return employees[empId].projDetails;
+    // }
 
-    //Edit project
-    function editProject(
-        uint16 tokenId,
-        uint8 team_size,
-        string memory projectName,
-        string memory startTime, //UnixTime
-        string memory endTime, //UnixTime
-        uint8 projectNumber
-    ) public {
-        require(team_size >= 1 && team_size <= 10, "Invalid team size");
-        require(tokenId >= 0 && tokenId <= returnToken(), "Token ID must be valid");
-        require(bytes(projectName).length > 0, "Project name cannot be empty");
-        require(employees[tokenId].exists[projectNumber], "Project not exists");
-        require(projectNumber < employees[tokenId].projDetails.length, "Invalid project ID");
-
-        bytes32 projectHash = keccak256(
-            abi.encode(projectName, startTime, endTime, team_size)
-        );
-        employees[tokenId].projDetails[projectNumber] = projectHash;
-        emit projectEdited(
-            projectName,
-            startTime,
-            endTime,
-            tokenId,
-            team_size,
-            projectHash
-        );
-    }
-
-    //Get All Projects Hash
-    function getAllProject(uint8 tokenId)
-        public
-        view
-        onlyOwner
-        returns (bytes32[] memory)
-    {
-        require(tokenId >= 0 && tokenId <= returnToken(), "Token ID must be valid");
-        return employees[tokenId].projDetails;
-    }
-
-    //Return TokenID
-    function returnToken() internal view returns (uint16) {
-        uint256 tokenId = NFT._tokenIdCounter();
-        return (uint16(tokenId) - 1);
-    }
-
+    // //Return empId
+    // // function returnToken() internal view returns (uint16) {
+    // //     uint256 empId = NFT._empIdCounter();
+    // //     return (uint16(empId) - 1);
+    // // }
     //Overrides
     function onERC721Received(
         address,
@@ -250,25 +266,35 @@ contract EMS is IERC721Receiver, ReentrancyGuard, Ownable {
         return IERC721Receiver.onERC721Received.selector;
     }
 
-    function burnProject(uint16 tokenId, uint8 projectID) public onlyOwner {
-        require(tokenId >= 0 && tokenId <= returnToken(), "Token ID must be valid");
-        require(projectID < employees[tokenId].projDetails.length, "Invalid project ID");
-        require(employees[tokenId].exists[projectID], "Project not exists");
+    // function burnProject(uint32 empId, uint8 projectID)
+    //     public
+    //     onlyOwner
+    //     validEmpId(empId)
+    // {
+    //     require(
+    //         projectID < employees[empId].projDetails.length,
+    //         "Invalid project ID"
+    //     );
+    //     require(employees[empId].exists[projectID], "Project not exists");
+    //     employees[empId].projDetails[projectID] = "";
+    //     employees[empId].exists[projectID] = false;
+    //     emit buurnProject(empId, projectID);
+    // }
 
-        employees[tokenId].projDetails[projectID] = "";
-        employees[tokenId].exists[projectID] = false;
-        emit buurnProject(tokenId, projectID);
-    }
+    // //burn
+    // function burn(uint32 empId) public virtual onlyOwner validEmpId(empId) {
+    //     delete employees[empId];
+    //     NFT.burn(empId);
+    //     emit burnNFT(empId);
+    // }
 
-    //burn
-    function burn(uint16 tokenId) public virtual onlyOwner {
-        require(tokenId >= 0 && tokenId <= returnToken(), "Token ID must be valid");
-        NFT.burn(uint256(tokenId));
-        emit burnNFT(tokenId);
-    }
-
-    //Pure/View Functions
+    // //Pure/View Functions
     function getNFT() public view onlyOwner returns (EmployeeNFT) {
         return NFT;
+    }
+
+    function getEmployee(uint32 empId) public view returns (bytes32) {
+        Employee storage employee = employees[empId];
+        return (employee.empDetails);
     }
 }
