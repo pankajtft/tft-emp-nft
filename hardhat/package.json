@@ -34,6 +34,7 @@
     "@chainlink/token": "^1.1.0",
     "@nomicfoundation/hardhat-chai-matchers": "^1.0.5",
     "@openzeppelin/contracts": "^4.5.0",
+    "@openzeppelin/hardhat-upgrades": "^1.22.1",
     "babel-eslint": "^10.1.0",
     "dotenv": "^10.0.0",
     "fs": "^0.0.1-security"

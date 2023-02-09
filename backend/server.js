@@ -5,18 +5,29 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const app = express();
 
+const ethereumjs = require("ethereumjs-abi");
+const util = require("ethereumjs-util");
+const Web3 = require("web3");
+const web3 = new Web3();
+
 const { ethers } = require("ethers");
+const { solidityKeccak256 } = ethers;
 const address = require("../client/pages/contract-constants/addresses.json")
   .EMS[31337];
+
 const abi = require("../client/pages/contract-constants/abi.json_EMS.json");
+// const { updateTokenId } = require("./controllers/employee/helpers");
 
-const { updateTokenId } = require("./controllers/employee/helpers");
-
-const provider = new ethers.providers.JsonRpcProvider(process.env.POLYGON_URL);
-
-var signer = new ethers.Wallet(process.env.POLY_PRIVATE_KEY, provider);
+const provider = new ethers.providers.JsonRpcProvider(
+  "https://polygon-mumbai.g.alchemy.com/v2/ilstxE0yedAjbQEDV1TaurFfb4Po9Hyw"
+);
+var signer = new ethers.Wallet(
+  "0x7d674e715215ce1d7db8ea53930163c44d2ca181abe7a9d8a4a74a2a8eb43313",
+  provider
+);
 const FactoryContractEthers = new ethers.Contract(address[0], abi, signer);
 module.exports = { FactoryContractEthers };
+
 
 app.use(
   bodyParser.json({
@@ -50,15 +61,13 @@ initMongo();
 
 FactoryContractEthers.on(
   "NFTMinted",
-  (employeeName, email, skills, empId, tokenId, empHash) => {
-    updateTokenId(empId, tokenId);
+  (employeeName, email, skills, empId, empHash) => {
     console.log(
       "nft minted with details ",
       employeeName,
       email,
       skills,
       empId,
-      tokenId,
       empHash
     );
   }
@@ -106,4 +115,36 @@ FactoryContractEthers.on("buurnProject", (tokenId, projectNumber) => {
   console.log("project details burned ", tokenId, projectNumber);
 });
 
-// this is a simple change
+// const employeeName = "lalit";
+// const empId = 123457;
+// const email = "lalit";
+
+
+// const encodedData = ethereumjs.rawEncode(
+//   ["string", "uint32", "string"],
+//   [employeeName, empId, email]
+// );
+// const empHash = util.keccak256(encodedData);
+// console.log(`0x${empHash.toString("hex")}`);
+
+
+// const input = `${employeeName},${empId},${email}`;
+// const empHash1 = util.keccak256(Buffer.from(input));
+// console.log(`0x${empHash1.toString("hex")}`);
+// const encodedHash = web3.eth.abi.encodeParameter("bytes32", empHash1);
+// console.log(encodedHash);
+
+// const encodedData1 = web3.eth.abi.encode(
+//   ["string", "uint32", "string"],
+//   [employeeName, empId, email]
+// );
+// const empHash1 = util.keccak256(encodedData1);
+// console.log(`0x${empHash1.toString("hex")}`);
+
+// const encodedData2 = solidityKeccak256(
+//   ["string", "uint32", "string"],
+//   [employeeName, empId, email]
+// );
+// const empHash2 = util.keccak256(encodedData2);
+// console.log(`0x${empHash2.toString("hex")}`);
+

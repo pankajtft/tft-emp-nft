@@ -43,31 +43,31 @@ const EmpDetails = ({ handleSubmitForm, initialData }) => {
         }}
       />
       <RHSelect
-      required
-      id="designation"
-      name="empDetail.designation"
-      label="Designation"
-      options={
-        [{label:"Unassigned", value:1},
-        {label:"Mang",value:2}, 
-        {label:"QA",value:3}, 
-        {label:"IT",value:4}, 
-        {label:"HR",value:5}, 
-        {label:"Development",value:6}, 
-        {label:"Admin",value:7}, 
-        {label:"ACCOUNTS",value:8}, 
-        {label:"SALES",value:9}, 
-        {label:"LEGAL",value:10}, 
-        {label:"DESIGN",value:11}, 
-        {label:"TA",value:12}, 
-        {label:"Product",value:13}, 
-        {label:"Support",value:14}, 
-        {label:"Analyst",value:15}, 
-        {label:"Resources",value:16}]
-      }
-      sx={{
-        pb: 1
-      }}
+        required
+        id="designation"
+        name="empDetail.designation"
+        label="Designation"
+        options={[
+          { label: "Unassigned", value: "Unassigned" },
+          { label: "Mang", value: "Mang" },
+          { label: "QA", value: "QA" },
+          { label: "IT", value: "IT" },
+          { label: "HR", value: "HR" },
+          { label: "Development", value: "Development" },
+          { label: "Admin", value: "Admin" },
+          { label: "ACCOUNTS", value: "ACCOUNTS" },
+          { label: "SALES", value: "SALES" },
+          { label: "LEGAL", value: "LEGAL" },
+          { label: "DESIGN", value: "DESIGN" },
+          { label: "TA", value: "TA" },
+          { label: "Product", value: "Product" },
+          { label: "Support", value: "Support" },
+          { label: "Analyst", value: "Analyst" },
+          { label: "Resources", value: "Resources" },
+        ]}
+        sx={{
+          pb: 1,
+        }}
       />
       {/* <RHSingleCheckDropDown
         required
@@ -99,20 +99,20 @@ const EmpDetails = ({ handleSubmitForm, initialData }) => {
         required
         name="empDetail.skills"
         label="Skills"
-        options={
-          ["React",
-            "Vue",
-            "React Native",
-            "Mongo",
-            "Node",
-            "Blockchain",
-            "Solidity",
-            "JavaScript",
-            "AWS"]
-        }
+        options={[
+          "React",
+          "Vue",
+          "React Native",
+          "Mongo",
+          "Node",
+          "Blockchain",
+          "Solidity",
+          "JavaScript",
+          "AWS",
+        ]}
         id="skills"
         sx={{
-          pt:1,
+          pt: 1,
           pb: 1,
         }}
       />

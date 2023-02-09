@@ -20,43 +20,13 @@ const mintEmployeeNFT = async (employeeName, email, skills, empId) => {
     email,
     skills,
     empId
-    // {
-    //   gasLimit: process.env.GAS_LIMIT,
-    // }
   );
   const receipt = await result.wait();
   return receipt;
 };
 
-// const mintEmployeeNFTwithProject = async (
-//   emp_name,
-//   emp_id,
-//   emp_email,
-//   _skills,
-//   _projectName,
-//   team_size,
-//   startTime,
-//   endTime
-// ) => {
-//   const result = await FactoryContractEthers.mintEmployeeNFTwithProject(
-//     emp_name,
-//     emp_id,
-//     emp_email,
-//     _skills,
-//     _projectName,
-//     team_size,
-//     startTime,
-//     endTime
-//     // {
-//     //   gasLimit: process.env.GAS_LIMIT,
-//     // }
-//   );
-//   const receipt = await result.wait();
-//   return receipt;
-// };
-
 const AddProject = async (
-  tokenId,
+  empId,
   team_size,
   projectName,
   startTime,
@@ -64,21 +34,18 @@ const AddProject = async (
 ) => {
   // console.log(contract);
   const result = await FactoryContractEthers.AddProject(
-    tokenId,
+    empId,
     team_size,
     projectName,
     startTime,
     endTime
-    // {
-    //   gasLimit: process.env.GAS_LIMIT,
-    // }
   );
   const receipt = await result.wait();
   return receipt;
 };
 
 const editProject = async (
-  tokenId,
+  empId,
   team_size,
   projectName,
   startTime,
@@ -86,7 +53,7 @@ const editProject = async (
   projectNumber
 ) => {
   const result = await FactoryContractEthers.editProject(
-    tokenId,
+    empId,
     team_size,
     projectName,
     startTime,
@@ -100,9 +67,9 @@ const editProject = async (
   return receipt;
 };
 
-const skillsUpdate = async (tokenId, skills) => {
+const skillsUpdate = async (empId, skills) => {
   const result = await FactoryContractEthers.skillUpdate(
-    tokenId,
+    empId,
     skills
     //   {
     //   gasLimit: process.env.GAS_LIMIT,
@@ -112,9 +79,9 @@ const skillsUpdate = async (tokenId, skills) => {
   return receipt;
 };
 
-const setCurrentProject = async (tokenId, projectID) => {
+const setCurrentProject = async (empId, projectID) => {
   const result = await FactoryContractEthers.setCurrentProject(
-    tokenId,
+    empId,
     projectID
     //    {
     //   gasLimit: process.env.GAS_LIMIT,
@@ -124,9 +91,9 @@ const setCurrentProject = async (tokenId, projectID) => {
   return receipt;
 };
 
-const burnProject = async (tokenId, projectNumber) => {
+const burnProject = async (empId, projectNumber) => {
   const result = await FactoryContractEthers.burnProject(
-    tokenId,
+    empId,
     projectNumber
     //   {
     //   gasLimit: process.env.GAS_LIMIT,
@@ -136,9 +103,10 @@ const burnProject = async (tokenId, projectNumber) => {
   return receipt;
 };
 
-const burn = async (tokenId) => {
+const burn = async (empId) => {
   const result = await FactoryContractEthers.burn(
-    tokenId
+    empId
+
     //   {
     //   gasLimit: process.env.GAS_LIMIT,
     // }

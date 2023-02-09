@@ -26,8 +26,9 @@ const employeeSchema = new mongoose.Schema(
         default: false,
       },
     },
-    tokenId: {
-      type: Number,
+    minted: {
+      type: Boolean,
+      default:false
     },
     projDetails: [
       {

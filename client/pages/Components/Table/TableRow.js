@@ -35,7 +35,7 @@ export const TableRow = ({ data }) => {
   }
 
   function styleForMinted() {
-    if (data.tokenId !== undefined) {
+    if (data.minted == true) {
       return (
         <p className="text-xs text-green-700 font-extrabold uppercase">
           Minted
@@ -133,7 +133,7 @@ export const TableRow = ({ data }) => {
           onButtonPress={(val) => handleDeleteOption(val)}
         />
       )}
-      {syncModal && data?.tokenId && (
+      {syncModal && data?.minted && (
         <DialogBox
           title={"Sync data with blockchain ?"}
           btnTitle1={"Cancel"}

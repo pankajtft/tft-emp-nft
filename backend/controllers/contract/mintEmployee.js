@@ -28,6 +28,7 @@ const mintEmployee = async (req, res) => {
     );
     await Employee.findByIdAndUpdate(employee._id, {
       "empDetail.isSkillSynced": true,
+      "minted":true
     });
     res.status(200).send("NFT minted successfully");
   } catch (err) {

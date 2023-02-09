@@ -1,0 +1,123 @@
+{
+  "manifestVersion": "3.2",
+  "admin": {
+    "address": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
+    "txHash": "0x085e55c0379d42df3a4b10311cf08058ccd732b645f2cde3cae583e918d21107"
+  },
+  "proxies": [
+    {
+      "address": "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0",
+      "txHash": "0x406fe132416cb11acb6bd2e56e09a3b1ffd4808e1f6dbab4b9a74ae1ec3346b2",
+      "kind": "transparent"
+    }
+  ],
+  "impls": {
+    "11502cb3a91d57e48db14da5456868ded53addecab8ef88b69d0a904e2e16799": {
+      "address": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+      "txHash": "0x838ff312f2a766f49735d5e2c1b77bf2d427343be659b1f599f0951fc37b9274",
+      "layout": {
+        "solcVersion": "0.8.9",
+        "storage": [
+          {
+            "label": "NFT",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_contract(EmployeeNFT)3846",
+            "contract": "EMS",
+            "src": "contracts\\EMS.sol:16"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_address",
+            "contract": "EMS",
+            "src": "contracts\\EMS.sol:17"
+          },
+          {
+            "label": "employees",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_mapping(t_uint32,t_struct(Employee)2683_storage)",
+            "contract": "EMS",
+            "src": "contracts\\EMS.sol:51"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_bool)dyn_storage": {
+            "label": "bool[]",
+            "numberOfBytes": "32"
+          },
+          "t_array(t_bytes32)dyn_storage": {
+            "label": "bytes32[]",
+            "numberOfBytes": "32"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_bytes32": {
+            "label": "bytes32",
+            "numberOfBytes": "32"
+          },
+          "t_contract(EmployeeNFT)3846": {
+            "label": "contract EmployeeNFT",
+            "numberOfBytes": "20"
+          },
+          "t_mapping(t_uint32,t_struct(Employee)2683_storage)": {
+            "label": "mapping(uint32 => struct EMS.Employee)",
+            "numberOfBytes": "32"
+          },
+          "t_struct(Employee)2683_storage": {
+            "label": "struct EMS.Employee",
+            "members": [
+              {
+                "label": "empDetails",
+                "type": "t_bytes32",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "skillHash",
+                "type": "t_bytes32",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "projDetails",
+                "type": "t_array(t_bytes32)dyn_storage",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "exists",
+                "type": "t_array(t_bool)dyn_storage",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "currentProject",
+                "type": "t_uint8",
+                "offset": 0,
+                "slot": "4"
+              }
+            ],
+            "numberOfBytes": "160"
+          },
+          "t_uint32": {
+            "label": "uint32",
+            "numberOfBytes": "4"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        }
+      }
+    }
+  }
+}

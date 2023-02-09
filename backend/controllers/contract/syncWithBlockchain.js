@@ -5,13 +5,12 @@ const { storeTransaction } = require("./helpers");
 const { ethers } = require("ethers");
 
 const addProjects = async (employee) => {
-  console.log("hii");
   if (employee?.projDetails) {
   for (const [index, project] of employee.projDetails.entries()) {
       if (!project?.isSynced) {
         console.log(project.projectName, " adding to contract.....");
         const contract_response = await AddProject(
-          employee.tokenId,
+          employee?.empDetail?.empCode,
           project.teamSize,
           project.projectName,
           project?.projectStartDate?.toString(),
@@ -35,7 +34,7 @@ const addProjects = async (employee) => {
       } else if (project?.isEdited) {
         console.log(project.projectName, " updating in contract.....");
         const contract_response = await editProject(
-          employee.tokenId,
+          employee?.empDetail?.empCode,
           project.teamSize,
           project.projectName,
           project?.projectStartDate?.toString(),
@@ -70,7 +69,7 @@ const syncWithBlockchain = async (req, res) => {
   res.send("working on it.....");
   if (!employee?.empDetail?.isSkillSynced) {
     const contract_response = await skillsUpdate(
-      employee.tokenId,
+      employee?.empDetail?.empCode,
       employee?.empDetail?.skills.join(",")
     );
 
